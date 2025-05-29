@@ -1,0 +1,58 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaApp.TemplateSelectorWindow"
+        xmlns:vm="clr-namespace:AvaloniaApp.ViewModels"
+        x:Name="window"
+        x:DataType="vm:TemplateSelectorViewModel" Width="600" Height="400"
+        Title="TemplateSelectorWindow">
+  <StackPanel>
+    <ItemsControl VerticalAlignment="Center" ItemsSource="{Binding Users}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <WrapPanel HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Auto">
+          </WrapPanel>
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <vm:PersonTemplateSelector>
+          <DataTemplate x:Key="Person_PlaceHolder" x:DataType="vm:Person">
+            <Border Background="LightGray" Padding="10" Margin="5" Width="100" Height="100"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+              <TextBlock Width="20" Height="20" LineHeight="20" FontSize="32" Text="+"></TextBlock>
+            </Border>
+          </DataTemplate>
+          <DataTemplate x:Key="Person_Normal" x:DataType="vm:Person">
+            <Border Background="LightGray" Padding="10" Margin="5" Width="100" Height="100">
+              <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Name}"></TextBlock>
+              </StackPanel>
+            </Border>
+          </DataTemplate>
+        </vm:PersonTemplateSelector>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <ContentControl Content="{Binding User}">
+      <ContentControl.ContentTemplate>
+        <vm:PersonTemplateSelector>
+          <DataTemplate x:Key="Person_PlaceHolder" x:DataType="vm:Person">
+            <Border Background="LightGray" Padding="10" Margin="5" Width="100" Height="100"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+              <TextBlock Width="20" Height="20" LineHeight="20" FontSize="32" Text="+"></TextBlock>
+            </Border>
+          </DataTemplate>
+          <DataTemplate x:Key="Person_Normal" x:DataType="vm:Person">
+            <Border Background="LightGray" Padding="10" Margin="5" Width="100" Height="100">
+              <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Name}"></TextBlock>
+              </StackPanel>
+            </Border>
+          </DataTemplate>
+        </vm:PersonTemplateSelector>
+      </ContentControl.ContentTemplate>
+    </ContentControl>
+    <TextBlock Text="{Binding #window.MyTitle}"></TextBlock>
+  </StackPanel>
+</Window>

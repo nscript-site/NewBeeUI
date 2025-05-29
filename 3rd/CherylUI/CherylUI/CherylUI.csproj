@@ -1,0 +1,81 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>Clément Sepulchre</Authors>
+        <Description>https://github.com/kikipoulet/CherylUI</Description>
+        <PackageProjectUrl>https://github.com/kikipoulet/CherylUI</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/kikipoulet/CherylUI</RepositoryUrl>
+        <PackageVersion>1.2.0</PackageVersion>
+        <LangVersion>10</LangVersion>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Avalonia.Skia" Version="11.3.0" />
+      <PackageReference Include="Avalonia.Themes.Simple" Version="11.3.0" />
+      <PackageReference Include="ReactiveUI" Version="20.2.45" />
+      <PackageReference Include="SkiaSharp" Version="2.88.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="CustomFont\Nunito-Black.ttf" />
+      <AvaloniaResource Include="Assets\gradient_dark.png" />
+      <AvaloniaResource Include="Assets\gradient_light_strong.png" />
+      <AvaloniaResource Include="Assets\gradient_dark_strong.png" />
+      <AvaloniaResource Include="CustomFont\Nunito-Black.ttf" />
+      <None Remove="CustomFont\Nunito-BlackItalic.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-BlackItalic.ttf" />
+      <None Remove="CustomFont\Nunito-Bold.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-Bold.ttf" />
+      <None Remove="CustomFont\Nunito-BoldItalic.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-BoldItalic.ttf" />
+      <None Remove="CustomFont\Nunito-ExtraBold.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-ExtraBold.ttf" />
+      <None Remove="CustomFont\Nunito-ExtraBoldItalic.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-ExtraBoldItalic.ttf" />
+      <None Remove="CustomFont\Nunito-ExtraLight.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-ExtraLight.ttf" />
+      <None Remove="CustomFont\Nunito-ExtraLightItalic.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-ExtraLightItalic.ttf" />
+      <None Remove="CustomFont\Nunito-Italic.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-Italic.ttf" />
+      <None Remove="CustomFont\Nunito-Light.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-Light.ttf" />
+      <None Remove="CustomFont\Nunito-LightItalic.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-LightItalic.ttf" />
+      <None Remove="CustomFont\Nunito-Medium.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-Medium.ttf" />
+      <None Remove="CustomFont\Nunito-MediumItalic.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-MediumItalic.ttf" />
+      <None Remove="CustomFont\Nunito-Regular.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-Regular.ttf" />
+      <None Remove="CustomFont\Nunito-SemiBold.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-SemiBold.ttf" />
+      <None Remove="CustomFont\Nunito-SemiBoldItalic.ttf" />
+      <AvaloniaResource Include="CustomFont\Nunito-SemiBoldItalic.ttf" />
+      <None Remove="CustomFont\Quicksand-Bold.ttf" />
+      <AvaloniaResource Include="CustomFont\Quicksand-Bold.ttf" />
+      <None Remove="CustomFont\Quicksand-Light.ttf" />
+      <AvaloniaResource Include="CustomFont\Quicksand-Light.ttf" />
+      <None Remove="CustomFont\Quicksand-Medium.ttf" />
+      <AvaloniaResource Include="CustomFont\Quicksand-Medium.ttf" />
+      <None Remove="CustomFont\Quicksand-Regular.ttf" />
+      <AvaloniaResource Include="CustomFont\Quicksand-Regular.ttf" />
+      <None Remove="CustomFont\Quicksand-SemiBold.ttf" />
+      <AvaloniaResource Include="CustomFont\Quicksand-SemiBold.ttf" />
+      <None Remove="Assets\gradient_light.png" />
+      <AvaloniaResource Include="Assets\gradient_light.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Controls\HorizontalSeparator.axaml.cs">
+        <DependentUpon>HorizontalSeparator.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
+</Project>

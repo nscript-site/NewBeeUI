@@ -1,0 +1,353 @@
+<ns:NWindow x:Class="AvaloniaApp.Views.NWindowDemoWindow"
+            xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="1200" Height="800"
+        xmlns:ns="nstyles"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="NWindowDemoWindow">
+  <ns:NWindow.RightWindowTitleBarControls>
+    <StackPanel Orientation="Horizontal">
+      <Button Classes="Basic WindowControlsButton">
+        <PathIcon Data="{x:Static ns:Icons.Search}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+      </Button>
+      <Button Classes="Basic WindowControlsButton">
+        <PathIcon Data="{x:Static ns:Icons.FileOpen}" Foreground="{Binding $parent.Foreground}"/>
+      </Button>
+      <Button Classes="Basic WindowControlsButton">
+        <PathIcon Data="{x:Static ns:Icons.Check}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+      </Button>
+    </StackPanel>
+  </ns:NWindow.RightWindowTitleBarControls>
+  <ScrollViewer>
+    <StackPanel Margin="10" Spacing="20">
+      <StackPanel Spacing="10" Orientation="Horizontal">
+        <ns:GlassCard>
+          <ns:GroupBox Header="GroupBox Header">
+            <TextBlock>Content in GroupBox</TextBlock>
+          </ns:GroupBox>
+        </ns:GlassCard>
+        <ns:GlassCard>
+          <ns:GroupBox>
+            <ns:GroupBox.Header>
+              <TextBlock FontSize="18">Custom GroupBox Header</TextBlock>
+            </ns:GroupBox.Header>
+            <TextBlock>Content in GroupBox</TextBlock>
+          </ns:GroupBox>
+        </ns:GlassCard>
+      </StackPanel>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="切换主题">
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button Click="Button_ToggleBaseTheme_Click" Classes="Flat">切换基础主题（白天/黑夜）</Button>
+            <Button Click="Button_ToggleColorTheme_Click" Classes="Flat">切换颜色主题</Button>
+          </StackPanel>
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="按钮">
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button Classes="Basic">Basic 按钮</Button>
+            <Button Classes="Flat">Flat 按钮</Button>
+            <Button Classes="Accent">Accent 按钮</Button>
+            <Button Classes="Outlined">Outlined 按钮</Button>
+            <Button Classes="Rounded">Rounded 按钮</Button>
+            <Button Classes="Rounded Flat">Rounded+Flat 按钮</Button>
+            <Button Classes="Success">Success 按钮</Button>
+            <Button Classes="Danger">Danger 按钮</Button>
+          </StackPanel>
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="Icon">
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button Classes="Icon">
+              <PathIcon Data="{x:Static ns:Icons.Search}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.FileOpen}" Foreground="{Binding $parent.Foreground}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.Check}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.Cross}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.Calendar}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.Plus}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.Minus}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.Error}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.Login}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.ChevronUp}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.ChevronDown}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.ChevronLeft}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.ChevronRight}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.CircleCheck}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.CircleWarning}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.CircleInformation}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.CircleClose}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.CircleOutline}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.CircleOutlineClose}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.CircleOutlinePlus}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.CircleOutlineMinus}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.CircleOutlineCheck}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.KeyboardCaps}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.BackspaceOutline}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.ArrowLeft}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.ArrowRight}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.Menu}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.Star}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.InformationOutline}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.AlertOutline}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:Icons.RotateRight}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+            <Button Classes="Icon Outlined">
+              <PathIcon Data="{x:Static ns:SearchIcon.Instance}" Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+          </StackPanel>
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="PathIcon">
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <PathIcon Data="{x:Static ns:Icons.Search}" />
+            <PathIcon Data="{x:Static ns:Icons.Plus}" />
+            <PathIcon Data="{x:Static ns:Icons.Star}" Foreground="Red"/>
+            <PathIcon Data="{x:Static ns:Icons.Star}" Classes="Danger" />
+          </StackPanel>
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="loading">
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <ns:Loading x:Name="loading"></ns:Loading>
+            <Button Click="Button_Click_Loading">显示/隐藏</Button>
+          </StackPanel>
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="TextBlock">
+          <TextBlock>这是一行文本</TextBlock>
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="RadioButton">
+          <RadioButton Content="RadioButton 1" GroupName="Group1" />
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="CheckBox">
+          <CheckBox Content="CheckBox 1" />
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="ToggleSwitch">
+          <ToggleSwitch Classes="Switch"></ToggleSwitch>
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="InfoBadge">
+          <StackPanel Orientation="Horizontal" Margin="50" Spacing="100">
+            <ns:InfoBadge Appearance="Information"
+                                CornerPosition="TopRight"
+                                Header="Info">
+              <Button Content="XXXX" />
+            </ns:InfoBadge>
+            <ns:InfoBadge Appearance="Warning"
+                                CornerPosition="TopLeft"
+                                Header="Warning">
+              <Button Content="XXXX" />
+            </ns:InfoBadge>
+            <ns:InfoBadge Appearance="Success"
+                                CornerPosition="BottomRight"
+                                Header="Success">
+              <Button Content="XXXX" />
+            </ns:InfoBadge>
+            <ns:InfoBadge Appearance="Error"
+                                CornerPosition="BottomLeft"
+                                Header="Error">
+              <Button Content="XXXX" />
+            </ns:InfoBadge>
+            <ns:InfoBadge Appearance="Error"
+                                CornerPosition="TopRight"
+                                IsDot="True">
+              <Button Content="XXXX" />
+            </ns:InfoBadge>
+            <ns:InfoBadge Appearance="Information"
+                                CornerPosition="TopRight"
+                                Header="100"
+                                Overflow="99">
+              <Button Content="XXXX" />
+            </ns:InfoBadge>
+          </StackPanel>
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="Info Bar">
+          <StackPanel Spacing="7">
+            <ns:InfoBar Title="Info" 
+                          Margin="10"
+                          IsClosable="True"
+                          IsOpen="True"
+                          Message="XXXXXXX" />
+            <ns:InfoBar Title="Warning"  
+                          Margin="10"
+                          IsClosable="False"
+                          IsOpen="True"
+                          Message="XXXXXXX"
+                          Severity="Warning" />
+            <ns:InfoBar Title="Error"  
+                          Margin="10"
+                          IsOpen="True"
+                          Message="XXXXXXX"
+                          Severity="Error" />
+            <ns:InfoBar Title="Success"
+                          Margin="10"  
+                          IsOpen="True"
+                          Message="XXXXXXX"
+                          Severity="Success" />
+          </StackPanel>
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard  IsInteractive="True">
+        <ns:GlassCard.ContextMenu>
+          <ContextMenu>
+            <!--  Ignore your IDE, x:False is a valid intrinsic  -->
+            <MenuItem CommandParameter="{x:False}"
+                      Header="Option" />
+            <MenuItem Header="Disabled Option" IsEnabled="False" />
+            <!--  Ignore your IDE, x:True is a valid intrinsic  -->
+            <MenuItem CommandParameter="{x:True}"
+                      Header="Option With Icon">
+              <MenuItem.Icon>
+                <PathIcon Width="15"
+                          Height="15"
+                          Data="{x:Static ns:Icons.Star}" />
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Disabled With Icon" IsEnabled="False">
+              <MenuItem.Icon>
+                <PathIcon Width="13"
+                          Height="13"
+                          Data="{x:Static ns:Icons.Cross}" />
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Separator Next" />
+            <Separator/>
+            <MenuItem Header="Submenu">
+              <MenuItem Header="Sub-Submenu">
+                <MenuItem Header="Nested Option" />
+                <MenuItem Header="-" />
+                <MenuItem Header="Disabled Nested Option" IsEnabled="False" />
+              </MenuItem>
+            </MenuItem>
+          </ContextMenu>
+        </ns:GlassCard.ContextMenu>
+        <ns:GroupBox Header="ContextMenu">
+          <TextBlock HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+           Classes="h3">
+            Right click anywhere in this card to open a context menu.
+          </TextBlock>
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
+        <ns:GroupBox Header="TabControl">
+          <StackPanel Orientation="Horizontal" Spacing="50">
+            <Border>
+              <TabControl TabStripPlacement="Top">
+                <TabItem Header="Tab1">Content in tab1</TabItem>
+                <TabItem Header="Tab2">Content in tab2</TabItem>
+              </TabControl>
+            </Border>
+            
+            <TabControl Classes="HorizontalTabs"  TabStripPlacement="Left">
+              <TabItem Header="Tab1">Content in tab1</TabItem>
+              <TabItem Header="Tab2">Content in tab2</TabItem>
+            </TabControl>
+
+            <Border>
+              <ns:TabHeaderList Classes="HorizontalTabs"  TabStripPlacement="Left">
+                <TabItem Header="Tab1">Content in tab1</TabItem>
+                <TabItem Header="Tab2">Content in tab2</TabItem>
+              </ns:TabHeaderList>
+            </Border>
+
+            <TabStrip>
+              <TabItem Header="Tab1">Content in tab1</TabItem>
+              <TabItem Header="Tab2">Content in tab2</TabItem>
+            </TabStrip>
+          </StackPanel>
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+    </StackPanel>
+  </ScrollViewer>
+</ns:NWindow>

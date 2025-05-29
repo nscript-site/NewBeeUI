@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaApp", "source\AvaloniaApp\AvaloniaApp.csproj", "{58B329EF-709F-891C-DDF3-D62E6DB6DA5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaApp.Desktop", "source\AvaloniaApp.Desktop\AvaloniaApp.Desktop.csproj", "{75D5ACE3-CA4C-BBA2-6F98-F8EEFE44694E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStyles", "source\NStyles\NStyles.csproj", "{A7AE2D29-CE66-BA4C-3542-0624C3FADC2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStyles.MeterialIcons.Generator", "source\NStyles.MeterialIcons.Generator\NStyles.MeterialIcons.Generator.csproj", "{B9F5D3C6-105A-4A92-B426-E5BEB01FAD64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStyles.MeterialIcons", "source\NStyles.MeterialIcons\NStyles.MeterialIcons.csproj", "{7F724FCA-AE26-4C05-934C-E3B3472E8B10}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58B329EF-709F-891C-DDF3-D62E6DB6DA5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58B329EF-709F-891C-DDF3-D62E6DB6DA5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58B329EF-709F-891C-DDF3-D62E6DB6DA5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58B329EF-709F-891C-DDF3-D62E6DB6DA5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75D5ACE3-CA4C-BBA2-6F98-F8EEFE44694E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75D5ACE3-CA4C-BBA2-6F98-F8EEFE44694E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75D5ACE3-CA4C-BBA2-6F98-F8EEFE44694E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75D5ACE3-CA4C-BBA2-6F98-F8EEFE44694E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7AE2D29-CE66-BA4C-3542-0624C3FADC2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7AE2D29-CE66-BA4C-3542-0624C3FADC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7AE2D29-CE66-BA4C-3542-0624C3FADC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7AE2D29-CE66-BA4C-3542-0624C3FADC2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9F5D3C6-105A-4A92-B426-E5BEB01FAD64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9F5D3C6-105A-4A92-B426-E5BEB01FAD64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9F5D3C6-105A-4A92-B426-E5BEB01FAD64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9F5D3C6-105A-4A92-B426-E5BEB01FAD64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F724FCA-AE26-4C05-934C-E3B3472E8B10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F724FCA-AE26-4C05-934C-E3B3472E8B10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F724FCA-AE26-4C05-934C-E3B3472E8B10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F724FCA-AE26-4C05-934C-E3B3472E8B10}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D37625B5-E465-405D-B489-F1A1322719CB}
+	EndGlobalSection
+EndGlobal

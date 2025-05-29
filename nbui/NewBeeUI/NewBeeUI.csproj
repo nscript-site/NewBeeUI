@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>11.3.0.1</Version>
+    <RepositoryUrl>https://github.com/nscript-site/NewBeeUI</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageId>newbeeui</PackageId>
+    <PackageTags>avalonia,mvu</PackageTags>
+    <PackageProjectUrl>https://github.com/nscript-site/NewBeeUI</PackageProjectUrl>
+    <Copyright>geblab.com</Copyright>
+    <Title>A avalonia mvu ui library for new bee</Title>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <IncludeSymbols>False</IncludeSymbols>
+    <Company>geblab</Company>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="nstyles" Version="9.0.1.15" />
+    <PackageReference Include="Avalonia" Version="11.3.0" />
+    <PackageReference Include="navalonia.markup" Version="11.3.0-beta05" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+</Project>

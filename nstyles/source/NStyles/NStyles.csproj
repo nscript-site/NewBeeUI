@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>9.0.1.15</Version>
+    <RepositoryUrl>https://github.com/nscript-site/nscript-solution</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageId>nstyles</PackageId>
+    <PackageTags>avalonia</PackageTags>
+    <PackageProjectUrl>https://github.com/nscript-site/nscript-solution</PackageProjectUrl>
+    <Copyright>geblab.com</Copyright>
+    <Title>A avalonia ui utils library based on sukiui</Title>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <IncludeSymbols>False</IncludeSymbols>
+    <Company>geblab</Company>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\Shaders\Background\backgroundshadcn.sksl" />
+    <None Remove="Properties\Shaders\Background\bubble.sksl" />
+    <None Remove="Properties\Shaders\Background\bubblestrong.sksl" />
+    <None Remove="Properties\Shaders\Background\cells.sksl" />
+    <None Remove="Properties\Shaders\Background\flat.sksl" />
+    <None Remove="Properties\Shaders\Background\gradient.sksl" />
+    <None Remove="Properties\Shaders\Background\gradientdarker.sksl" />
+    <None Remove="Properties\Shaders\Background\gradientsoft.sksl" />
+    <None Remove="Properties\Shaders\Background\waves.sksl" />
+    <None Remove="Properties\Shaders\Loading\glow.sksl" />
+    <None Remove="Properties\Shaders\Loading\pellets.sksl" />
+    <None Remove="Properties\Shaders\Loading\simple.sksl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Shaders\Background\backgroundshadcn.sksl" />
+    <EmbeddedResource Include="Properties\Shaders\Background\bubble.sksl" />
+    <EmbeddedResource Include="Properties\Shaders\Background\bubblestrong.sksl" />
+    <EmbeddedResource Include="Properties\Shaders\Background\cells.sksl" />
+    <EmbeddedResource Include="Properties\Shaders\Background\flat.sksl" />
+    <EmbeddedResource Include="Properties\Shaders\Background\gradient.sksl" />
+    <EmbeddedResource Include="Properties\Shaders\Background\gradientdarker.sksl" />
+    <EmbeddedResource Include="Properties\Shaders\Background\gradientsoft.sksl" />
+    <EmbeddedResource Include="Properties\Shaders\Background\waves.sksl" />
+    <EmbeddedResource Include="Properties\Shaders\Loading\glow.sksl" />
+    <EmbeddedResource Include="Properties\Shaders\Loading\pellets.sksl" />
+    <EmbeddedResource Include="Properties\Shaders\Loading\simple.sksl" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="2.88.9" />
+    <PackageReference Include="Avalonia" Version="11.2.5" />
+    <PackageReference Include="Avalonia.Skia" Version="11.2.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Theme\TextBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
+</Project>

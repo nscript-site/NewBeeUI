@@ -1,0 +1,185 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:icons="clr-namespace:NStyles"
+                    xmlns:nc="https://github.com/nscript-site">
+  <ControlTheme x:Key="NWindowTheme" TargetType="nc:NWindow">
+    <Setter Property="Margin" Value="100" />
+    <Setter Property="TransparencyLevelHint" Value="Transparent"></Setter>
+    <Setter Property="SystemDecorations" Value="{OnPlatform Full, Linux=None, x:TypeArguments=SystemDecorations}" />
+
+    <Setter Property="ExtendClientAreaChromeHints" Value="NoChrome" />
+    <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="-1" />
+    <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
+    <Setter Property="TextElement.Foreground" Value="{DynamicResource SukiText}" />
+    <Setter Property="FlowDirection" Value="{DynamicResource FlowDirectionPrimary}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Margin="{TemplateBinding Margin}"
+                ClipToBounds="True"
+                CornerRadius="{OnPlatform '0',
+                                                  Linux='10',
+                                                  x:TypeArguments=CornerRadius}">
+          <VisualLayerManager Name="PART_VisualLayerManager" IsHitTestVisible="True">
+            <VisualLayerManager.ChromeOverlayLayer>
+              <!-- <nc:SukiHost /> -->
+              <ItemsControl ItemsSource="{Binding Hosts, RelativeSource={RelativeSource AncestorType={x:Type nc:NWindow}}}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <Panel />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+              </ItemsControl>
+            </VisualLayerManager.ChromeOverlayLayer>
+            <Panel Background="{DynamicResource SukiWindowBackground}" x:Name="PART_Root" >
+              <DockPanel LastChildFill="True">
+                <Panel ContextMenu="{TemplateBinding TitleBarContextMenu}" DockPanel.Dock="Top">
+                  <Panel.Styles>
+                    <Style Selector="nc|NWindow[ShowBottomBorder=True] /template/ Border#PART_BottomBorder">
+                      <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    </Style>
+                    <Style Selector="nc|NWindow[ShowBottomBorder=False] /template/ Border#PART_BottomBorder">
+                      <Setter Property="BorderThickness" Value="0,0,0,0" />
+                    </Style>
+                  </Panel.Styles>
+                  <StackPanel>
+                    <LayoutTransformControl Name="PART_LayoutTransform" RenderTransformOrigin="0%,0%">
+                      <Panel>
+                        <Panel Name="PART_TitleBarBackground" Background="{DynamicResource SukiWindowBackground}" IsHitTestVisible="True" 
+                           Opacity="1" />
+                        <DockPanel Margin="12,9" LastChildFill="True">
+                          <StackPanel VerticalAlignment="Center"
+                                      DockPanel.Dock="Right"
+                                      Orientation="Horizontal"
+                                      Spacing="7">
+                            <StackPanel.Styles>
+                              <Style Selector="PathIcon">
+                                <Setter Property="Height" Value="10" />
+                                <Setter Property="Width" Value="10" />
+                              </Style>
+                            </StackPanel.Styles>
+                            <ContentPresenter HorizontalAlignment="Right"
+                                              Content="{TemplateBinding RightWindowTitleBarControls}"
+                                              />
+                            <!--<ItemsControl ItemsSource="{TemplateBinding RightWindowTitleBarControls}">
+                              <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                  <StackPanel FlowDirection="{DynamicResource FlowDirectionOpposite}" Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                              </ItemsControl.ItemsPanel>
+                            </ItemsControl>-->
+                            <Button Name="PART_MinimizeButton"
+                                    VerticalContentAlignment="Bottom"
+                                    Classes="Basic WindowControlsButton"
+                                    IsVisible="{TemplateBinding CanMinimize}">
+                              <PathIcon Margin="0,0,0,4"
+                                        VerticalAlignment="Bottom"
+                                        Data="{x:Static icons:Icons.WindowMinimize}" />
+                            </Button>
+                            <Button Name="PART_MaximizeButton"
+                                    Classes="Basic WindowControlsButton"
+                                    IsVisible="{TemplateBinding CanMaximize}">
+                              <PathIcon x:Name="MaximizeIcon" Data="{x:Static icons:Icons.WindowMaximize}" />
+                            </Button>
+                            <Button Name="PART_CloseButton" Classes="Basic WindowControlsButton Close">
+                              <PathIcon Data="{x:Static icons:Icons.WindowClose}" />
+                            </Button>
+                          </StackPanel>
+                          <StackPanel VerticalAlignment="Center"
+                                      IsHitTestVisible="False"
+                                      Orientation="Horizontal"
+                                      Spacing="10">
+                            <ContentPresenter HorizontalAlignment="Left"
+                                              Content="{TemplateBinding LogoContent}"
+                                              IsHitTestVisible="False" />
+                            <TextBlock VerticalAlignment="Center"
+                                       FontSize="{TemplateBinding TitleFontSize}"
+                                       FontWeight="{TemplateBinding TitleFontWeight}"
+                                       IsHitTestVisible="False"
+                                       Text="{TemplateBinding Title}" />
+                            <ContentPresenter HorizontalAlignment="Left"
+                                              Content="{TemplateBinding SubTitleContent}"
+                                              IsHitTestVisible="False" />
+                          </StackPanel>
+                        </DockPanel>
+                      </Panel>
+                    </LayoutTransformControl>
+                    <Border Name="PART_BottomBorder" BorderBrush="{DynamicResource SukiBorderBrush}" />
+                  </StackPanel>
+                </Panel>
+                <ContentPresenter x:Name="PART_ContentPresenter"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  CornerRadius="10"
+                                  IsHitTestVisible="True" />
+              </DockPanel>
+            </Panel>
+          </VisualLayerManager>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^[ShowTitlebarBackground=False] /template/ Menu#PART_Menu">
+      <Setter Property="Margin" Value="10,0,0,7"></Setter>
+    </Style>
+    
+    <Style Selector="^[WindowState=Maximized] /template/ PathIcon#MaximizeIcon">
+      <Setter Property="Data" Value="{x:Static icons:Icons.WindowRestore}" />
+    </Style>
+    <Style Selector="^[WindowState=Normal] /template/ PathIcon#MaximizeIcon">
+      <Setter Property="Data" Value="{x:Static icons:Icons.WindowMaximize}" />
+    </Style>
+    <Style Selector="^[IsTitleBarVisible=True]">
+      <Style Selector="^[TitleBarAnimationEnabled=True]">
+        <Style Selector="^ /template/ LayoutTransformControl#PART_LayoutTransform">
+          <Style.Animations>
+            <Animation Easing="{StaticResource MenuEasing}"
+                       FillMode="Forward"
+                       Duration="{StaticResource MediumAnimationDuration}">
+              <KeyFrame Cue="0%">
+                <Setter Property="ScaleTransform.ScaleY" Value="0" />
+                <Setter Property="IsVisible" Value="True" />
+              </KeyFrame>
+              <KeyFrame Cue="100%">
+                <Setter Property="ScaleTransform.ScaleY" Value="1" />
+              </KeyFrame>
+            </Animation>
+          </Style.Animations>
+        </Style>
+      </Style>
+      <Style Selector="^[TitleBarAnimationEnabled=False]">
+        <Style Selector="^ /template/ LayoutTransformControl#PART_LayoutTransform">
+          <Setter Property="IsVisible" Value="True" />
+        </Style>
+      </Style>
+    </Style>
+    <Style Selector="^[IsTitleBarVisible=False]">
+      <Style Selector="^[TitleBarAnimationEnabled=True]">
+        <Style Selector="^ /template/ LayoutTransformControl#PART_LayoutTransform">
+          <Style.Animations>
+            <Animation Easing="{StaticResource MenuEasing}"
+                       FillMode="Forward"
+                       Duration="{StaticResource MediumAnimationDuration}">
+              <KeyFrame Cue="0%">
+                <Setter Property="ScaleTransform.ScaleY" Value="1" />
+              </KeyFrame>
+              <KeyFrame Cue="100%">
+                <Setter Property="ScaleTransform.ScaleY" Value="0" />
+                <Setter Property="IsVisible" Value="False" />
+              </KeyFrame>
+            </Animation>
+          </Style.Animations>
+        </Style>
+      </Style>
+      <Style Selector="^[TitleBarAnimationEnabled=False]">
+        <Style Selector="^ /template/ LayoutTransformControl#PART_LayoutTransform">
+          <Setter Property="IsVisible" Value="False" />
+        </Style>
+      </Style>
+    </Style>
+  </ControlTheme>
+  <ControlTheme x:Key="{x:Type nc:NWindow}"
+                BasedOn="{StaticResource NWindowTheme}"
+                TargetType="nc:NWindow" />
+</ResourceDictionary>

@@ -1,0 +1,11 @@
+﻿public class SearchIcon
+{
+    private static readonly Lazy<SearchIcon> _instance = new(() => new SearchIcon());
+    public static StreamGeometry Instance => _instance.Value.g;
+
+    private StreamGeometry g;
+    private SearchIcon()
+    {
+        g = StreamGeometry.Parse("SVGVALUE");
+    }
+}
