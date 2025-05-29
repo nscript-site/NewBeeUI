@@ -11,7 +11,9 @@ NewBeeUI(NB UI，又叫菜鸟UI) 是基于 Avalonia 的 mvu gui 库，它专门�
 
 相关库：
 
-- nstyles: 一套可在 NativeAOT 下编译的主题，改自 sukiui
-- [nmarkup](https://github.com/nscript-site/Avalonia.Markup.Declarative): fork 自 Avalonia.Markup.Declarative，进行了少量的修改
-- NStyles.MeterialIcons: 一套可在 NativeAOT 下编译的图标库
+- nstyles: 一套可在 NativeAOT 下编译的主题，改自 sukiui。[![NuGet](https://img.shields.io/nuget/v/nstyles.svg)](https://www.nuget.org/packages/nstyles)
+
+- [nmarkup](https://github.com/nscript-site/Avalonia.Markup.Declarative): fork 自 Avalonia.Markup.Declarative，进行了少量的修改 [![NuGet](https://img.shields.io/nuget/v/nmarkup.svg)](https://www.nuget.org/packages/nmarkup)
+
+- NStyles.MeterialIcons: 一套可在 NativeAOT 下编译的图标库 [![NuGet](https://img.shields.io/nuget/v/NStyles.MeterialIcons.svg)](https://www.nuget.org/packages/NStyles.MeterialIcons)
 
