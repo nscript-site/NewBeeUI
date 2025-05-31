@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Avalonia.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,6 +54,8 @@ public class IconView : BaseView
     public string? Tooltip { get; set; } = null;
     public string? SelectedTooltip { get; set; } = null;
 
+    public Action<Button>? OnSetTooltipPosition  { get; set; } = null;
+
     private bool _selected;
     public bool Selected
     {
@@ -78,6 +81,7 @@ public class IconView : BaseView
 
         if (_button != null && string.IsNullOrEmpty(toolTip) == false)
         {
+            OnSetTooltipPosition ?.Invoke(_button);
             ToolTip.SetTip(_button, toolTip);
         }
 

@@ -6,6 +6,15 @@ using System.Windows.Input;
 
 namespace NewBeeUI;
 
+public enum ToolTipPosition
+{
+    Auto,
+    Top,
+    Bottom,
+    Left,
+    Right
+}
+
 public abstract class BaseView : MvuView
 {
     public const string Classed_Icon_Button = "IconButton";
@@ -55,17 +64,17 @@ public abstract class BaseView : MvuView
         return tb;
     }
 
-    protected Button IconButton(StreamGeometry g, string? tooltip = null, double scale = 0.8)
+    protected Button IconButton(StreamGeometry g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
     {
-        return CreateIconButton(new PathIcon().Data(g), tooltip, scale);
+        return CreateIconButton(new PathIcon().Data(g), tooltip, scale, GetSetTooltipPosition(toolTipPosition));
     }
 
-    protected Button IconIconButton(Func<StreamGeometry> g, string? tooltip = null, double scale = 0.8)
+    protected Button IconIconButton(Func<StreamGeometry> g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
     {
-        return CreateIconButton(new PathIcon().Data(g), tooltip, scale);
+        return CreateIconButton(new PathIcon().Data(g), tooltip, scale, GetSetTooltipPosition(toolTipPosition));
     }
 
-    protected Button CreateIconButton(PathIcon path, string? tooltip, double scale)
+    protected Button CreateIconButton(PathIcon path, string? tooltip, double scale, Action<Button>? onSetTooltipPosition)
     {
         var button = new Button().Classes("Icon").Classes(Classed_Icon_Button)
             .Content(path.Ref(out PathIcon icon))
@@ -73,12 +82,46 @@ public abstract class BaseView : MvuView
 
         if (string.IsNullOrEmpty(tooltip) == false)
         {
-            ToolTip.SetPlacement(button, PlacementMode.Top);
-            ToolTip.SetVerticalOffset(button, -5);
+            onSetTooltipPosition?.Invoke(button);
             ToolTip.SetTip(button, tooltip);
         }
 
         return button;
+    }
+
+    private static Action<Button>? GetSetTooltipPosition(ToolTipPosition toolTipPosition)
+    {
+        return toolTipPosition switch
+        {
+            ToolTipPosition.Top => DisplayToolTipAtTop,
+            ToolTipPosition.Bottom => DisplayToolTipAtBottom,
+            ToolTipPosition.Left => DisplayToolTipAtLeft,
+            ToolTipPosition.Right => DisplayToolTipAtRight,
+            ToolTipPosition.Auto => null, // Use default position
+            _ => null
+        };
+    }
+
+    protected static void DisplayToolTipAtTop(Control ctrl)
+    {
+        ToolTip.SetPlacement(ctrl, PlacementMode.Top);
+        ToolTip.SetVerticalOffset(ctrl, -5);
+    }
+
+    protected static void DisplayToolTipAtBottom(Control ctrl)
+    {
+        ToolTip.SetPlacement(ctrl, PlacementMode.Bottom);
+        ToolTip.SetVerticalOffset(ctrl, 5);
+    }
+
+    protected static void DisplayToolTipAtLeft(Control ctrl)
+    {
+        ToolTip.SetPlacement(ctrl, PlacementMode.Left);
+    }
+
+    protected static void DisplayToolTipAtRight(Control ctrl)
+    {
+        ToolTip.SetPlacement(ctrl, PlacementMode.Right);
     }
 
     protected PathIcon PathIcon(StreamGeometry g)
@@ -109,17 +152,19 @@ public abstract class BaseView : MvuView
         return new StackPanel() { Orientation = Orientation.Vertical }.Align(hAlign, vAlign);
     }
 
-    public static IconView SelectableIconButton(StreamGeometry g, string? tooltip = null, string? selectedTooltip = null, double scale = 0.8)
+    public static IconView SelectableIconButton(StreamGeometry g, string? tooltip = null, string? selectedTooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
     {
-        return CreateSelectableIcon(new PathIcon().Data(g), tooltip, selectedTooltip, scale);
+        return CreateSelectableIcon(new PathIcon().Data(g), tooltip, selectedTooltip, toolTipPosition, scale);
     }
 
-    public static IconView CreateSelectableIcon(PathIcon path, string? tooltip, string? selectedTooltip, double scale)
+    public static IconView CreateSelectableIcon(PathIcon path, string? tooltip, string? selectedTooltip, ToolTipPosition toolTipPosition, double scale)
     {
         var iconView = new IconView();
+        iconView.RenderTransform = new ScaleTransform(scale, scale);
         iconView.Path = path;
         iconView.Tooltip = tooltip;
         iconView.SelectedTooltip = selectedTooltip;
+        iconView.OnSetTooltipPosition = GetSetTooltipPosition(toolTipPosition);
         return iconView;
     }
 
