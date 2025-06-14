@@ -33,8 +33,8 @@ public class PopupWindowView : BaseView, IWindowView
                     await new PopupWindowView().ShowDialogAsync(this, "在子窗体弹出");
                 }),
 
-                TextButton("在子窗体弹出2").OnClick(async _=>{
-                    new PopupWindowView().ShowDialogAsync(this, "在子窗体弹出2");
+                TextButton("在子窗体弹出2").OnClick( _=>{
+                    new PopupWindowView().ShowDialog(this, "在子窗体弹出2");
                 }),
 
                 TextButton("关闭窗口").OnClick(_=>{

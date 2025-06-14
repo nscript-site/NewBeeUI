@@ -106,7 +106,7 @@ public class MainView : BaseView, IWindowView
                 if (e.FirstItem() is RoutedViewBuilder builder)
                 {
                     if(builder.IsEmpty() == false)
-                        Router?.Goto(builder);
+                        Router?.Goto(builder);    // 跳转
                 }
             });
 
@@ -119,6 +119,7 @@ public class MainView : BaseView, IWindowView
         [
             new RoutedViewBuilder("Dashboard", () => new DashboardView())
                 .Icon(ViewDashboardOutlineIcon.Instance),
+            new RoutedViewBuilder("Hello", () => new HelloView()),
             new RoutedViewBuilder("按钮", () => new ButtonsView()),
             new RoutedViewBuilder("Windows", () => new WindowsView()),
             new RoutedViewBuilder("Test", () => new TestView()),
