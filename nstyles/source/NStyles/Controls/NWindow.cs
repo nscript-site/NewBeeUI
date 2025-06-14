@@ -113,6 +113,15 @@ public class NWindow : Window
         set => SetValue(CanMinimizeProperty, value);
     }
 
+    public static readonly StyledProperty<bool> CanCloseProperty =
+    AvaloniaProperty.Register<NWindow, bool>(nameof(CanClose), defaultValue: true);
+
+    public bool CanClose
+    {
+        get => GetValue(CanCloseProperty);
+        set => SetValue(CanCloseProperty, value);
+    }
+
     public static readonly StyledProperty<bool> ShowTitlebarBackgroundProperty =
         AvaloniaProperty.Register<NWindow, bool>(nameof(ShowTitlebarBackground), defaultValue: true);
     public bool ShowTitlebarBackground
@@ -359,19 +368,26 @@ public class NWindow : Window
         Win32Properties.AddWndProcHookCallback(this, new Win32Properties.CustomWndProcHookCallback(proc));
     }
 
+    bool oldShowBottomBorder = true;
     private void OnWindowStateChanged(WindowState state)
     {
         if (state == WindowState.FullScreen)
+        {
+            oldShowBottomBorder = ShowBottomBorder;
             CanResize = CanMove = false;
-        if (state == WindowState.Maximized)
+            ShowBottomBorder = false;
+        }
+        else if (state == WindowState.Maximized)
         {
             Margin = new Thickness(7);
             CanResize = CanMove = true;
+            ShowBottomBorder = oldShowBottomBorder;
         }
         else
         {
             Margin = new Thickness(0);
             CanResize = CanMove = true;
+            ShowBottomBorder = oldShowBottomBorder;
         }
     }
 

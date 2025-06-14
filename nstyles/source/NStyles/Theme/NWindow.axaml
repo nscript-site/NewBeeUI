@@ -80,7 +80,8 @@
                                     IsVisible="{TemplateBinding CanMaximize}">
                               <PathIcon x:Name="MaximizeIcon" Data="{x:Static icons:Icons.WindowMaximize}" />
                             </Button>
-                            <Button Name="PART_CloseButton" Classes="Basic WindowControlsButton Close">
+                            <Button Name="PART_CloseButton" Classes="Basic WindowControlsButton Close" 
+                                    IsVisible="{TemplateBinding CanClose}">
                               <PathIcon Data="{x:Static icons:Icons.WindowClose}" />
                             </Button>
                           </StackPanel>

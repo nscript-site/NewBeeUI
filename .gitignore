@@ -217,3 +217,4 @@ src/Web/Avalonia.Web.Blazor/Interop/Typescript/*.js
 /src/AvaloniaExtensionGenerator/nupkg
 
 dist
+*.slnf

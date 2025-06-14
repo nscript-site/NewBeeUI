@@ -340,6 +340,14 @@
               </ns:TabHeaderList>
             </Border>
 
+
+            <Border>
+              <ns:TabHeaderList TabStripPlacement="Left">
+                <TabItem Header="Tab1">Content in tab1</TabItem>
+                <TabItem Header="Tab2">Content in tab2</TabItem>
+              </ns:TabHeaderList>
+            </Border>
+
             <TabStrip>
               <TabItem Header="Tab1">Content in tab1</TabItem>
               <TabItem Header="Tab2">Content in tab2</TabItem>
