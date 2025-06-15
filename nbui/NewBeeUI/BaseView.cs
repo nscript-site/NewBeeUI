@@ -1,4 +1,6 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia.Animation;
+using Avalonia.Animation.Easings;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
@@ -153,11 +155,53 @@ public abstract class BaseView : MvuView
         return new PathIcon().Data(g);
     }
 
-    protected Grid Grid(string? rows = null, string? cols = null)
+    protected Grid Grid(string? rows = null, string? cols = null, Control?[]? controls = null)
     {
         var g = new Grid();
         if (rows != null) g.Rows(rows);
         if (cols != null) g.Cols(cols);
+
+        if(controls != null)
+        {
+            foreach (var c in controls)
+            {
+                if (c == null) continue;
+                g.Children.Add(c);
+            }
+        }
+
+        return g;
+    }
+
+    protected Grid HGrid(string? cols, Control?[] controls)
+    {
+        var g = new Grid();
+        if (cols != null) g.Cols(cols);
+        int idx = 0;
+        foreach (var c in controls)
+        {
+            if (c == null) continue;
+
+            c.Col(idx);
+            g.Children.Add(c);
+            idx++;
+        }
+        return g;
+    }
+
+    protected Grid VGrid(string? rows, Control?[] controls)
+    {
+        var g = new Grid();
+        if (rows != null) g.Rows(rows);
+        int idx = 0;
+        foreach (var c in controls)
+        {
+            if (c == null) continue;
+
+            c.Row(idx);
+            g.Children.Add(c);
+            idx++;
+        }
         return g;
     }
 
@@ -511,4 +555,74 @@ public static class BaseViewExtensions
 
         return null;
     }
+
+    #region 简化动作回调
+
+    public static T WhenLoaded<T>(this T ctrl, Action<T> action) where T : Control
+    {
+        ctrl.OnLoaded((Avalonia.Interactivity.RoutedEventArgs _) => action(ctrl));
+        return ctrl;
+    }
+
+    public static T WhenClick<T>(this T ctrl, Action<T> action) where T : Control
+    {
+        ctrl.OnTapped(_ => action(ctrl));
+        return ctrl;
+    }
+
+    public static T WhenDoubleClick<T>(this T ctrl, Action<T> action) where T : Control
+    {
+        ctrl.OnDoubleTapped(_ => action(ctrl));
+        return ctrl;
+    }
+
+    #endregion
+
+
+    #region 动画
+
+    public static T Opacity<T>(this T ctrl, double duration, double from, double to) where T : Visual
+    {
+        ctrl.Animate<double>(Visual.OpacityProperty, from, to, TimeSpan.FromSeconds(duration));
+        return ctrl;
+    }
+
+    public static T Transform<T>(this T ctrl, double duration, Transform from, Transform to) where T : Visual
+    {
+        ctrl.Animate<Transform>(Visual.RenderTransformProperty, from, to, TimeSpan.FromSeconds(duration));
+        return ctrl;
+    }
+
+    public static T Move<T>(this T ctrl, double duration, double fromX, double fromY, double toX, double toY) where T : Visual
+    {
+        if(fromX != toX)
+            ctrl.Animate<double>(TranslateTransform.XProperty, fromX, toX, TimeSpan.FromSeconds(duration));
+    
+        if(fromY != toY)
+            ctrl.Animate<double>(TranslateTransform.YProperty, fromY, toY, TimeSpan.FromSeconds(duration));
+        return ctrl;
+    }
+
+    public static T Rotate<T>(this T ctrl, double duration, double fromAngle, double toAngle) where T : Visual
+    {
+        ctrl.Animate<double>(RotateTransform.AngleProperty, fromAngle, toAngle, TimeSpan.FromSeconds(duration));
+        return ctrl;
+    }
+
+    public static T Scale<T>(this T ctrl, double duration, double fromScale, double toScale) where T : Visual
+    {
+        return ctrl.Scale(duration, fromScale, fromScale, toScale, toScale);
+    }
+
+    public static T Scale<T>(this T ctrl, double duration, double fromScaleX, double fromScaleY, double toScaleX, double toScaleY) where T : Visual
+    {
+        if (fromScaleX != toScaleX)
+            ctrl.Animate<double>(ScaleTransform.ScaleXProperty, fromScaleX, toScaleX, TimeSpan.FromSeconds(duration));
+
+        if (fromScaleY != toScaleY)
+            ctrl.Animate<double>(ScaleTransform.ScaleYProperty, fromScaleY, toScaleY, TimeSpan.FromSeconds(duration));
+        return ctrl;
+    }
+
+    #endregion
 }

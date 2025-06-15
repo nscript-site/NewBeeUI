@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NewBeeUI.Demo.Views;
+﻿namespace NewBeeUI.Demo.Views;
 
 public class HelloView : BaseView
 {
@@ -14,7 +8,7 @@ public class HelloView : BaseView
     {
         return VStack([
                 TextBlock().Align(0).Text(() => $"Click {count} times"),
-                TextButton("Hello").OnClick(_=>{
+                TextButton("Hello").WhenClick(_=>{
                     count++;
                     this.UpdateState();
                 })

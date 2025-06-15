@@ -4,10 +4,15 @@ NewBeeUI(NB UI，又叫菜鸟UI) 是基于 Avalonia 的 mvu gui 库，它专门�
 
 设计原则：
 
-- 支持 MVU 模式
+- 支持 MVU 模式（准确的说，是 VU 模式，M是可选的）
 - 支持 NativeAOT
 - 支持跨平台
 - 尽可能轻量、简单
+
+取名 NewBeeUI/牛逼UI，顾名思义， 是两个意思：
+
+- 一个是菜鸟、新手的意思，对新人极友好，只需要知道极少的知识，就可以开发一般应用了。
+- 一个是牛逼的意思，方便组合和扩展，对有经验的人来说，也很方便。
 
 相关库：
 
@@ -100,7 +105,7 @@ public List<RoutedViewBuilder> GetMenuItems()
 
 ### 观察机制
 
-默认情况下，UpdateState 只更新当前 view 的状态。可通过 Observe 方法，实现不同 view 之间的级联状态更新。当 A Observe B 时，如果 B 调用了 UpdateState 方法，也会触发 A 调用 UpdateState 放大。
+默认情况下，UpdateState 只更新当前 view 的状态。可通过 Observe 方法，实现不同 view 之间的级联状态更新。当 A Observe B 时，如果 B 调用了 UpdateState 方法，也会触发 A 调用 UpdateState。
 
 循环绑定也没关系，内部会自动处理，保障 UpdateState 触发时，调用链中的相关 view 只调用一次 UpdateState 方法。
 

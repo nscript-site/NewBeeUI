@@ -13,8 +13,7 @@ public class ButtonsView : BaseView
     protected override object Build()
     {
         return Grid(rows: "*,60").Children([
-                VStack(0, 0).Children([TextButton("返回").OnClick(_=>{
-                        Router?.GoBack(); }),
+                VStack(0, 0).Children([TextButton("返回").OnClick(_=>{ Router?.GoBack(); }),
                     TextBlock("Hello World!").Align(0, 0),
                     new ToggleSwitch(),
                     IconButton(SearchIcon.Instance),

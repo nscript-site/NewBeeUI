@@ -102,7 +102,7 @@ public static class ControlAnimationHelper
         }.RunAsync(control);
     }
 
-    public static CancellationTokenSource Animate<T>(this Animatable control, AvaloniaProperty Property, T from, T to, TimeSpan duration, ulong count = 1)
+    public static CancellationTokenSource Animate<T>(this Animatable control, AvaloniaProperty Property, T from, T to, TimeSpan duration, ulong count = 1, Easing? easing = null)
     {
         var tokensource = new CancellationTokenSource();
         
@@ -110,7 +110,7 @@ public static class ControlAnimationHelper
         {
             Duration = duration,
             FillMode = FillMode.Forward,
-            Easing = new CubicEaseInOut(),
+            Easing = easing ?? new CubicEaseInOut(),
             IterationCount = new IterationCount(count),
             PlaybackDirection = PlaybackDirection.Normal,
             Children =
@@ -131,7 +131,7 @@ public static class ControlAnimationHelper
         return tokensource;
     }
 
-    public static CancellationTokenSource Animate<T>(this Animatable control, AvaloniaProperty Property, T from, T to)
+    public static CancellationTokenSource Animate<T>(this Animatable control, AvaloniaProperty Property, T from, T to, Easing? easing = null)
     {
         var tokensource = new CancellationTokenSource();
         
@@ -139,7 +139,7 @@ public static class ControlAnimationHelper
         {
             Duration = TimeSpan.FromMilliseconds(500),
             FillMode = FillMode.Forward,
-            Easing = new CubicEaseInOut(),
+            Easing = easing ?? new CubicEaseInOut(),
             IterationCount = new IterationCount(1),
             PlaybackDirection = PlaybackDirection.Normal,
             Children =

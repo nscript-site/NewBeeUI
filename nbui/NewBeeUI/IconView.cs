@@ -45,7 +45,7 @@ public class IconView : BaseView
 
         if (_onClick_Action != null)
         {
-            button.OnClick(e => _onClick_Action(this));
+            button.OnClick((Avalonia.Interactivity.RoutedEventArgs e) => _onClick_Action(this));
         }
 
         return button;
