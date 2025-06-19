@@ -1,15 +1,8 @@
-﻿using Avalonia.Animation;
-using Avalonia.Animation.Easings;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Controls.Primitives;
-using Avalonia.Controls.Templates;
+﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
-using Avalonia.Markup.Declarative;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Threading;
-using HarfBuzzSharp;
-using NStyles;
 using NStyles.Controls;
 using System.Windows.Input;
 
@@ -110,6 +103,14 @@ public abstract class BaseView : MvuView
         return button;
     }
 
+    protected MenuItem Menu(string txt, StreamGeometry? g, Action? action)
+    {
+        var menu = new MenuItem().Header(txt);
+        if (g != null) menu.Icon = new PathIcon().Data(g);
+        if (action != null) menu.OnClick(_ => { action(); });
+        return menu;
+    }
+
     private static Action<Button>? GetSetTooltipPosition(ToolTipPosition toolTipPosition)
     {
         return toolTipPosition switch
@@ -180,10 +181,11 @@ public abstract class BaseView : MvuView
         int idx = 0;
         foreach (var c in controls)
         {
-            if (c == null) continue;
-
-            c.Col(idx);
-            g.Children.Add(c);
+            if (c != null)
+            {
+                c.Col(idx);
+                g.Children.Add(c);
+            }
             idx++;
         }
         return g;
@@ -196,10 +198,11 @@ public abstract class BaseView : MvuView
         int idx = 0;
         foreach (var c in controls)
         {
-            if (c == null) continue;
-
-            c.Row(idx);
-            g.Children.Add(c);
+            if (c != null)
+            {
+                c.Row(idx);
+                g.Children.Add(c);
+            }
             idx++;
         }
         return g;
@@ -489,10 +492,53 @@ public static class BaseViewExtensions
         return builder;
     }
 
+    public static double Clamp(this double val, double min, double max)
+    {
+        val = Math.Min(max, val);
+        val = Math.Max(min, val);
+        return val;
+    }
+
+    public static float Clamp(this float val, float min, float max)
+    {
+        val = Math.Min(max, val);
+        val = Math.Max(min, val);
+        return val;
+    }
+
+    public static int Clamp(this int val, int min, int max)
+    {
+        val = Math.Min(max, val);
+        val = Math.Max(min, val);
+        return val;
+    }
+
     public static T TryChild<T>(this T control, Control? value) where T : Decorator
     {
         if(value == null) return control;
         control.Child = value;
+        return control;
+    }
+
+    public static T OnClick<T>(this T control, Action action, RoutingStrategies? routes = null) where T : Button
+    {
+        return control.OnClick(_ =>
+        {
+            action();
+        }, routes);
+    }
+
+    public static T? AppendTo<T>(this T? control, IList<T> list) where T : Control
+    {
+        if (control == null) return control;
+
+        list.Add(control);
+        return control;
+    }
+
+    public static T AppendWithTo<T,TItem2>(this T control, TItem2 item2, IList<Tuple<T,TItem2>> list) where T : Control
+    {
+        list.Add(new Tuple<T,TItem2>(control, item2));
         return control;
     }
 

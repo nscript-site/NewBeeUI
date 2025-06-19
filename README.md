@@ -123,12 +123,64 @@ public static TViewModel SetState<TViewModel>(this TViewModel targetView, Action
 
 ### 一些简化写法
 
+#### - Alignment 的简化
+
 通过  Align 扩展方法，简化对 HorizontalAlignment 和 VerticalAlignment 的设置，自动将 int? 转换为 HorizontalAlignment 或 VerticalAlignment。对该值的约定如下：
 
 - <0: 近 (Left/Top)
 - 0: 居中 (Center)
 - \>0: 远 (Right/Bottom)
 - null: Stretch
+
+例如：
+
+```csharp
+TextBlock("XXX").Align(-1,0),
+```
+
+#### - Grid 的简化
+
+BaseView 提供 HGrid 和 VGrid 两个方法，可以快速创建单行水平或单列垂直的 Grid 布局，每个元素不用指定 Row 或 Col，将自动根据它的位置指定对应的 Row 或 Col。元素也可以为 null。例如：
+
+```csharp
+HGrid("100,*,300",[
+    TextBlock("AAA"),
+    null,
+    TextBlock("CCC"),
+]),
+```
+
+#### - Stack 的简化
+
+BaseView 提供了 HStack 和 VStack 两个方法，简化对 Stack Panel 的使用。
+
+#### - WhenXXXXX 扩展方法
+
+Avalonia 的很多事件的参数比较复杂，对于常用的事件，NewBeeUI 提供了 WhenXXXXX 扩展方法，简化对这些事件的使用。WhenXXXXX 中传入 Action<T> 中的 T，是当前控件：
+
+```csharp
+public static T WhenLoaded<T>(this T ctrl, Action<T> action) where T : Control
+{
+    ctrl.OnLoaded((Avalonia.Interactivity.RoutedEventArgs _) => action(ctrl));
+    return ctrl;
+}
+
+public static T WhenClick<T>(this T ctrl, Action<T> action) where T : Control
+{
+    ctrl.OnTapped(_ => action(ctrl));
+    return ctrl;
+}
+
+public static T WhenDoubleClick<T>(this T ctrl, Action<T> action) where T : Control
+{
+    ctrl.OnDoubleTapped(_ => action(ctrl));
+    return ctrl;
+}
+```
+
+#### - OnClick 的简化
+
+增加了以 Action 为参数的 OnClick 扩展方法，可以将无参函数直接传入，可以直接写 a.OnClick(foo) 而不需要写 a.OnClick(_ => foo()) 了。
 
 ## 路由机制
 

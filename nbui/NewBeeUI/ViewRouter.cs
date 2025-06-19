@@ -132,7 +132,7 @@ public class ViewRouter : BaseView
         var view = CurrentView?.View ?? EmptyView;
         if (view == null)
         {
-            view = new TextBlock().Text("Empty").Align(0, 0);
+            view = new TextBlock().Text("").Align(0, 0);
         }
         return view;
     }

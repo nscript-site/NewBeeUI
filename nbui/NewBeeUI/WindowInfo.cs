@@ -31,17 +31,18 @@ public class WindowInfo
 
     public Action<BaseView>? OnCreate { get; set; }
 
-    public void CloseWindow()
+    internal void CloseWindow()
     {
         Window?.Close();
         Window = null;
     }
 
-    public async Task ShowDialogAsync(BaseView content, BaseView? owner = null, string? newTitle = null)
+    internal async Task ShowDialogAsync(BaseView content, BaseView? owner = null, string? newTitle = null)
     {
         Window? desktopWindow = owner?.GetDesktopWindow() ?? content.GetDesktopMainWindow();
 
         var newWin = CreateNWindow(content, newTitle);
+        Window = newWin;
 
         if (desktopWindow == null)
         {
@@ -56,7 +57,6 @@ public class WindowInfo
         else
         {
             await newWin.ShowDialog(desktopWindow);
-            Window = null;
         }
     }
 
