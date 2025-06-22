@@ -4,6 +4,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Threading;
 using NStyles.Controls;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace NewBeeUI;
@@ -256,6 +257,32 @@ public abstract class BaseView : MvuView
     protected Panel VLine()
     {
         return new Panel().Width(1).VerticalAlignment(VerticalAlignment.Stretch);
+    }
+
+    public void ShowLoading()
+    {
+        var hosts = this.OverlayHosts();
+        if (hosts == null) return;
+
+        this.IsEnabled = false;
+        var Loading = new Loading().Align(0, 0);
+        hosts.Add(Loading);
+    }
+
+    public void RemoveLoading()
+    {
+        if(this.IsEnabled == false) this.IsEnabled = true;
+
+        var hosts = this.OverlayHosts();
+        if (hosts == null || hosts.Count == 0) return;
+        for(int i = hosts.Count - 1; i >= 0; i--)
+        {
+            var ctrl = hosts[i];
+            if (ctrl is Loading)
+            {
+                hosts.RemoveAt(i);
+            }
+        }
     }
 }
 

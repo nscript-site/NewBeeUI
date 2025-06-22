@@ -26,6 +26,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="NStyles.MeterialIcons" Version="11.3.0.1" />
     <PackageReference Include="nstyles" Version="9.0.1.15" />
     <PackageReference Include="Avalonia" Version="11.3.0" />
     <PackageReference Include="navalonia.markup" Version="11.3.0-beta05" />
