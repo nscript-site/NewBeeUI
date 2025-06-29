@@ -192,6 +192,25 @@
       </ns:GlassCard>
 
       <ns:GlassCard>
+        <ns:GroupBox Header="Slider">
+          <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Slider Width="200"></Slider>
+          </StackPanel>
+          <!--<StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+            <Slider Width="200"></Slider>
+            <Slider MinWidth="250"
+                    MaxWidth="400"
+                    HorizontalAlignment="Left"
+                    IsSnapToTickEnabled="True"
+                    Maximum="100"
+                    Minimum="0"
+                    TickFrequency="1"
+                    Value="30" />
+          </StackPanel>-->
+        </ns:GroupBox>
+      </ns:GlassCard>
+
+      <ns:GlassCard>
         <ns:GroupBox Header="RadioButton">
           <RadioButton Content="RadioButton 1" GroupName="Group1" />
         </ns:GroupBox>

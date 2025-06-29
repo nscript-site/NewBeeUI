@@ -13,6 +13,7 @@ public class ToastView : BaseView
     protected override object Build()
     {
         return new Border().Align(0, 0).CornerRadius(4)
+                    .Margin(80)
                     .MaxWidth(600)
                     .BorderBrush(R("SukiMenuBorderBrush"))
                     .BorderThickness(1)
@@ -34,9 +35,11 @@ public class ToastView : BaseView
 
     System.Timers.Timer? toastTimer;
 
-    public void ShowToast(string message, double seconds = 2, double opacity = 1, bool compactMode = false)
+    public void ShowToast(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1)
     {
         if (border == null || toast == null || String.IsNullOrEmpty(message)) return;
+
+        this.Align(hAlign, vAlign);
 
         if (toastTimer != null)
         {

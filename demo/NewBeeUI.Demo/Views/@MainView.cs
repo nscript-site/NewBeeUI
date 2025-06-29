@@ -114,7 +114,8 @@ public class MainView : BaseView, IWindowView
             new RoutedViewBuilder("Windows", () => new WindowsView()),
             new RoutedViewBuilder("Test", () => new TestView()),
             new RoutedViewBuilder("Overlay", new OverlayView()),
-            new RoutedViewBuilder("Animate", ()=> new AnimateView()),
+            //new RoutedViewBuilder("Animate", ()=> new AnimateView()),
+            new RoutedViewBuilder("Slider", ()=> new SliderView()),
         ];
     }
 }

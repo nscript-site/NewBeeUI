@@ -2,11 +2,13 @@
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:system="clr-namespace:System;assembly=netstandard">
+  
   <StyleInclude Source="avares://NStyles/Theme/PathIconStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/RadioButtonStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/ToggleButtonStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/ToggleSwitchStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/CheckBoxStyles.axaml" />
+  <StyleInclude Source="avares://NStyles/Theme/SliderStyles.axaml" />
   <Styles.Resources>
     <ResourceDictionary>
 
@@ -24,6 +26,7 @@
       <Easing x:Key="MenuEasing">CircularEaseOut</Easing>
       
       <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://NStyles/Theme/Base.axaml" />
         <ResourceInclude Source="avares://NStyles/Theme/NWindow.axaml" />
         <ResourceInclude Source="avares://NStyles/Theme/Button.axaml" />
         <ResourceInclude Source="avares://NStyles/Theme/PathIcon.axaml" />
@@ -36,6 +39,8 @@
         <ResourceInclude Source="avares://NStyles/Theme/TabControl.axaml" />
         <ResourceInclude Source="avares://NStyles/Theme/TabItem.axaml" />
         <ResourceInclude Source="avares://NStyles/Theme/TabHeaderList.axaml" />
+        <ResourceInclude Source="avares://NStyles/Theme/Slider.axaml" />
+        <ResourceInclude Source="avares://NStyles/Theme/RepeatButton.axaml" />
       </ResourceDictionary.MergedDictionaries>
 
     </ResourceDictionary>

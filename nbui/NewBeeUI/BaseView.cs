@@ -41,9 +41,9 @@ public abstract class BaseView : MvuView
         Dispatcher.UIThread.InvokeAsync(action);
     }
 
-    protected Button TextButton(string text)
+    protected Button TextButton(string text, double? fontSize = null)
     {
-        return new Button() { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center }.Text(text);
+        return new Button() { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center }.Text(text, fontSize);
     }
 
     protected CheckBox CheckBox(string? text = null)
@@ -157,6 +157,20 @@ public abstract class BaseView : MvuView
         return new PathIcon().Data(g);
     }
 
+    protected Panel Panel(params Control?[] controls)
+    {
+        var panel = new Panel();
+        if (controls != null)
+        {
+            foreach (var c in controls)
+            {
+                if (c == null) continue;
+                panel.Children.Add(c);
+            }
+        }
+        return panel;
+    }
+
     protected Grid Grid(string? rows = null, string? cols = null, Control?[]? controls = null)
     {
         var g = new Grid();
@@ -214,6 +228,13 @@ public abstract class BaseView : MvuView
         var stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10 };
         stack.Children.AddRange(controls);
         return stack;
+    }
+
+    protected Border Border(Control? control)
+    {
+        var border = new Border();
+        if (control != null) border.Child = control;
+        return border;
     }
 
     protected StackPanel HStack(int? hAlign = -1, int? vAlign = 0)
@@ -335,10 +356,18 @@ public static class BaseViewExtensions
         return ctrl;
     }
 
-    public static TButton Text<TButton>(this TButton button, string text) where TButton : Button
+    public static TButton Text<TButton>(this TButton button, string text, double? fontSize = null) where TButton : Button
     {
-        button.Content(new TextBlock().Text(text));
+        var tb = new TextBlock().Text(text);
+        if(fontSize != null) tb.FontSize = fontSize.Value;
+        button.Content(tb);
         return button;
+    }
+
+    public static T RunInBackground<T>(this T ctrl, Action action) where T : Control
+    {
+        Task.Run(action);
+        return ctrl;
     }
 
     public static T OnKey<T>(this T ctrl, Key key, Action action) where T : Control

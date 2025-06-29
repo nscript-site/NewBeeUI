@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>11.3.0.17</Version>
+    <Version>11.3.0.22</Version>
     <RepositoryUrl>https://github.com/nscript-site/nscript-solution</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageId>nstyles</PackageId>
@@ -57,6 +57,9 @@
     <None Update="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Theme\RepeatButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </None>
     <None Update="Theme\TextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
