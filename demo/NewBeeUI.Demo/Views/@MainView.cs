@@ -116,6 +116,7 @@ public class MainView : BaseView, IWindowView
             new RoutedViewBuilder("Overlay", new OverlayView()),
             //new RoutedViewBuilder("Animate", ()=> new AnimateView()),
             new RoutedViewBuilder("Slider", ()=> new SliderView()),
+            new RoutedViewBuilder("Menu", ()=> new MenuView()),
         ];
     }
 }

@@ -18,6 +18,7 @@
                 <Border Name="root"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
                         ClipToBounds="True">
                     <Panel>
                         <DockPanel Margin="5,10">

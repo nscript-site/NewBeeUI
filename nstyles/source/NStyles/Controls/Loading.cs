@@ -121,7 +121,7 @@ public class Loading : Control
             // 动画进度
             float t = (float)(AnimationSeconds * 10); // 控制速度
             int activeIndex = (int)(t % dotCount);
-
+            
             for (int i = 0; i < dotCount; i++)
             {
                 // 计算每个点的角度
@@ -129,12 +129,9 @@ public class Loading : Control
                 float x = center.X + ringRadius * (float)Math.Cos(angle);
                 float y = center.Y + ringRadius * (float)Math.Sin(angle);
 
-                // 亮度渐变：当前点最亮，前后点次亮，其余更暗
-                float alpha = 0.3f;
-                if (i == activeIndex)
-                    alpha = 1.0f;
-                else if ((i + 1) % dotCount == activeIndex || (i - 1 + dotCount) % dotCount == activeIndex)
-                    alpha = 0.6f;
+                float weight = (i - activeIndex + dotCount)%dotCount;
+                weight = 1 - weight;
+                float alpha = 0.1f + weight * 0.9f;
 
                 using var paint = new SKPaint
                 {

@@ -6,13 +6,15 @@ public struct ViewRouteUpdateEvent
     public RoutedView? New { get; set; }
 }
 
+/// <summary>
+/// 路由事件的触发顺序：
+///   oldView.OnViewLeave -> OnRouteUpdate -> newView.OnViewEnter
+/// </summary>
 public class ViewRouter : BaseView
 {
     internal protected Dictionary<string, IRoutedViewBuilder> ViewBuilders { get; } = new Dictionary<string, IRoutedViewBuilder>();
 
     public Action<ViewRouteUpdateEvent>? OnRouteUpdate { get; set; }
-
-    public Action<RoutedView>? OnViewLeave { get; set; }
 
     public RoutedView? CurrentView { get; private set; }
 
@@ -101,9 +103,11 @@ public class ViewRouter : BaseView
             }
         }
 
-        if (CurrentView != null) OnViewLeave?.Invoke(CurrentView);
-
+        CurrentView?.OnViewLeave?.Invoke(CurrentView);
+        var oldView = CurrentView;
         CurrentView = errView;
+        OnRouteUpdate?.Invoke(new ViewRouteUpdateEvent { Old = oldView, New = CurrentView });
+        CurrentView?.OnViewEnter?.Invoke(CurrentView);
 
         if (this.IsLoaded == true)
             this.Reload();
@@ -113,11 +117,15 @@ public class ViewRouter : BaseView
     {
         var oldView = CurrentView;
 
-        if(CurrentView != null) OnViewLeave?.Invoke(CurrentView);
-        
+        CurrentView?.OnViewLeave?.Invoke(CurrentView);
+
         CurrentView = builder.Build();
+
         CurrentViewBuilder = builder;
         OnRouteUpdate?.Invoke(new ViewRouteUpdateEvent { Old = oldView, New = CurrentView });
+
+        CurrentView?.OnViewEnter?.Invoke(CurrentView);
+
         if (this.IsLoaded == true)
             this.Reload();
     }

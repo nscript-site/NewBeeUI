@@ -4,7 +4,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Threading;
 using NStyles.Controls;
-using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace NewBeeUI;
@@ -105,6 +105,14 @@ public abstract class BaseView : MvuView
     }
 
     protected MenuItem Menu(string txt, StreamGeometry? g, Action? action)
+    {
+        var menu = new MenuItem().Header(txt);
+        if (g != null) menu.Icon = new PathIcon().Data(g);
+        if (action != null) menu.OnClick(_ => { action(); });
+        return menu;
+    }
+
+    protected MenuItem MenuF(string txt, Func<StreamGeometry?> g, Action? action)
     {
         var menu = new MenuItem().Header(txt);
         if (g != null) menu.Icon = new PathIcon().Data(g);
@@ -638,6 +646,61 @@ public static class BaseViewExtensions
         }
 
         return window.Hosts;
+    }
+
+    /// <summary>
+    ///   当  BaseView 为 null 时，直接执行操作。不为空时，如果执行超时，在 BaseView 上显示加载状态。
+    /// </summary>
+    /// <param name="owner"></param>
+    /// <param name="action"></param>
+    /// <param name="minDelayMilliseconds"></param>
+    public static T? RunWithDelayedLoading<T>(this T? owner, Action action, int minDelayMilliseconds = 200, bool runAtBackground = false) where T:BaseView
+    {
+        if(runAtBackground == false)
+            owner?.RunWithDelayedLoadingCore(action, minDelayMilliseconds);
+        else
+            Task.Run(() => owner?.RunWithDelayedLoadingCore(action, minDelayMilliseconds));
+        return owner;
+    }
+
+    private static void RunWithDelayedLoadingCore<T>(this T? owner, Action action, int minDelayMilliseconds = 200) where T : BaseView
+    {
+        if (owner == null)
+        {
+            action();
+            return;
+        }
+
+        bool focused = owner.IsFocused;
+
+        bool isLoading = true;
+
+        try
+        {
+            // 过少许时间后再显示
+            Task.Delay(minDelayMilliseconds).ContinueWith(_ =>
+            {
+                if (isLoading == false) return;
+
+                Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    if (isLoading == false) return;
+                    owner.ShowLoading();
+                });
+            });
+
+            action();
+        }
+        finally
+        {
+            isLoading = false;
+
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                owner.RemoveLoading();
+                if(focused == true) owner.Focus();          // 不 focus 会失去焦点
+            });
+        }
     }
 
     public static Window? GetDesktopWindow(this Control ctrl)

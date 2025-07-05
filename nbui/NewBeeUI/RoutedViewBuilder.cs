@@ -11,6 +11,10 @@ public class RoutedView
     public string Route { get; internal set; }
     public Control View { get; internal set; }
 
+    public Action<RoutedView>? OnViewLeave { get; set; } = null;
+
+    public Action<RoutedView>? OnViewEnter { get; set; } = null;
+
     public RoutedView(string name, string path, Control view)
     {
         Name = name;
@@ -31,10 +35,14 @@ public class RoutedViewBuilder : IRoutedViewBuilder
 
     public PathIcon? Icon { get; set; } = null;
 
+    public Action<RoutedView>? OnViewLeave { get; set; } = null;
+
+    public Action<RoutedView>? OnViewEnter { get; set; } = null;
+
     public RoutedView Build()
     {
         var view = GetOrCreateView();
-        return new RoutedView(Name, Route, view);
+        return new RoutedView(Name, Route, view) { OnViewEnter = OnViewEnter, OnViewLeave = OnViewLeave };
     }
 
     public bool IsEmpty()
