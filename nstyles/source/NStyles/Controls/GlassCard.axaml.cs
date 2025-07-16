@@ -36,7 +36,7 @@ public class GlassCard : ContentControl
     
  
     public static readonly StyledProperty<bool> IsAnimatedProperty =
-        AvaloniaProperty.Register<GlassCard, bool>(nameof(IsAnimated), true);
+        AvaloniaProperty.Register<GlassCard, bool>(nameof(IsAnimated), false);
 
     public bool IsAnimated
     {

@@ -8,30 +8,14 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="RootPanel" Opacity="0">
-                    <Border Name="PART_BorderCard" RenderTransformOrigin="50%,50%"
+                    <Border Name="PART_BorderCard" 
+                            RenderTransformOrigin="50%,50%"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             ClipToBounds="{TemplateBinding ClipToBounds}"
                             CornerRadius="{TemplateBinding CornerRadius}"
                             Opacity="{DynamicResource GlassOpacity}">
-                        <Border.Transitions>
-                            <Transitions>
-                                <DoubleTransition Property="Width"
-                                                  Duration="0:0:0.5"
-                                                  Easing="QuadraticEaseOut" />
-                                <DoubleTransition Property="Height"
-                                                  Duration="0:0:0.5"
-                                                  Easing="QuadraticEaseOut" />
-                            </Transitions>
-                        </Border.Transitions>
-                        <Border.Transitions>
-                            <Transitions>
-                                <!-- <BrushTransition Property="Background" Duration="0:0:0.15" /> -->
-                                <BrushTransition Property="BorderBrush" Duration="0:0:0.15" />
-                                <DoubleTransition Property="Opacity" Duration="0:0:0.15" />
-                            </Transitions>
-                        </Border.Transitions>
                     </Border>
                     <Border Name="PART_ClipBorder"
                             Background="{DynamicResource SukiPrimaryColor0}"
@@ -39,11 +23,6 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             ClipToBounds="{TemplateBinding ClipToBounds}"
                             CornerRadius="{TemplateBinding CornerRadius}">
-                        <Border.Transitions>
-                            <Transitions>
-                                <BrushTransition Property="BorderBrush" Duration="0:0:0.15" />
-                            </Transitions>
-                        </Border.Transitions>
                         <ContentPresenter Name="PART_CP" Margin="{TemplateBinding Padding}"
                                           Content="{TemplateBinding Content}" />
                     </Border>

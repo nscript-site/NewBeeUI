@@ -23,13 +23,20 @@ public class MainView : BaseView, IWindowView
             WindowWidth = 800,
             WindowHeight = 600,
             IsWindowAnimationEnable = true,
-            Subtitle = new TextBlock().Ref(out SubtitleTextBlock)!
-                .FontSize(12).Align(-1, 0),
+            Subtitle = BuildSubtitle(),
             RightWindowsBar = this.HStack([
                 IconButton(MessageSettingsOutlineIcon.Instance, "设置", ToolTipPosition.Top)
                     .Width(24).Height(24).OnClick(_=>{ new SettingView().ShowDialog("设置"); })
             ])
         };
+    }
+
+    protected Control BuildSubtitle()
+    {
+        var tb = new TextBlock().Ref(out SubtitleTextBlock)!.TextTrimming(TextTrimming.CharacterEllipsis)
+                .FontSize(12).Align(null, 0);
+        var grid = HGrid("*", [ tb ]).ClipToBounds(true);
+        return grid;
     }
 
     #endregion
@@ -59,7 +66,7 @@ public class MainView : BaseView, IWindowView
         {
             if (SubtitleTextBlock != null)
             {
-                SubtitleTextBlock.Text = $"{e.New?.Name ?? "No Title"}";
+                SubtitleTextBlock.Text = $"{e.New?.Name ?? "No Title"} - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
             }
         };
         return r;
@@ -117,6 +124,8 @@ public class MainView : BaseView, IWindowView
             //new RoutedViewBuilder("Animate", ()=> new AnimateView()),
             new RoutedViewBuilder("Slider", ()=> new SliderView()),
             new RoutedViewBuilder("Menu", ()=> new MenuView()),
+            new RoutedViewBuilder("Flayout", ()=>new FlyoutView()),
+            new RoutedViewBuilder("Styles", ()=>new StyleView())
         ];
     }
 }

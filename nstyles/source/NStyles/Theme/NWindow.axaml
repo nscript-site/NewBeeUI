@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:icons="clr-namespace:NStyles"
+                     xmlns:local="clr-namespace:NStyles.Converters"
                     xmlns:nc="https://github.com/nscript-site">
   <ControlTheme x:Key="NWindowTheme" TargetType="nc:NWindow">
     <Setter Property="Margin" Value="100" />
@@ -85,21 +86,23 @@
                               <PathIcon Data="{x:Static icons:Icons.WindowClose}" />
                             </Button>
                           </StackPanel>
-                          <StackPanel VerticalAlignment="Center"
+
+                          <StackPanel x:Name="_SubtitleStack" VerticalAlignment="Center"
                                       IsHitTestVisible="False"
                                       Orientation="Horizontal"
                                       Spacing="10">
-                            <ContentPresenter HorizontalAlignment="Left"
+                            <ContentPresenter x:Name="_LogoPresenter" HorizontalAlignment="Left"
                                               Content="{TemplateBinding LogoContent}"
                                               IsHitTestVisible="False" />
-                            <TextBlock VerticalAlignment="Center"
+                            <TextBlock  x:Name="_TitleText" VerticalAlignment="Center"
                                        FontSize="{TemplateBinding TitleFontSize}"
                                        FontWeight="{TemplateBinding TitleFontWeight}"
                                        IsHitTestVisible="False"
                                        Text="{TemplateBinding Title}" />
-                            <ContentPresenter HorizontalAlignment="Left"
-                                              Content="{TemplateBinding SubTitleContent}"
-                                              IsHitTestVisible="False" />
+                            <ContentPresenter x:Name="_SubtitleContent" HorizontalAlignment="Left"
+                                                Content="{TemplateBinding SubTitleContent}"
+                                                IsHitTestVisible="False">
+                            </ContentPresenter>
                           </StackPanel>
                         </DockPanel>
                       </Panel>

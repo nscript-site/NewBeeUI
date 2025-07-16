@@ -9,6 +9,7 @@
   <StyleInclude Source="avares://NStyles/Theme/ToggleSwitchStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/CheckBoxStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/SliderStyles.axaml" />
+  <StyleInclude Source="avares://NStyles/Theme/TextBoxStyles.axaml" />
   <Styles.Resources>
     <ResourceDictionary>
 
@@ -41,6 +42,9 @@
         <ResourceInclude Source="avares://NStyles/Theme/TabHeaderList.axaml" />
         <ResourceInclude Source="avares://NStyles/Theme/Slider.axaml" />
         <ResourceInclude Source="avares://NStyles/Theme/RepeatButton.axaml" />
+        <ResourceInclude Source="avares://NStyles/Theme/Menu.axaml" />
+        <ResourceInclude Source="avares://NStyles/Theme/MenuFlyoutPresenter.axaml" />
+        <ResourceInclude Source="avares://NStyles/Theme/FlyoutPresenter.axaml" />
       </ResourceDictionary.MergedDictionaries>
 
     </ResourceDictionary>

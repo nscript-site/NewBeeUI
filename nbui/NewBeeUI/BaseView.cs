@@ -1,7 +1,9 @@
 ﻿using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Styling;
 using Avalonia.Threading;
 using NStyles.Controls;
 using System.Threading.Tasks;
@@ -236,6 +238,13 @@ public abstract class BaseView : MvuView
         var stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10 };
         stack.Children.AddRange(controls);
         return stack;
+    }
+
+    protected WrapPanel WrapPanel(Control[] controls)
+    {
+        var wrap = new WrapPanel();
+        wrap.Children.AddRange(controls);
+        return wrap;
     }
 
     protected Border Border(Control? control)
@@ -648,6 +657,16 @@ public static class BaseViewExtensions
         return window.Hosts;
     }
 
+    public static T Flyout<T>(this T control, Control? flyoutContent, Action<Flyout>? onFlyout = null) where T : Button
+    {
+        if(flyoutContent == null) return control;
+
+        var flyout = new Flyout();
+        flyout.Content = flyoutContent;
+        onFlyout?.Invoke(flyout);
+        return control.Flyout(flyout);
+    }
+
     /// <summary>
     ///   当  BaseView 为 null 时，直接执行操作。不为空时，如果执行超时，在 BaseView 上显示加载状态。
     /// </summary>
@@ -719,6 +738,25 @@ public static class BaseViewExtensions
         }
 
         return null;
+    }
+
+    public static Style<TElement> Select<TElement>(this Style<TElement> style, Func<Selector, Selector> selector) where TElement : StyledElement
+    {
+        if(style.Selector != null)
+            style.Selector = selector(style.Selector);
+        else
+            style.Selector = selector(TypeSelector(null));
+
+        return style;
+        static Selector TypeSelector(Selector? s)
+        {
+            return s.OfType<TElement>();
+        }
+    }
+
+    public static T Scale<T>(this T control, double scale) where T : Visual
+    {
+        return control.RenderTransform(new ScaleTransform(scale, scale));
     }
 
     #region 简化动作回调

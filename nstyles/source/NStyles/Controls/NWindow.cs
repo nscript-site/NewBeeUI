@@ -7,6 +7,7 @@ using Avalonia.Collections;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using Avalonia;
+using Avalonia.Controls.Presenters;
 
 namespace NStyles.Controls;
 
@@ -278,12 +279,52 @@ public class NWindow : Window
             OnWindowStateChanged(windowState);
     }
 
+    protected override void OnSizeChanged(SizeChangedEventArgs e)
+    {
+        base.OnSizeChanged(e);
+        if(titleSubContent != null && titleStack != null)
+        {
+            double maxWidth = titleStack.Bounds.Width;
+            if (double.IsNaN(maxWidth)) return;
+            if(titleLogo != null)
+            {
+                double logWidth = titleLogo.Bounds.Width;
+                if(double.IsNaN(logWidth) == false)
+                {
+                    maxWidth -= logWidth + 10; // 10 is the margin between logo and title
+                }
+            }
+            if(titleText != null)
+            {
+                double titleWidth = titleText.Bounds.Width;
+                if (double.IsNaN(titleWidth) == false)
+                {
+                    maxWidth -= titleWidth + 10; // 10 is the margin between logo and title
+                }
+            }
+            maxWidth -= 20; // 20 is the margin between title and subtitle
+            maxWidth = Math.Max(maxWidth, 0);
+            titleSubContent.MaxWidth = maxWidth;
+        }
+    }
+
+    protected StackPanel? titleStack;
+    protected ContentPresenter? titleLogo;
+    protected TextBlock? titleText;
+    protected ContentPresenter? titleSubContent;
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
         OnWindowStateChanged(WindowState);
         try
         {
+            var ns = e.NameScope;
+            titleStack = ns.Find<StackPanel>("_SubtitleStack");
+            titleLogo = ns.Find<ContentPresenter>("_LogoPresenter");
+            titleText = ns.Find<TextBlock>("_TitleText");
+            titleSubContent = ns.Find<ContentPresenter>("_SubtitleContent");
+
             // Create handlers for buttons
             if (e.NameScope.Get<Button>("PART_MaximizeButton") is { } maximize)
             {
