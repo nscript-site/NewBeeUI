@@ -125,7 +125,8 @@ public class MainView : BaseView, IWindowView
             new RoutedViewBuilder("Slider", ()=> new SliderView()),
             new RoutedViewBuilder("Menu", ()=> new MenuView()),
             new RoutedViewBuilder("Flayout", ()=>new FlyoutView()),
-            new RoutedViewBuilder("Styles", ()=>new StyleView())
+            new RoutedViewBuilder("Styles", ()=>new StyleView()),
+            new RoutedViewBuilder("ComboBox", ()=>new ComboBoxView())
         ];
     }
 }

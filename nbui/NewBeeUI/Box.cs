@@ -11,26 +11,26 @@ public struct Box<T>
     private bool Unboxed = false;
 
     public T? Value { get; private set; }
-    public Func<T?>? ValueFactory { get; private set; }
+    public Func<T>? ValueFactory { get; private set; }
 
     public bool IsEmpty => Value == null && ValueFactory == null;
 
-    public Box(T? value)
+    public Box(T value)
     {
         Value = value;
     }
 
-    public Box(Func<T?> factory)
+    public Box(Func<T> factory)
     {
         ValueFactory = factory;
     }
 
-    public static implicit operator Box<T>(T? value)
+    public static implicit operator Box<T>(T value)
     {
         return new Box<T>(value);
     }
 
-    public static implicit operator Box<T>(Func<T?> value)
+    public static implicit operator Box<T>(Func<T> value)
     {
         return new Box<T>(value);
     }

@@ -86,7 +86,7 @@ public abstract class BaseView : MvuView
         return CreateIconButton(new PathIcon().Data(g), tooltip, scale, GetSetTooltipPosition(toolTipPosition));
     }
 
-    protected Button IconIconButton(Func<StreamGeometry> g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
+    protected Button IconButton(Func<StreamGeometry> g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
     {
         return CreateIconButton(new PathIcon().Data(g), tooltip, scale, GetSetTooltipPosition(toolTipPosition));
     }
@@ -287,14 +287,33 @@ public abstract class BaseView : MvuView
         return iconView;
     }
 
+    #region DynamicResource and Colors
+
     public static DynamicResourceExtension R(string key)
     {
         return new DynamicResourceExtension(key);
     }
 
-    protected Panel VLine()
+    public static DynamicResourceExtension R_PrimaryColor
     {
-        return new Panel().Width(1).VerticalAlignment(VerticalAlignment.Stretch);
+        get => new DynamicResourceExtension("SukiPrimaryColor");
+    }
+
+    public static DynamicResourceExtension R_TextColor
+    {
+        get => new DynamicResourceExtension("SukiText");
+    }
+
+    public static DynamicResourceExtension R_LightBorderBrush
+    {
+        get => new DynamicResourceExtension("SukiLightBorderBrush");
+    }
+
+    #endregion
+
+    protected Panel VLine(int width = 1)
+    {
+        return new Panel().Width(width).VerticalAlignment(VerticalAlignment.Stretch);
     }
 
     public void ShowLoading()
@@ -513,19 +532,19 @@ public static class BaseViewExtensions
         return container;
     }
 
-    public static TPanel Children<TPanel>(this TPanel container, params Box<Control>[] arrs) where TPanel : Panel
-    {
-        if (arrs == null) return container;
+    //public static TPanel Children<TPanel>(this TPanel container, params Box<Control>[] arrs) where TPanel : Panel
+    //{
+    //    if (arrs == null) return container;
 
-        foreach (var arr in arrs)
-        {
-            var ctrl = arr.Unbox();
-            if(ctrl != null)
-                container.Children.Add(ctrl);
-        }
+    //    foreach (var arr in arrs)
+    //    {
+    //        var ctrl = arr.Unbox();
+    //        if(ctrl != null)
+    //            container.Children.Add(ctrl);
+    //    }
 
-        return container;
-    }
+    //    return container;
+    //}
 
     public static Object? FirstItem(this SelectionChangedEventArgs e)
     {
@@ -757,6 +776,24 @@ public static class BaseViewExtensions
     public static T Scale<T>(this T control, double scale) where T : Visual
     {
         return control.RenderTransform(new ScaleTransform(scale, scale));
+    }
+
+    public static bool TryEquals<T>(this T a, T? b) where T : struct
+    {
+        if(b == null) return false;
+        return a.Equals(b.Value);
+    }
+
+    public static bool TryEquals<T>(this T a, T? b) where T : class
+    {
+        if (b == null) return false;
+        return a.Equals(b);
+    }
+
+    public static string? TryAddLeftContent(this string? content, string prefix)
+    {
+        if (content == null) return null;
+        return prefix + content;
     }
 
     #region 简化动作回调
