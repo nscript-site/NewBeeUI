@@ -18,7 +18,7 @@
 
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.0" />
-    <PackageReference Include="navalonia.markup" Version="11.3.0-beta05" />
+    <PackageReference Include="nmarkup" Version="11.3.0.1" />
     <PackageReference Include="NStyles.MeterialIcons" Version="11.3.0.1" />
   </ItemGroup>
 

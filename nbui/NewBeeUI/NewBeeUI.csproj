@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>11.3.0.14</Version>
+    <Version>11.3.0.16</Version>
     <RepositoryUrl>https://github.com/nscript-site/NewBeeUI</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageId>newbeeui</PackageId>
@@ -26,9 +26,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="nmarkup" Version="11.3.0.1" />
     <PackageReference Include="NStyles.MeterialIcons" Version="11.3.0.1" />
     <PackageReference Include="Avalonia" Version="11.3.0" />
-    <PackageReference Include="navalonia.markup" Version="11.3.0-beta05" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\nstyles\source\NStyles\NStyles.csproj" />
