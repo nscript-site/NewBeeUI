@@ -4,22 +4,16 @@
                      xmlns:local="clr-namespace:NStyles.Converters"
                     xmlns:nc="https://github.com/nscript-site">
   <ControlTheme x:Key="NWindowTheme" TargetType="nc:NWindow">
-    <Setter Property="Margin" Value="100" />
+    <Setter Property="Margin" Value="0" />
     <Setter Property="TransparencyLevelHint" Value="Transparent"></Setter>
     <Setter Property="SystemDecorations" Value="{OnPlatform Full, Linux=None, x:TypeArguments=SystemDecorations}" />
-
-    <Setter Property="ExtendClientAreaChromeHints" Value="NoChrome" />
-    <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="-1" />
-    <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
     <Setter Property="TextElement.Foreground" Value="{DynamicResource SukiText}" />
     <Setter Property="FlowDirection" Value="{DynamicResource FlowDirectionPrimary}" />
     <Setter Property="Template">
       <ControlTemplate>
-        <Border Margin="{TemplateBinding Margin}"
+        <Border Margin="{TemplateBinding Margin}" Background="{DynamicResource SukiWindowBackground}"
                 ClipToBounds="True"
-                CornerRadius="{OnPlatform '0',
-                                                  Linux='10',
-                                                  x:TypeArguments=CornerRadius}">
+                CornerRadius="{OnPlatform '0', Linux='10', x:TypeArguments=CornerRadius}">
           <VisualLayerManager Name="PART_VisualLayerManager" IsHitTestVisible="True">
             <VisualLayerManager.ChromeOverlayLayer>
               <!-- <nc:SukiHost /> -->
@@ -61,33 +55,26 @@
                             <ContentPresenter HorizontalAlignment="Right"
                                               Content="{TemplateBinding RightWindowTitleBarControls}"
                                               />
-                            <!--<ItemsControl ItemsSource="{TemplateBinding RightWindowTitleBarControls}">
-                              <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                  <StackPanel FlowDirection="{DynamicResource FlowDirectionOpposite}" Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                              </ItemsControl.ItemsPanel>
-                            </ItemsControl>-->
                             <Button Name="PART_MinimizeButton"
                                     VerticalContentAlignment="Bottom"
                                     Classes="Basic WindowControlsButton"
-                                    IsVisible="{TemplateBinding CanMinimize}">
+                                    IsVisible="{TemplateBinding ShouldShowMinimizeButton}">
                               <PathIcon Margin="0,0,0,4"
                                         VerticalAlignment="Bottom"
                                         Data="{x:Static icons:Icons.WindowMinimize}" />
                             </Button>
                             <Button Name="PART_MaximizeButton"
                                     Classes="Basic WindowControlsButton"
-                                    IsVisible="{TemplateBinding CanMaximize}">
+                                    IsVisible="{TemplateBinding ShouldShowMaximizeButton}">
                               <PathIcon x:Name="MaximizeIcon" Data="{x:Static icons:Icons.WindowMaximize}" />
                             </Button>
                             <Button Name="PART_CloseButton" Classes="Basic WindowControlsButton Close" 
-                                    IsVisible="{TemplateBinding CanClose}">
+                                    IsVisible="{TemplateBinding ShouldShowCloseButton}">
                               <PathIcon Data="{x:Static icons:Icons.WindowClose}" />
                             </Button>
                           </StackPanel>
 
-                          <StackPanel x:Name="_SubtitleStack" VerticalAlignment="Center"
+                          <StackPanel x:Name="_TitleStack" VerticalAlignment="Center"
                                       IsHitTestVisible="False"
                                       Orientation="Horizontal"
                                       Spacing="10">

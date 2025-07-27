@@ -18,6 +18,15 @@ public class NWindow : Window
     public static readonly StyledProperty<double> TitleFontSizeProperty =
         AvaloniaProperty.Register<NWindow, double>(nameof(TitleFontSize), defaultValue: 13);
 
+    public static readonly StyledProperty<bool> IsNotMacProperty =
+        AvaloniaProperty.Register<NWindow, bool>(nameof(IsNotMac), defaultValue: !OperatingSystem.IsMacOS());
+
+    public bool IsNotMac
+    {
+        get => GetValue(IsNotMacProperty);
+        set => SetValue(IsNotMacProperty, value);
+    }
+
     public double TitleFontSize
     {
         get => GetValue(TitleFontSizeProperty);
@@ -148,6 +157,36 @@ public class NWindow : Window
         set => SetValue(CanMoveProperty, value);
     }
 
+    // 添加计算属性 - Minimize 按钮
+    public static readonly StyledProperty<bool> ShouldShowMinimizeButtonProperty =
+        AvaloniaProperty.Register<NWindow, bool>(nameof(ShouldShowMinimizeButton));
+
+    public bool ShouldShowMinimizeButton
+    {
+        get => GetValue(ShouldShowMinimizeButtonProperty);
+        private set => SetValue(ShouldShowMinimizeButtonProperty, value);
+    }
+
+    // 添加计算属性 - Maximize 按钮
+    public static readonly StyledProperty<bool> ShouldShowMaximizeButtonProperty =
+        AvaloniaProperty.Register<NWindow, bool>(nameof(ShouldShowMaximizeButton));
+
+    public bool ShouldShowMaximizeButton
+    {
+        get => GetValue(ShouldShowMaximizeButtonProperty);
+        private set => SetValue(ShouldShowMaximizeButtonProperty, value);
+    }
+
+    // 添加计算属性 - Close 按钮
+    public static readonly StyledProperty<bool> ShouldShowCloseButtonProperty =
+        AvaloniaProperty.Register<NWindow, bool>(nameof(ShouldShowCloseButton));
+
+    public bool ShouldShowCloseButton
+    {
+        get => GetValue(ShouldShowCloseButtonProperty);
+        private set => SetValue(ShouldShowCloseButtonProperty, value);
+    }
+
     // Background properties
     public static readonly StyledProperty<bool> BackgroundAnimationEnabledProperty =
         AvaloniaProperty.Register<NWindow, bool>(nameof(BackgroundAnimationEnabled), defaultValue: false);
@@ -256,6 +295,33 @@ public class NWindow : Window
         MenuItems = new AvaloniaList<MenuItem>();
         RightWindowTitleBarControls = new Avalonia.Controls.Control();
         Hosts = new Avalonia.Controls.Controls();
+
+                // 设置平台检测
+        IsNotMac = !OperatingSystem.IsMacOS();
+
+        // 启用 macOS 原生标题栏扩展
+        if (OperatingSystem.IsMacOS())
+        {
+            ExtendClientAreaToDecorationsHint = true;
+            ExtendClientAreaTitleBarHeightHint = 44;
+            
+            // 尝试不同的组合
+            ExtendClientAreaChromeHints = 
+                Avalonia.Platform.ExtendClientAreaChromeHints.PreferSystemChrome |
+                Avalonia.Platform.ExtendClientAreaChromeHints.OSXThickTitleBar;
+        }
+        else if (OperatingSystem.IsLinux())
+        {
+            ExtendClientAreaToDecorationsHint = true;
+            ExtendClientAreaTitleBarHeightHint = -1; // Linux 标题栏高度
+            ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
+        }
+        else
+        {
+            ExtendClientAreaToDecorationsHint = true;
+            ExtendClientAreaTitleBarHeightHint = -1; // Windows 标题栏高度
+            ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
+        }
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
@@ -277,6 +343,16 @@ public class NWindow : Window
         base.OnPropertyChanged(change);
         if (change.Property == WindowStateProperty && change.NewValue is WindowState windowState)
             OnWindowStateChanged(windowState);
+
+        if (change.Property == CanMinimizeProperty || 
+            change.Property == CanMaximizeProperty || 
+            change.Property == CanCloseProperty || 
+            change.Property == IsNotMacProperty)
+        {
+            ShouldShowMinimizeButton = CanMinimize && IsNotMac;
+            ShouldShowMaximizeButton = CanMaximize && IsNotMac;
+            ShouldShowCloseButton = CanClose && IsNotMac;
+        }
     }
 
     protected override void OnSizeChanged(SizeChangedEventArgs e)
@@ -320,17 +396,25 @@ public class NWindow : Window
         try
         {
             var ns = e.NameScope;
-            titleStack = ns.Find<StackPanel>("_SubtitleStack");
+            titleStack = ns.Find<StackPanel>("_TitleStack");
             titleLogo = ns.Find<ContentPresenter>("_LogoPresenter");
             titleText = ns.Find<TextBlock>("_TitleText");
             titleSubContent = ns.Find<ContentPresenter>("_SubtitleContent");
 
-            // Create handlers for buttons
-            if (e.NameScope.Get<Button>("PART_MaximizeButton") is { } maximize)
+            if (titleStack != null)
             {
-                maximize.Click += OnMaximizeButtonClicked;
-                EnableWindowsSnapLayout(maximize);
+                if (IsNotMac == false)
+                {
+                    titleStack.Margin = new Thickness(60, 0, 0, 0);
+                }
             }
+
+            // Create handlers for buttons
+                if (e.NameScope.Get<Button>("PART_MaximizeButton") is { } maximize)
+                {
+                    maximize.Click += OnMaximizeButtonClicked;
+                    EnableWindowsSnapLayout(maximize);
+                }
 
             if (e.NameScope.Get<Button>("PART_MinimizeButton") is { } minimize)
                 minimize.Click += (_, _) => WindowState = WindowState.Minimized;
@@ -420,7 +504,7 @@ public class NWindow : Window
         }
         else if (state == WindowState.Maximized)
         {
-            Margin = new Thickness(7);
+            Margin = new Thickness(0);
             CanResize = CanMove = true;
             ShowBottomBorder = oldShowBottomBorder;
         }
