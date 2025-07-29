@@ -1,6 +1,8 @@
 ﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
+using NewBeeUI.Demo.Properties;
 using NewBeeUI.Demo.Views;
 
 namespace NewBeeUI.Demo;
@@ -10,6 +12,7 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+        this.Styles.AddRange(GlobalStyles.BuildStyles());
     }
 
     public override void OnFrameworkInitializationCompleted()

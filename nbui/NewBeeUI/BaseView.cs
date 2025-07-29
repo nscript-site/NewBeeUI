@@ -122,7 +122,7 @@ public abstract class BaseView : MvuView
         return menu;
     }
 
-    private static Action<Button>? GetSetTooltipPosition(ToolTipPosition toolTipPosition)
+    protected internal static Action<Button>? GetSetTooltipPosition(ToolTipPosition toolTipPosition)
     {
         return toolTipPosition switch
         {
@@ -794,6 +794,31 @@ public static class BaseViewExtensions
     {
         if (content == null) return null;
         return prefix + content;
+    }
+
+    public static Button CreateWindowIcon(this IWindowView win, StreamGeometry g, string? tooltip = null, double scale = 0.8)
+    {
+        return win.CreateWindowIcon(new PathIcon().Data(g), tooltip, scale);
+    }
+
+    public static Button CreateWindowIcon(this IWindowView win, Func<StreamGeometry> g, string? tooltip = null, double scale = 0.8)
+    {
+        return win.CreateWindowIcon(new PathIcon().Data(g), tooltip, scale);
+    }
+
+    private static Button CreateWindowIcon(this IWindowView win, PathIcon path, string? tooltip, double scale)
+    {
+        var button = new Button().Classes("Basic").Classes("WindowControlsButton")
+            .Content(path.Ref(out PathIcon icon).Width(16).Height(16));
+
+        button.Tag = path;
+
+        if (string.IsNullOrEmpty(tooltip) == false)
+        {
+            ToolTip.SetTip(button, tooltip);
+        }
+
+        return button;
     }
 
     #region 简化动作回调

@@ -10,8 +10,29 @@ public class MainView : BaseView, IWindowView
 
     public WindowInfo WindowInfo { get; }
 
+
+    public class DockRightDisableIcon
+    {
+        private static readonly Lazy<DockRightDisableIcon> _instance = new Lazy<DockRightDisableIcon>(() => new DockRightDisableIcon());
+
+        private StreamGeometry g;
+
+        public static StreamGeometry Instance => _instance.Value.g;
+
+        private DockRightDisableIcon()
+        {
+            g = StreamGeometry.Parse("M20 4H4A2 2 0 0 0 2 6V18A2 2 0 0 0 4 20H20A2 2 0 0 0 22 18V6A2 2 0 0 0 20 4M15 18H4V6H15ZM20 18H17V6H20Z");
+        }
+    }
+
+
+    protected bool IsDockRightEnabled = true;
+
     protected WindowInfo CreateWindowInfo()
     {
+        Button? dockIcon = null;
+        Button? dockIconCollapse = null;
+
         return new NWindowInfo()
         {
             WindowTitle = "标题",
@@ -25,9 +46,16 @@ public class MainView : BaseView, IWindowView
             IsWindowAnimationEnable = true,
             Subtitle = BuildSubtitle(),
             RightWindowsBar = this.HStack([
-                IconButton(MessageSettingsOutlineIcon.Instance, "设置", ToolTipPosition.Top)
-                    .Width(24).Height(24).OnClick(_=>{ new SettingView().ShowDialog("设置"); })
-            ])
+                this.CreateWindowIcon(CogOutlineIcon.Instance).OnClick(_=>{ new SettingView().ShowDialog("设置"); }),
+                this.CreateWindowIcon(Icons.DockRightExpand)
+                    .IsVisible(IsDockRightEnabled)
+                    .Ref(out dockIcon)!
+                    .OnClick(_=>{ IsDockRightEnabled = false; dockIcon!.IsVisible = false; dockIconCollapse!.IsVisible = true; }),
+                this.CreateWindowIcon(Icons.DockRightCollapse)
+                    .IsVisible(!IsDockRightEnabled)
+                    .Ref(out dockIconCollapse)!
+                    .OnClick(_=>{ IsDockRightEnabled = true; dockIcon!.IsVisible = true; dockIconCollapse!.IsVisible = false;  }),
+            ]).Ref(out var rightBar)!,
         };
     }
 
@@ -74,9 +102,9 @@ public class MainView : BaseView, IWindowView
 
     protected Control BuildMenu()
     {
-        Control BuildMenuItem(RoutedViewBuilder builder)
+        Control BuildMenuItem(RoutedViewBuilder? builder)
         {
-            if (builder.IsEmpty())
+            if (builder == null || builder.IsEmpty())
             {
                 return Border().Width(100).Height(1).Align(null, 0).Margin(10, 0)
                     .Background(Brushes.Gray).IsHitTestVisible(false);

@@ -21,6 +21,7 @@ public class ButtonsView : BaseView
                 ]),
                 HStack(0,0).Row(1).Children([
                     IconButton(SearchIcon.Instance, "ToolTip", ToolTipPosition.Top ), SelectableIconButton(SearchIcon.Instance, "ToolTip", "ToolTip2", ToolTipPosition.Top),
+                    SelectableIconButton(CogBoxIcon.Instance).OnClick(v=>{ v.Selected = !v.Selected; v.UpdateState(); }),
                     ])
             ]);
     }

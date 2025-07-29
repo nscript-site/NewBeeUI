@@ -1,13 +1,11 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia.Collections;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
-using Avalonia.Media;
-using System;
-using Avalonia.Collections;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
-using Avalonia;
-using Avalonia.Controls.Presenters;
+using Avalonia.Media;
 
 namespace NStyles.Controls;
 
@@ -229,26 +227,6 @@ public class NWindow : Window
         set => SetValue(BackgroundShaderCodeProperty, value);
     }
 
-    //public static readonly StyledProperty<bool> BackgroundTransitionsEnabledProperty =
-    //    AvaloniaProperty.Register<SukiBackground, bool>(nameof(BackgroundTransitionsEnabled), defaultValue: false);
-
-    ///// <inheritdoc cref="SukiBackground.TransitionsEnabled"/>
-    //public bool BackgroundTransitionsEnabled
-    //{
-    //    get => GetValue(BackgroundTransitionsEnabledProperty);
-    //    set => SetValue(BackgroundTransitionsEnabledProperty, value);
-    //}
-
-    //public static readonly StyledProperty<double> BackgroundTransitionTimeProperty =
-    //    AvaloniaProperty.Register<SukiBackground, double>(nameof(BackgroundTransitionTime), defaultValue: 1.0);
-
-    ///// <inheritdoc cref="SukiBackground.TransitionTime"/>
-    //public double BackgroundTransitionTime
-    //{
-    //    get => GetValue(BackgroundTransitionTimeProperty);
-    //    set => SetValue(BackgroundTransitionTimeProperty, value);
-    //}
-
     public static readonly StyledProperty<Avalonia.Controls.Control> RightWindowTitleBarControlsProperty =
         AvaloniaProperty.Register<NWindow, Avalonia.Controls.Control>(nameof(RightWindowTitleBarControls),
             defaultValue: new Avalonia.Controls.Control());
@@ -392,6 +370,11 @@ public class NWindow : Window
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
+
+        ShouldShowMinimizeButton = CanMinimize && IsNotMac;
+        ShouldShowMaximizeButton = CanMaximize && IsNotMac;
+        ShouldShowCloseButton = CanClose && IsNotMac;
+
         OnWindowStateChanged(WindowState);
         try
         {

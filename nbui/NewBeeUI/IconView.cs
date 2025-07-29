@@ -18,6 +18,10 @@ public class IconView : BaseView
     Action<IconView>? _onClick_Action = null;
     Border? _border = null;
 
+    public double BorderMargin { get; set; } = -8;
+
+    public Action<Button>? OnCreateButton { get; set; } = null;
+
     protected override object Build()
     {
         return CreateIcon(Path, Tooltip).Ref(out _button)!;
@@ -27,19 +31,25 @@ public class IconView : BaseView
     {
         if (path == null) return new Button();
 
-        var button = new Button().Classes("Icon").Classes(Classed_Icon_Button)
+        var t = new Thickness(BorderMargin);
+
+        var button = new Button()
+            .Classes("Icon").Classes(Classed_Icon_Button)
             .Content(
                 new Panel()
                     .Children(
-                    new Border().CornerRadius(5).VerticalAlignment(VerticalAlignment.Stretch).HorizontalAlignment(HorizontalAlignment.Stretch)
-                        .BorderThickness(new Thickness(0))
+                    new Border().CornerRadius(5).Align(null,null)
+                        .BorderThickness(0)
                         .Ref(out _border)!
-                        .Classes(Classed_IconView_Border).Margin(-8),
+                        .Classes(Classed_IconView_Border)
+                        .Margin(t),
                         path.Ref(out PathIcon icon)
                     ))
             .Observable(Button.ForegroundProperty, fg => icon.Foreground = fg);
 
         _button = button;
+
+        OnCreateButton?.Invoke(button);
 
         UpdateDisplay();
 

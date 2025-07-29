@@ -58,6 +58,9 @@ public static class Icons
     public static StreamGeometry AlertOutline { get; } = GetIcon(nameof(AlertOutline), IconsResources.AlertOutline);
     public static StreamGeometry RotateRight { get; } = GetIcon(nameof(RotateRight), IconsResources.RotateRight);
 
+    public static StreamGeometry DockRightExpand { get; } = GetIcon(nameof(DockRightExpand), IconsResources.DockRightExpand);
+    public static StreamGeometry DockRightCollapse { get; } = GetIcon(nameof(DockRightCollapse), IconsResources.DockRightCollapse);
+
     public static StreamGeometry GetIcon(string name, string svg)
     {
         if (IconsResources._iconCache.TryGetValue(name, out var icon))
@@ -156,4 +159,9 @@ internal static class IconsResources
     internal const string AlertOutline = "M 11,4L 13,4L 13,15L 11,15L 11,4 Z M 13,18L 13,20L 11,20L 11,18L 13,18 Z";
 
     internal const string RotateRight = "M16.89,15.5L18.31,16.89C19.21,15.73 19.76,14.39 19.93,13H17.91C17.77,13.87 17.43,14.72 16.89,15.5M13,17.9V19.92C14.39,19.75 15.74,19.21 16.9,18.31L15.46,16.87C14.71,17.41 13.87,17.76 13,17.9M19.93,11C19.76,9.61 19.21,8.27 18.31,7.11L16.89,8.53C17.43,9.28 17.77,10.13 17.91,11M15.55,5.55L11,1V4.07C7.06,4.56 4,7.92 4,12C4,16.08 7.05,19.44 11,19.93V17.91C8.16,17.43 6,14.97 6,12C6,9.03 8.16,6.57 11,6.09V10L15.55,5.55Z";
+
+    internal const string DockRightExpand = "M20 4H4A2 2 0 0 0 2 6V18A2 2 0 0 0 4 20H20A2 2 0 0 0 22 18V6A2 2 0 0 0 20 4M15 18H4V6H15Z";
+
+    internal const string DockRightCollapse = "M20 4H4A2 2 0 0 0 2 6V18A2 2 0 0 0 4 20H20A2 2 0 0 0 22 18V6A2 2 0 0 0 20 4M15 18H4V6H15ZM20 18H17V6H20Z";
+
 }
