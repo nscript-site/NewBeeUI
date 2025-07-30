@@ -4,7 +4,7 @@
     <Color x:Key="SukiWindowBackground">#fcfcfc</Color>
     <Color x:Key="SukiBackground">Transparent</Color>
     <Color x:Key="SukiStrongBackground">#fcfcfc</Color>
-    <Color x:Key="SukiLightBackground">Transparent</Color>
+    <Color x:Key="SukiLightBackground">#e0e0e0</Color>
     <Color x:Key="SukiCardBackground">White</Color>
     <Color x:Key="SukiPopupBackground">#fefefe</Color>
     <Color x:Key="SukiGlassCardBackground">#fdfefefe</Color>

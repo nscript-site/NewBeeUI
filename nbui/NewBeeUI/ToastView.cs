@@ -10,6 +10,11 @@ public class ToastView : BaseView
 
     bool CompactMode;
 
+    /// <summary>
+    /// 是否是临时创建的。如果是，则在关闭时，将自动从父容器中移除。
+    /// </summary>
+    public bool IsTemporary { get; set; }
+
     protected override object Build()
     {
         return new Border().Align(0, 0).CornerRadius(4)
@@ -60,9 +65,17 @@ public class ToastView : BaseView
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                border.IsVisible = false;
                 toastTimer?.Dispose();
                 toastTimer = null;
+                if(IsTemporary)
+                {
+                    var hosts = this.OverlayHosts();
+                    hosts?.Remove(this);
+                }
+                else
+                {
+                    border.IsVisible = false;
+                }
             });
         };
         toastTimer.Start();

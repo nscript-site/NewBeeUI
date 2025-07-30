@@ -316,6 +316,15 @@ public abstract class BaseView : MvuView
         return new Panel().Width(width).VerticalAlignment(VerticalAlignment.Stretch);
     }
 
+    public void ShowToastView(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1)
+    {
+        var hosts = this.OverlayHosts();
+        if (hosts == null) return;
+        var toast = new ToastView() { IsTemporary = true };
+        hosts.Add(toast);
+        toast.ShowToast(message, seconds, opacity, compactMode, hAlign, vAlign);
+    }
+
     public void ShowLoading()
     {
         var hosts = this.OverlayHosts();

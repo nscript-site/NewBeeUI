@@ -481,13 +481,17 @@ public class NWindow : Window
     {
         if (state == WindowState.FullScreen)
         {
+            Margin = new Thickness(0);
             oldShowBottomBorder = ShowBottomBorder;
             CanResize = CanMove = false;
             ShowBottomBorder = false;
         }
         else if (state == WindowState.Maximized)
         {
-            Margin = new Thickness(0);
+            if(IsNotMac == true)
+                Margin = new Thickness(7);
+            else
+                Margin = new Thickness(0);
             CanResize = CanMove = true;
             ShowBottomBorder = oldShowBottomBorder;
         }
