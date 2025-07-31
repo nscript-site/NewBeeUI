@@ -316,22 +316,34 @@ public abstract class BaseView : MvuView
         return new Panel().Width(width).VerticalAlignment(VerticalAlignment.Stretch);
     }
 
-    public void ShowToastView(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1)
+    /// <summary>
+    /// 显示 ToastView
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="seconds"></param>
+    /// <param name="opacity"></param>
+    /// <param name="compactMode"></param>
+    /// <param name="hAlign"></param>
+    /// <param name="vAlign"></param>
+    /// <param name="onCreate"></param>
+    public void ShowToastView(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1, Action<ToastView>? onCreate = null)
     {
         var hosts = this.OverlayHosts();
         if (hosts == null) return;
         var toast = new ToastView() { IsTemporary = true };
+        onCreate?.Invoke(toast);
         hosts.Add(toast);
         toast.ShowToast(message, seconds, opacity, compactMode, hAlign, vAlign);
     }
 
-    public void ShowLoading()
+    public void ShowLoading(Action<Loading>? onCreate = null)
     {
         var hosts = this.OverlayHosts();
         if (hosts == null) return;
 
         this.IsEnabled = false;
         var Loading = new Loading().Align(0, 0);
+        onCreate?.Invoke(Loading);
         hosts.Add(Loading);
     }
 
@@ -701,16 +713,17 @@ public static class BaseViewExtensions
     /// <param name="owner"></param>
     /// <param name="action"></param>
     /// <param name="minDelayMilliseconds"></param>
-    public static T? RunWithDelayedLoading<T>(this T? owner, Action action, int minDelayMilliseconds = 200, bool runAtBackground = false) where T:BaseView
+    /// <param name="onCreate"></param>
+    public static T? RunWithDelayedLoading<T>(this T? owner, Action action, int minDelayMilliseconds = 200, bool runAtBackground = false, Action<Loading>? onCreate = null) where T:BaseView
     {
         if(runAtBackground == false)
-            owner?.RunWithDelayedLoadingCore(action, minDelayMilliseconds);
+            owner?.RunWithDelayedLoadingCore(action, minDelayMilliseconds,onCreate);
         else
-            Task.Run(() => owner?.RunWithDelayedLoadingCore(action, minDelayMilliseconds));
+            Task.Run(() => owner?.RunWithDelayedLoadingCore(action, minDelayMilliseconds, onCreate));
         return owner;
     }
 
-    private static void RunWithDelayedLoadingCore<T>(this T? owner, Action action, int minDelayMilliseconds = 200) where T : BaseView
+    private static void RunWithDelayedLoadingCore<T>(this T? owner, Action action, int minDelayMilliseconds = 200, Action<Loading>? onCreate = null) where T : BaseView
     {
         if (owner == null)
         {
@@ -732,7 +745,7 @@ public static class BaseViewExtensions
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     if (isLoading == false) return;
-                    owner.ShowLoading();
+                    owner.ShowLoading(onCreate);
                 });
             });
 

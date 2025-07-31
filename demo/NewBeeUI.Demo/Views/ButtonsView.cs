@@ -18,11 +18,20 @@ public class ButtonsView : BaseView
                     new ToggleSwitch(),
                     IconButton(SearchIcon.Instance),
                     IconButton(NStyles.MeterialIcons.SearchWebIcon.Instance),
+                    TextButton("显示加载").WhenClick(_ => MockLoading()),
                 ]),
                 HStack(0,0).Row(1).Children([
                     IconButton(SearchIcon.Instance, "ToolTip", ToolTipPosition.Top ), SelectableIconButton(SearchIcon.Instance, "ToolTip", "ToolTip2", ToolTipPosition.Top),
                     SelectableIconButton(CogBoxIcon.Instance).OnClick(v=>{ v.Selected = !v.Selected; v.UpdateState(); }),
                     ])
             ]);
+    }
+
+    protected void MockLoading()
+    {
+        this.RunWithDelayedLoading(() =>
+        {
+            Thread.Sleep(3000);
+        }, runAtBackground: true, onCreate: l => { l.Margin(200, 0, 0, 0); });
     }
 }
