@@ -12,6 +12,7 @@
   <StyleInclude Source="avares://NStyles/Theme/TextBoxStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/ComboBoxStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/ComboBoxItemStyle.axaml" />
+  <StyleInclude Source="avares://NStyles/Theme/ProgressBarStyles.axaml" />
   <Styles.Resources>
     <ResourceDictionary>
 

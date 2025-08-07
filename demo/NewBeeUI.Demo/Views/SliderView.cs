@@ -10,23 +10,11 @@ public class SliderView : BaseView
 {
     protected override object Build()
     {
-        return new Slider().Width(200);
-        //return HStack([
-        //    new Slider().Width(200).Align(0,-1),
-        //    VStack([
-        //    HStack([
-        //        new Slider().Width(200)
-        //        ]),
-        //    new Slider().Width(200),
-        //    new Slider().Width(200),
-        //    ])
-        //    ]);
-        //return VStack([
-        //    HStack([
-        //        new Slider().Width(200)
-        //        ]),
-        //    new Slider().Width(200),
-        //    new Slider().Width(200),
-        //    ]); 
+        return VStack([
+            HStack([
+                new Slider().Width(200)
+                ]),
+                new ProgressBar().Width(200).Value(50)
+            ]);
     }
 }
