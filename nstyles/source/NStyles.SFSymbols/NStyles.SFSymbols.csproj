@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>11.3.0.1</Version>
+    <RepositoryUrl>https://github.com/nscript-site/nscript-solution</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageId>NStyles.SFSymbols</PackageId>
+    <PackageTags>avalonia, SFSymbols</PackageTags>
+    <PackageProjectUrl>https://github.com/nscript-site/nscript-solution</PackageProjectUrl>
+    <Copyright>geblab.com</Copyright>
+    <Title>A avalonia sfsymbols  library</Title>
+    <IncludeSymbols>False</IncludeSymbols>
+    <Company>geblab</Company>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+</Project>

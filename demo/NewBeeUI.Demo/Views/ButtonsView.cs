@@ -17,6 +17,7 @@ public class ButtonsView : BaseView
                     TextBlock("Hello World!").Align(0, 0),
                     new ToggleSwitch(),
                     IconButton(SearchIcon.Instance),
+                    IconButton(Icons.ScaleToOriginal),
                     IconButton(NStyles.MeterialIcons.SearchWebIcon.Instance),
                     TextButton("显示加载").WhenClick(_ => MockLoading()),
                 ]),

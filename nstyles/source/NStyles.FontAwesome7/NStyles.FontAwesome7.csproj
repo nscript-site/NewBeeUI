@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>11.3.0.1</Version>
+    <RepositoryUrl>https://github.com/nscript-site/nscript-solution</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageId>NStyles.FontAwesome7</PackageId>
+    <PackageTags>avalonia, FontAwesome7</PackageTags>
+    <PackageProjectUrl>https://github.com/nscript-site/nscript-solution</PackageProjectUrl>
+    <Copyright>geblab.com</Copyright>
+    <Title>A avalonia FontAwesome7 icons library</Title>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <IncludeSymbols>False</IncludeSymbols>
+    <Company>geblab</Company>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="README.md">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+</Project>
