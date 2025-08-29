@@ -18,6 +18,7 @@
 
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.0" />
+    <PackageReference Include="GodotSharp" Version="4.5.0-dev.5" />
     <PackageReference Include="nmarkup" Version="11.3.0.1" />
     <PackageReference Include="NStyles.MeterialIcons" Version="11.3.0.1" />
   </ItemGroup>

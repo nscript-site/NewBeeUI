@@ -27,22 +27,21 @@
         <Setter Property="BoxShadow" Value="0 0 4 0 #999999" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="BorderBrush" Value="{DynamicResource SukiPrimaryColor}" />
-        <Setter Property="Transitions">
+        <!--<Setter Property="Transitions">
             <Transitions>
                 <BoxShadowsTransition Property="BoxShadow" Duration="0:0:0.3" />
-
             </Transitions>
-        </Setter>
+        </Setter>-->
 
     </Style>
 
-    <Style Selector="Border.ThumbBorder">
+    <!--<Style Selector="Border.ThumbBorder">
         <Setter Property="Transitions">
             <Transitions>
                 <ThicknessTransition Property="BorderThickness" Duration="0:0:0.1" />
             </Transitions>
         </Setter>
-    </Style>
+    </Style>-->
 
     <Style Selector="Border.ThumbBorder:pointerover">
         <Setter Property="BoxShadow" Value="0 0 7 0 #999999" />
@@ -55,9 +54,6 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid Name="grid" Height="32">
-                    <Grid.Resources>
-                       
-                    </Grid.Resources>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" MinHeight="20" />
@@ -70,7 +66,6 @@
                             VerticalAlignment="Center"
                             BorderThickness="0"
                             CornerRadius="20" />
-
                     <Track Name="PART_Track"
                            Grid.Row="1"
                            IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
@@ -92,15 +87,13 @@
                         <Thumb Name="thumb" Width="32" Height="32" Margin="3,0,0,0">
                             <Thumb.Template>
                                 <ControlTemplate>
-                                    <Grid Width="32" Height="32" Margin="0">
-                                      <Border Width="16"
-                                                Height="16"
-                                                Margin="0"
-                                                Background="White"
-                                                BorderThickness="0"
-                                                Classes="ThumbBorder ThumbB"
-                                                CornerRadius="{DynamicResource MediumCornerRadius}" />
-                                    </Grid>
+                                  <Border Width="16"
+                                            Height="16"
+                                            Margin="0"
+                                            Background="White"
+                                            BorderThickness="0"
+                                            Classes="ThumbBorder ThumbB"
+                                            CornerRadius="{DynamicResource MediumCornerRadius}" />
                                 </ControlTemplate>
                             </Thumb.Template>
                         </Thumb>

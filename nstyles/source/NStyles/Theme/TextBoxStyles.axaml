@@ -193,8 +193,7 @@
                                             <Panel>
                                                 <TextBlock Name="watermark"
                                                            FontSize="{TemplateBinding FontSize}"
-                                                           IsVisible="{TemplateBinding Text,
-                                                                                       Converter={x:Static StringConverters.IsNullOrEmpty}}"
+                                                           IsVisible="{TemplateBinding Text, Converter={x:Static StringConverters.IsNullOrEmpty}}"
                                                            Opacity="0.5"
                                                            Text="{TemplateBinding Watermark}"
                                                            TextAlignment="{TemplateBinding TextAlignment}"

@@ -1,12 +1,12 @@
 ﻿using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Presenters;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Declarative;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using NStyles.Controls;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace NewBeeUI;
@@ -43,19 +43,60 @@ public abstract class BaseView : MvuView
         Dispatcher.UIThread.InvokeAsync(action);
     }
 
-    protected Button TextButton(string text, double? fontSize = null)
+    #region Tooltip Helpers
+
+    public static Action<Button>? GetSetTooltipPosition(ToolTipPosition toolTipPosition)
+    {
+        return toolTipPosition switch
+        {
+            ToolTipPosition.Top => DisplayToolTipAtTop,
+            ToolTipPosition.Bottom => DisplayToolTipAtBottom,
+            ToolTipPosition.Left => DisplayToolTipAtLeft,
+            ToolTipPosition.Right => DisplayToolTipAtRight,
+            ToolTipPosition.Auto => null, // Use default position
+            _ => null
+        };
+    }
+
+    public static void DisplayToolTipAtTop(Control ctrl)
+    {
+        ToolTip.SetPlacement(ctrl, PlacementMode.Top);
+        ToolTip.SetVerticalOffset(ctrl, -5);
+    }
+
+    public static void DisplayToolTipAtBottom(Control ctrl)
+    {
+        ToolTip.SetPlacement(ctrl, PlacementMode.Bottom);
+        ToolTip.SetVerticalOffset(ctrl, 5);
+    }
+
+    public static void DisplayToolTipAtLeft(Control ctrl)
+    {
+        ToolTip.SetPlacement(ctrl, PlacementMode.Left);
+    }
+
+    public static void DisplayToolTipAtRight(Control ctrl)
+    {
+        ToolTip.SetPlacement(ctrl, PlacementMode.Right);
+    }
+
+    #endregion
+
+    #region Control Create Helpers
+
+    public static Button TextButton(string text, double? fontSize = null)
     {
         return new Button() { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center }.Text(text, fontSize);
     }
 
-    protected CheckBox CheckBox(string? text = null)
+    public static CheckBox CheckBox(string? text = null)
     {
         var cb = new CheckBox();
-        if(text != null) cb.Text(text);
+        if (text != null) cb.Text(text);
         return cb;
     }
 
-    protected Border Border(Control? child = null, 
+    public static Border Border(Control? child = null,
         double thickness = 0,
         double? width = null, double? height = null)
     {
@@ -67,31 +108,31 @@ public abstract class BaseView : MvuView
         return b;
     }
 
-    protected TextBox TextBox(string? text = null)
+    public static TextBox TextBox(string? text = null)
     {
         var tb = new TextBox();
         if (text != null) tb.Text(text);
         return tb;
     }
 
-    protected TextBlock TextBlock(string? text = null, bool wrap = false)
+    public static TextBlock TextBlock(string? text = null, bool wrap = false)
     {
         var tb = new TextBlock() { TextWrapping = wrap ? TextWrapping.Wrap : TextWrapping.NoWrap };
         if (text != null) tb.Text(text);
         return tb;
     }
 
-    protected Button IconButton(StreamGeometry g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
+    public static Button IconButton(StreamGeometry g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
     {
         return CreateIconButton(new PathIcon().Data(g), tooltip, scale, GetSetTooltipPosition(toolTipPosition));
     }
 
-    protected Button IconButton(Func<StreamGeometry> g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
+    public static Button IconButton(Func<StreamGeometry> g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
     {
         return CreateIconButton(new PathIcon().Data(g), tooltip, scale, GetSetTooltipPosition(toolTipPosition));
     }
 
-    protected Button CreateIconButton(PathIcon path, string? tooltip, double scale, Action<Button>? onSetTooltipPosition)
+    public static Button CreateIconButton(PathIcon path, string? tooltip, double scale, Action<Button>? onSetTooltipPosition)
     {
         var button = new Button().Classes("Icon").Classes(Classed_Icon_Button)
             .Content(path.Ref(out PathIcon icon))
@@ -122,52 +163,17 @@ public abstract class BaseView : MvuView
         return menu;
     }
 
-    protected internal static Action<Button>? GetSetTooltipPosition(ToolTipPosition toolTipPosition)
-    {
-        return toolTipPosition switch
-        {
-            ToolTipPosition.Top => DisplayToolTipAtTop,
-            ToolTipPosition.Bottom => DisplayToolTipAtBottom,
-            ToolTipPosition.Left => DisplayToolTipAtLeft,
-            ToolTipPosition.Right => DisplayToolTipAtRight,
-            ToolTipPosition.Auto => null, // Use default position
-            _ => null
-        };
-    }
-
-    protected static void DisplayToolTipAtTop(Control ctrl)
-    {
-        ToolTip.SetPlacement(ctrl, PlacementMode.Top);
-        ToolTip.SetVerticalOffset(ctrl, -5);
-    }
-
-    protected static void DisplayToolTipAtBottom(Control ctrl)
-    {
-        ToolTip.SetPlacement(ctrl, PlacementMode.Bottom);
-        ToolTip.SetVerticalOffset(ctrl, 5);
-    }
-
-    protected static void DisplayToolTipAtLeft(Control ctrl)
-    {
-        ToolTip.SetPlacement(ctrl, PlacementMode.Left);
-    }
-
-    protected static void DisplayToolTipAtRight(Control ctrl)
-    {
-        ToolTip.SetPlacement(ctrl, PlacementMode.Right);
-    }
-
-    protected PathIcon PathIcon(StreamGeometry g)
+    public static PathIcon PathIcon(StreamGeometry g)
     {
         return new PathIcon().Data(g);
     }
 
-    protected PathIcon PathIcon(Func<StreamGeometry> g)
+    public static PathIcon PathIcon(Func<StreamGeometry> g)
     {
         return new PathIcon().Data(g);
     }
 
-    protected Panel Panel(params Control?[] controls)
+    public static Panel Panel(params Control?[] controls)
     {
         var panel = new Panel();
         if (controls != null)
@@ -181,7 +187,7 @@ public abstract class BaseView : MvuView
         return panel;
     }
 
-    protected Grid Grid(string? rows = null, string? cols = null, Control?[]? controls = null)
+    public static Grid Grid(string? rows = null, string? cols = null, Control?[]? controls = null)
     {
         var g = new Grid();
         if (rows != null) g.Rows(rows);
@@ -199,7 +205,7 @@ public abstract class BaseView : MvuView
         return g;
     }
 
-    protected Grid HGrid(string? cols, Control?[] controls)
+    public static Grid HGrid(string? cols, Control?[] controls)
     {
         var g = new Grid();
         if (cols != null) g.Cols(cols);
@@ -216,7 +222,7 @@ public abstract class BaseView : MvuView
         return g;
     }
 
-    protected Grid VGrid(string? rows, Control?[] controls)
+    public static Grid VGrid(string? rows, Control?[] controls)
     {
         var g = new Grid();
         if (rows != null) g.Rows(rows);
@@ -233,40 +239,40 @@ public abstract class BaseView : MvuView
         return g;
     }
 
-    protected StackPanel HStack(Control[] controls)
+    public static StackPanel HStack(Control[] controls)
     {
         var stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10 };
         stack.Children.AddRange(controls);
         return stack;
     }
 
-    protected WrapPanel WrapPanel(Control[] controls)
+    public static WrapPanel WrapPanel(Control[] controls)
     {
         var wrap = new WrapPanel();
         wrap.Children.AddRange(controls);
         return wrap;
     }
 
-    protected Border Border(Control? control)
+    public static Border Border(Control? control)
     {
         var border = new Border();
         if (control != null) border.Child = control;
         return border;
     }
 
-    protected StackPanel HStack(int? hAlign = -1, int? vAlign = 0)
+    public static StackPanel HStack(int? hAlign = -1, int? vAlign = 0)
     {
         return new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10 }.Align(hAlign,vAlign);
     }
 
-    protected StackPanel VStack(Control[] controls)
+    public static StackPanel VStack(Control[] controls)
     {
         var stack = new StackPanel() { Orientation = Orientation.Vertical, Spacing = 10 };
         stack.Children.AddRange(controls);
         return stack;
     }
 
-    protected StackPanel VStack(int? hAlign = -1, int? vAlign = 0)
+    public static StackPanel VStack(int? hAlign = -1, int? vAlign = 0)
     {
         return new StackPanel() { Orientation = Orientation.Vertical, Spacing = 10 }.Align(hAlign, vAlign);
     }
@@ -286,6 +292,88 @@ public abstract class BaseView : MvuView
         iconView.OnSetTooltipPosition = GetSetTooltipPosition(toolTipPosition);
         return iconView;
     }
+
+    public static Panel VLine(int width = 1)
+    {
+        return new Panel().Width(width).VerticalAlignment(VerticalAlignment.Stretch);
+    }
+
+    public static Control HLine(double height = 1, double opacity = 0.6, Thickness? margin = null, Action<Control>? onCreate = null)
+    {
+        var panel = new Panel().Background(BaseView.R("SukiBorderBrush")).Opacity(opacity)
+            .Height(height).HorizontalAlignment(HorizontalAlignment.Stretch);
+        if (margin == null)
+            panel.Margin(0, 10, 0, 0);
+        else
+            panel.Margin(margin.Value);
+
+        if (onCreate != null)
+            onCreate(panel);
+
+        return panel;
+    }
+
+    /// <summary>
+    /// 水平向的文字 TabItem
+    /// </summary>
+    /// <param name="txt"></param>
+    /// <param name="textAlign"></param>
+    /// <param name="size"></param>
+    /// <returns></returns>
+    public static TabItem HTextTabItem(string txt, Control? content = null, int textAlign = 0, float size = 14)
+    {
+        var h = new TextBlock
+        {
+            Text = txt,
+            HorizontalAlignment = textAlign switch
+            {
+                < 0 => HorizontalAlignment.Left,
+                0 => HorizontalAlignment.Center,
+                > 0 => HorizontalAlignment.Right
+            },
+            FontSize = size // 设置字体大小
+        };
+
+        return new TabItem() { Header = h, Content = content };
+    }
+
+    public static Grid HTabs(TabItem[] tabItems, int selectedIndex = 0)
+    {
+        TabItem? selected = null;
+
+        if(selectedIndex >= 0 && selectedIndex < tabItems.Length)
+            selected = tabItems[selectedIndex];
+
+        // 右侧内容
+        var right = new ContentPresenter()
+            .VerticalAlignment(VerticalAlignment.Top);
+
+        Object BuildRightContent()
+        {
+            return selected?.Content ?? TextBlock("No Content");
+        }
+
+        return new Grid().Cols("Auto,1,*")
+            .Children([
+                // 左侧选项卡
+                new TabHeaderList()
+                    .ItemsPanel(new StackPanel().Margin(10,10).Orientation(Orientation.Vertical))
+                    .HorizontalAlignment(HorizontalAlignment.Right).Items(tabItems)
+                    .OnSelectionChanged(
+                        e=>{
+                            if (e.AddedItems.Count == 0) return;
+                            selected = e.AddedItems[0] as TabItem;
+                            if(right != null) right.Content = BuildRightContent();
+                        }),
+                
+                // 分隔线
+                new Panel().Col(1).Background(R("SukiBorderBrush")).Width(1).VerticalAlignment(VerticalAlignment.Stretch),
+
+                right.Col(2).Content(BuildRightContent())
+        ]);
+    }
+
+    #endregion
 
     #region DynamicResource and Colors
 
@@ -310,11 +398,6 @@ public abstract class BaseView : MvuView
     }
 
     #endregion
-
-    protected Panel VLine(int width = 1)
-    {
-        return new Panel().Width(width).VerticalAlignment(VerticalAlignment.Stretch);
-    }
 
     /// <summary>
     /// 显示 ToastView

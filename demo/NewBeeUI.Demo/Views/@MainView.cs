@@ -45,7 +45,7 @@ public class MainView : BaseView, IWindowView
             WindowHeight = 600,
             IsWindowAnimationEnable = true,
             Subtitle = BuildSubtitle(),
-            RightWindowsBar = this.HStack([
+            RightWindowsBar = HStack([
                 this.CreateWindowIcon(CogOutlineIcon.Instance).OnClick(_=>{ new SettingView().ShowDialog("设置"); }),
                 this.CreateWindowIcon(Icons.DockRightExpand)
                     .IsVisible(IsDockRightEnabled)
@@ -154,7 +154,9 @@ public class MainView : BaseView, IWindowView
             new RoutedViewBuilder("Menu", ()=> new MenuView()),
             new RoutedViewBuilder("Flayout", ()=>new FlyoutView()),
             new RoutedViewBuilder("Styles", ()=>new StyleView()),
-            new RoutedViewBuilder("ComboBox", ()=>new ComboBoxView())
+            new RoutedViewBuilder("ComboBox", ()=>new ComboBoxView()),
+            new RoutedViewBuilder("TextBox", ()=>new TextBoxView()),
+            new RoutedViewBuilder("ThreeD", ()=>new ThreeDView()),
         ];
     }
 }
