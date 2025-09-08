@@ -508,4 +508,19 @@ public class NWindow : Window
         base.OnPointerPressed(e);
         BeginMoveDrag(e);
     }
+
+    public Action<WindowClosingEventArgs>? OnWindowClosing { get; set; }
+    public Action? OnWindowClosed { get; set; }
+
+    protected override void OnClosing(WindowClosingEventArgs e)
+    {
+        OnWindowClosing?.Invoke(e);
+        base.OnClosing(e);
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+        OnWindowClosed?.Invoke();
+    }
 }

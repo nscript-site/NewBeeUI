@@ -21,6 +21,9 @@ public class WindowInfo
 
     public bool IsWindowAnimationEnable { get; set; } = false;
 
+    public Action<WindowClosingEventArgs>? OnWindowClosing { get; set; }
+    public Action? OnWindowClosed { get; set; }
+
     public Window? Window { get; protected set; } = null;
 
     public double? CornerRadius { get; set; } = null;
@@ -73,6 +76,8 @@ public class WindowInfo
             WindowStartupLocation = StartupLocation,
             BackgroundAnimationEnabled = IsWindowAnimationEnable,
             TitleBarAnimationEnabled = IsWindowAnimationEnable,
+            OnWindowClosed = OnWindowClosed,
+            OnWindowClosing = OnWindowClosing,
         };
 
         if(CornerRadius.HasValue)

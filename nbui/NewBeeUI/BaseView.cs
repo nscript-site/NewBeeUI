@@ -122,21 +122,69 @@ public abstract class BaseView : MvuView
         return tb;
     }
 
-    public static Button IconButton(StreamGeometry g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
+    public static PathIcon Icon(StreamGeometry g, double? size = null)
     {
-        return CreateIconButton(new PathIcon().Data(g), tooltip, scale, GetSetTooltipPosition(toolTipPosition));
+        var p = new PathIcon().Data(g);
+        if(size != null) p.Size(size.Value);
+        return p;
     }
 
-    public static Button IconButton(Func<StreamGeometry> g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
+    public static Button IconButton(StreamGeometry g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto,
+        double scale = 1.0, double? iconSize = null)
     {
-        return CreateIconButton(new PathIcon().Data(g), tooltip, scale, GetSetTooltipPosition(toolTipPosition));
+        return CreateButton(new PathIcon().Data(g), null, tooltip, scale, iconSize, onSetTooltipPosition: GetSetTooltipPosition(toolTipPosition));
     }
 
-    public static Button CreateIconButton(PathIcon path, string? tooltip, double scale, Action<Button>? onSetTooltipPosition)
+    public static Button IconButton(Func<StreamGeometry> g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, 
+        double scale = 1.0, double? iconSize = null)
     {
-        var button = new Button().Classes("Icon").Classes(Classed_Icon_Button)
-            .Content(path.Ref(out PathIcon icon))
-            .Observable(Button.ForegroundProperty, fg => icon.Foreground = fg).RenderTransform(new ScaleTransform(scale, scale));
+        return CreateButton(new PathIcon().Data(g), null, tooltip, scale, iconSize, onSetTooltipPosition: GetSetTooltipPosition(toolTipPosition));
+    }
+
+    public static Button IconButton(string text, StreamGeometry g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, 
+        double scale = 1.0, double? iconSize = null)
+    {
+        return CreateButton(new PathIcon().Data(g), text, tooltip, scale, iconSize, onSetTooltipPosition: GetSetTooltipPosition(toolTipPosition));
+    }
+
+    public static Button IconButton(string text, Func<StreamGeometry> g, string? tooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, 
+        double scale = 1.0, double? iconSize = null)
+    {
+        return CreateButton(new PathIcon().Data(g), text, tooltip, scale, iconSize, onSetTooltipPosition: GetSetTooltipPosition(toolTipPosition));
+    }
+
+    public static Button CreateButton(PathIcon? icon, string? text, string? tooltip, 
+        double scale, double? iconSize = null, Action<Button>? onSetTooltipPosition = null)
+    {
+        Control? textControl = text == null ? null : TextBlock(text);
+        Control? content = null;
+        
+        if (text != null && icon != null)
+            content = HStack([icon, textControl!]).Align(null,0);
+        else if (icon != null)
+            content = icon;
+        else if(text != null)
+            content = textControl;
+
+        if(icon != null)
+        {
+            if(iconSize != null)
+            {
+                icon.Width = iconSize.Value;
+                icon.Height = iconSize.Value;
+            }
+        }
+
+        var button = new Button().RenderTransform(new ScaleTransform(scale, scale));
+
+        if (icon != null)
+        {
+            button.Observable(Button.ForegroundProperty, fg => icon.Foreground = fg);
+            if (textControl == null)
+                button.Classes("Icon").Classes(Classed_Icon_Button);
+        }
+
+        if(content != null) button.Content(content);
 
         if (string.IsNullOrEmpty(tooltip) == false)
         {
@@ -428,6 +476,26 @@ public abstract class BaseView : MvuView
         var Loading = new Loading().Align(0, 0);
         onCreate?.Invoke(Loading);
         hosts.Add(Loading);
+    }
+
+    /// <summary>
+    /// 展示在窗口的 Overlay 上, 如果窗口不存在，则返回 false。
+    /// 本方法仅用于桌面环境。
+    /// </summary>
+    /// <returns></returns>
+    public bool ShowInOverlay(BaseView owner)
+    {
+        var hosts = owner.OverlayHosts();
+        if (hosts == null) return false;
+        hosts.Add(this);
+        return false;
+    }
+
+    public bool RemoveFromOverlay()
+    {
+        var hosts = this.OverlayHosts();
+        if (hosts == null) return false;
+        return hosts.Remove(this);
     }
 
     public void RemoveLoading()

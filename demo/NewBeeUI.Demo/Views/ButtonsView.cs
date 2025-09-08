@@ -18,6 +18,8 @@ public class ButtonsView : BaseView
                     new ToggleSwitch(),
                     IconButton(SearchIcon.Instance),
                     IconButton(Icons.ScaleToOriginal),
+                    IconButton("InnerText", SearchIcon.Instance),
+                    IconButton("InnerText", SearchIcon.Instance, iconSize:12),
                     IconButton(NStyles.MeterialIcons.SearchWebIcon.Instance),
                     TextButton("显示加载").WhenClick(_ => MockLoading()),
                 ]),
