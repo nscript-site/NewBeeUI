@@ -14,6 +14,8 @@ public class MessageBoxView : BaseView
 
     public Control? IconContent { get; set; } = null;
 
+    private TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+
     public MessageBoxView():base()
     {
         this.MinWidth = 300;
@@ -43,6 +45,12 @@ public class MessageBoxView : BaseView
         return border;
     }
 
+    public void WaitClosed()
+    {
+        tcs.Task.ConfigureAwait(false);
+        tcs.Task.Wait();
+    }
+
     public Button CreateButton(string text, string? classes = null, StreamGeometry ? icon = null, double? iconSize = 14, Action? onClosed = null)
     {
         var btn =  icon == null ? TextButton(text) 
@@ -52,13 +60,14 @@ public class MessageBoxView : BaseView
             {
                 this.RemoveFromOverlay();
                 onClosed?.Invoke();
+                tcs.SetResult(true);
             });
         if(classes != null) 
             btn = btn.Classes(classes);
         return btn;
     }
 
-    public static void Show(BaseView owner, string message, string title = "消息",  
+    public static MessageBoxView Show(BaseView owner, string message, string title = "消息",  
         string closeButtonText = "关闭",
         string? closeButtonClasses = null,
         StreamGeometry? iconCloseButton = null,
@@ -71,6 +80,7 @@ public class MessageBoxView : BaseView
         onCreate?.Invoke(msgBox);
 
         msgBox.ShowInOverlay(owner);
+        return msgBox;
     }
 
     private static MessageBoxView CreateMessageBoxView(BaseView owner, string message, string title, Control? iconContent = null)
@@ -88,9 +98,9 @@ public class MessageBoxView : BaseView
         return msgBox;
     }
 
-    public static void ShowOkCancel(BaseView owner, string message, Action<bool> onClose, 
+    public static async Task ShowOkCancel(BaseView owner, string message, Action<bool> onClose, 
         string title = "确认", 
-        string okButtonText = "确定", string calcelButtonText = "取消", 
+        string okButtonText = "确定", string cancelButtonText = "取消", 
         string? okButtonClasses = null, string? cancelButtonClasses = null,
         StreamGeometry? iconOkButton = null, StreamGeometry? iconCancelButton = null,
         Control? iconContent = null,
@@ -98,9 +108,10 @@ public class MessageBoxView : BaseView
     {        
         var msgBox = CreateMessageBoxView(owner, message, title,iconContent);
         var okButton = msgBox.CreateButton(okButtonText, okButtonClasses, iconOkButton, onClosed: () => onClose?.Invoke(true));
-        var calcelButton = msgBox.CreateButton(calcelButtonText, cancelButtonClasses, iconCancelButton, onClosed: () => onClose?.Invoke(false));
-        msgBox.Buttons = [okButton,calcelButton];
+        var cancelButton = msgBox.CreateButton(cancelButtonText, cancelButtonClasses, iconCancelButton, onClosed: () => onClose?.Invoke(false));
+        msgBox.Buttons = [okButton,cancelButton];
         onCreate?.Invoke(msgBox);
         msgBox.ShowInOverlay(owner);
+        await msgBox.tcs.Task.WaitAsync(CancellationToken.None);
     }
 }

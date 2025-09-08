@@ -17,17 +17,17 @@ public class WindowsView : BaseView
                 TextButton("MessageBoxView1").OnClick(_=>{
                     MessageBoxView.Show(this, "这是一条消息XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
                 }),
-                TextButton("ConfirmMessage").OnClick(_=>{
-                    MessageBoxView.ShowOkCancel(this, "确定 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 吗", 
+                TextButton("ConfirmMessage").OnClick(async _=>{
+                    await MessageBoxView.ShowOkCancel(this, "确定 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 吗", 
                         onClose: val => {
                             MessageBoxView.Show(this, val ? "你点击了确定" : "你点击了取消");
                         });
                 }),
-                 TextButton("ConfirmMessageWithIcons").OnClick(_=>{
-                    MessageBoxView.ShowOkCancel(this, "确定 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 吗",
+                 TextButton("ConfirmMessageWithIcons").OnClick(async _=>{
+                    await MessageBoxView.ShowOkCancel(this, "确定 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 吗",
                         iconOkButton: CheckIcon.Instance,
                         iconCancelButton: CloseIcon.Instance,
-                        okButtonClasses: "Primary", 
+                        okButtonClasses: "Primary",
                         cancelButtonClasses: "Danger",
                         iconContent: Icon(InformationIcon.Instance, 20).Foreground(Brushes.Red),
                         onClose: val => {
