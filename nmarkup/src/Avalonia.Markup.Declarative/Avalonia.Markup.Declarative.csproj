@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net9.0;net8.0</TargetFrameworks>
+		<IsPackable>true</IsPackable>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+
+		<Authors>Avalonia Team</Authors>
+		<PackageProjectUrl>https://github.com/nscript-site/Avalonia.Markup.Declarative</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/nscript-site/Avalonia.Markup.Declarative</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<Description>The set of base classes and extension methods over Avalonia's controls to define views/markup with C# code instead of XAML.</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageTags>avalonia;avaloniaui;mvvm;mvp;csharpmarjup;android;ios;mac;forms;wpf;net;netstandard;net461;uwp;xamarin</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageId>nmarkup</PackageId>
+		<Title>nmarkup</Title>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<InternalsVisibleTo Include="Avalonia.Markup.Declarative.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="icon.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
+		<PackageReference Include="Avalonia" Version="11.2.8" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Avalonia.Markup.Declarative.SourceGenerator\Avalonia.Markup.Declarative.SourceGenerator.csproj" ReferenceOutputAssembly="true">
+			<PrivateAssets>all</PrivateAssets>
+		</ProjectReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="$(OutputPath)/$(AssemblyName).SourceGenerator.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Package the generator in the analyzer directory of the nuget package -->
+		<None Include="../Avalonia.Markup.Declarative.SourceGenerator/bin/$(Configuration)/netstandard2.0/Avalonia.Markup.Declarative.SourceGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="readme.txt" Pack="true" PackagePath="." />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="README.md" Pack="True" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="ControlExtensions.Generated\" />
+	</ItemGroup>
+</Project>

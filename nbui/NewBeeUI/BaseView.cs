@@ -320,6 +320,20 @@ public abstract class BaseView : MvuView
         return stack;
     }
 
+    public static Control[] Build(Control?[]?[] controls)
+    {
+        var list = new List<Control>();
+        foreach (var arr in controls)
+        {
+            if (arr == null) continue;
+            foreach (var c in arr)
+            {
+                if (c != null) list.Add(c);
+            }
+        }
+        return list.ToArray();
+    }
+
     public static StackPanel VStack(int? hAlign = -1, int? vAlign = 0)
     {
         return new StackPanel() { Orientation = Orientation.Vertical, Spacing = 10 }.Align(hAlign, vAlign);
