@@ -218,3 +218,4 @@ src/Web/Avalonia.Web.Blazor/Interop/Typescript/*.js
 
 dist
 *.slnf
+OpenHarmony.Avalonia
