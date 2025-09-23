@@ -25,7 +25,6 @@ public class MainView : BaseView, IWindowView
         }
     }
 
-
     protected bool IsDockRightEnabled = true;
 
     protected WindowInfo CreateWindowInfo()

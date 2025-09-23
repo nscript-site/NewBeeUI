@@ -17,20 +17,21 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-#if DEBUG
-        this.AttachDevTools();
-#endif
         // Line below is needed to remove Avalonia data validation.
         // Without this line you will get duplicate validations from both Avalonia and CT
         BindingPlugins.DataValidators.RemoveAt(0);
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+#if DEBUG
+            this.AttachDevTools();
+#endif
+
             new MainView().ShowDialog();
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
-            singleViewPlatform.MainView = new MainView();
+            singleViewPlatform.MainView = new HostView(new MainView());
         }
 
         base.OnFrameworkInitializationCompleted();

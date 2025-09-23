@@ -6,6 +6,7 @@ using Avalonia.Markup.Declarative;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Styling;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using NStyles.Controls;
 using System.Windows.Input;
 
@@ -853,13 +854,18 @@ public static class BaseViewExtensions
     public static Controls? OverlayHosts(this Control ctrl)
     {
         NWindow? window = ctrl.GetDesktopWindow() as NWindow;
-        if (window == null)
+        if (window != null)
         {
-            // 如果没有找到宿主窗口，则返回空
-            return null;
+            return window.Hosts;
         }
 
-        return window.Hosts;
+        var root = ctrl.GetVisualRoot() as TopLevel;
+        if (root == null) return null;
+
+        HostView? hostView = root.Content as HostView;
+        if (hostView != null) return hostView.Hosts.Children;
+
+        return null;
     }
 
     public static T Flyout<T>(this T control, Control? flyoutContent, Action<Flyout>? onFlyout = null) where T : Button
