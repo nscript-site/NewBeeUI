@@ -15,6 +15,8 @@ public partial class App : Application
         this.Styles.AddRange(GlobalStyles.BuildStyles());
     }
 
+    public static bool IsMobileApp { get; private set; }
+
     public override void OnFrameworkInitializationCompleted()
     {
         // Line below is needed to remove Avalonia data validation.
@@ -31,6 +33,7 @@ public partial class App : Application
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
+            IsMobileApp = true;
             singleViewPlatform.MainView = new HostView(new MainView());
         }
 

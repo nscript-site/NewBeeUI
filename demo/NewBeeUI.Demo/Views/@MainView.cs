@@ -1,4 +1,6 @@
-﻿namespace NewBeeUI.Demo.Views;
+﻿using System.Runtime.InteropServices;
+
+namespace NewBeeUI.Demo.Views;
 
 public class MainView : BaseView, IWindowView
 {
@@ -9,7 +11,6 @@ public class MainView : BaseView, IWindowView
     #region IWindowView
 
     public WindowInfo WindowInfo { get; }
-
 
     public class DockRightDisableIcon
     {
@@ -77,13 +78,20 @@ public class MainView : BaseView, IWindowView
 
     protected override object Build()
     {
-        var router = BuildViewRouter().Ref(out Router)!;
+        var router = BuildViewRouter().Margin(20).Ref(out Router)!;
 
-        return Grid(cols: "Auto, *")
+        var grid = Grid(cols: "Auto, *")
             .Children([
                 BuildMenu(),
                 router.Col(1)
             ]);
+
+        if(App.IsMobileApp && OperatingSystem.IsLinux())  //鸿蒙手机
+        {
+            grid.Margin(0, 48, 0, 0);
+        }
+
+        return grid;
     }
 
     protected ViewRouter BuildViewRouter()
@@ -93,7 +101,7 @@ public class MainView : BaseView, IWindowView
         {
             if (SubtitleTextBlock != null)
             {
-                SubtitleTextBlock.Text = $"{e.New?.Name ?? "No Title"} - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+                SubtitleTextBlock.Text = $"{e.New?.Name ?? "No Title"}";
             }
         };
         return r;
@@ -141,10 +149,8 @@ public class MainView : BaseView, IWindowView
     {
         return
         [
-            new RoutedViewBuilder("Dashboard", () => new DashboardView())
-                .Icon(ViewDashboardOutlineIcon.Instance),
-            new RoutedViewBuilder("Hello", () => new HelloView()),
-            new RoutedViewBuilder("按钮", () => new ButtonsView()),
+            new RoutedViewBuilder("Dashboard", () => new DashboardView()).Icon(ViewDashboardOutlineIcon.Instance),
+            new RoutedViewBuilder("Buttons", () => new ButtonsView()),
             new RoutedViewBuilder("Windows", () => new WindowsView()),
             new RoutedViewBuilder("Test", () => new TestView()),
             new RoutedViewBuilder("Overlay", new OverlayView()),
@@ -155,7 +161,6 @@ public class MainView : BaseView, IWindowView
             new RoutedViewBuilder("Styles", ()=>new StyleView()),
             new RoutedViewBuilder("ComboBox", ()=>new ComboBoxView()),
             new RoutedViewBuilder("TextBox", ()=>new TextBoxView()),
-            new RoutedViewBuilder("ThreeD", ()=>new ThreeDView()),
         ];
     }
 }

@@ -288,13 +288,6 @@ public abstract class BaseView : MvuView
         return g;
     }
 
-    public static StackPanel HStack(Control[] controls)
-    {
-        var stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10 };
-        stack.Children.AddRange(controls);
-        return stack;
-    }
-
     public static WrapPanel WrapPanel(Control[] controls)
     {
         var wrap = new WrapPanel();
@@ -309,15 +302,36 @@ public abstract class BaseView : MvuView
         return border;
     }
 
-    public static StackPanel HStack(int? hAlign = -1, int? vAlign = 0)
+    public const string BaseView_Classes_HStack = "BaseView_HStack";
+    public static StackPanel HStack(Control[] controls, bool useDefaultClasses = true)
     {
-        return new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10 }.Align(hAlign,vAlign);
+        var stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10 };
+        stack.Children.AddRange(controls);
+        if (useDefaultClasses) stack.Classes(BaseView_Classes_HStack);
+        return stack;
     }
 
-    public static StackPanel VStack(Control[] controls)
+    public static StackPanel HStack(int? hAlign = -1, int? vAlign = 0, bool useDefaultClasses = true)
+    {
+        var stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10 }.Align(hAlign,vAlign);
+        if (useDefaultClasses) stack.Classes(BaseView_Classes_HStack);
+        return stack;
+    }
+
+    public const string BaseView_Classes_VStack = "BaseView_VStack";
+
+    public static StackPanel VStack(Control[] controls, bool useDefaultClasses = true)
     {
         var stack = new StackPanel() { Orientation = Orientation.Vertical, Spacing = 10 };
         stack.Children.AddRange(controls);
+        if(useDefaultClasses) stack.Classes(BaseView_Classes_VStack);
+        return stack;
+    }
+
+    public static StackPanel VStack(int? hAlign = -1, int? vAlign = 0, bool useDefaultClasses = true)
+    {
+        var stack = new StackPanel() { Orientation = Orientation.Vertical, Spacing = 10 }.Align(hAlign, vAlign);
+        if (useDefaultClasses) stack.Classes(BaseView_Classes_VStack);
         return stack;
     }
 
@@ -333,11 +347,6 @@ public abstract class BaseView : MvuView
             }
         }
         return list.ToArray();
-    }
-
-    public static StackPanel VStack(int? hAlign = -1, int? vAlign = 0)
-    {
-        return new StackPanel() { Orientation = Orientation.Vertical, Spacing = 10 }.Align(hAlign, vAlign);
     }
 
     public static IconView SelectableIconButton(StreamGeometry g, string? tooltip = null, string? selectedTooltip = null, ToolTipPosition toolTipPosition = ToolTipPosition.Auto, double scale = 1.0)
@@ -434,6 +443,13 @@ public abstract class BaseView : MvuView
 
                 right.Col(2).Content(BuildRightContent())
         ]);
+    }
+
+    public static GroupBox GroupBox(string header, Control? content = null, int? hAlign = null)
+    {
+        var gb = new GroupBox() { Header = header }.Align(hAlign).BorderThickness(1);
+        if (content != null) gb.Content = content;
+        return gb;
     }
 
     #endregion

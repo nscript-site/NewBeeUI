@@ -4,6 +4,8 @@
     <TargetFramework>net9.0-ios</TargetFramework>
     <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
+    <!--<CodesignKey>Apple Development: Created via API (XXXXXXXXXXXXXX)</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>-->
   </PropertyGroup>
 
   <ItemGroup>
