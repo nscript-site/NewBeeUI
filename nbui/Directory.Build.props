@@ -1,0 +1,10 @@
+<Project>
+	<PropertyGroup>
+		<!--<Version>11.3.0.1</Version>-->
+    <Version>11.2.8.0</Version>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AvaloniaVersion>11.2.8</AvaloniaVersion>
+    <SkiaSharpVersion>2.88.9</SkiaSharpVersion>
+  </PropertyGroup>
+</Project>

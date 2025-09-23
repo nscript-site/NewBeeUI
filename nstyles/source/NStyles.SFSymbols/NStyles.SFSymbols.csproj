@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>11.3.0.1</Version>
+    <Version>11.2.8</Version>
     <RepositoryUrl>https://github.com/nscript-site/nscript-solution</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageId>NStyles.SFSymbols</PackageId>
@@ -19,8 +19,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.3.0" />
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
   </ItemGroup>
+
+  <Target Name="PrintAvaloniaVersion" AfterTargets="Build">
+    <Message Text="AvaloniaVersion: $(AvaloniaVersion)" Importance="High" />
+  </Target>
 
   <ItemGroup>
     <None Update="README.md">

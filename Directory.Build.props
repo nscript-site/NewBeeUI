@@ -1,0 +1,21 @@
+<Project>
+	<PropertyGroup>
+		<!--<Version>11.3.0.1</Version>-->
+    <Version>11.2.8.0</Version>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AvaloniaVersion>11.2.8</AvaloniaVersion>
+    <SkiaSharpVersion>2.88.9</SkiaSharpVersion>
+  </PropertyGroup>
+  <!--<ItemGroup>
+    <PackageVersion Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Skia" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="SkiaSharp" Version="$(SkiaSharpVersion)" />
+    <PackageVersion Include="nmarkup" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="NStyles.MeterialIcons" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+  </ItemGroup>-->
+</Project>

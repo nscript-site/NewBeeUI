@@ -4,7 +4,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>11.3.0.31</Version>
+    <!--<Version>11.3.0.31</Version>-->
+    <Version>11.2.8</Version>
     <RepositoryUrl>https://github.com/nscript-site/nscript-solution</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageId>nstyles</PackageId>
@@ -49,9 +50,9 @@
     <EmbeddedResource Include="Properties\Shaders\Loading\simple.sksl" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="2.88.9" />
-    <PackageReference Include="Avalonia" Version="11.2.5" />
-    <PackageReference Include="Avalonia.Skia" Version="11.2.5" />
+    <PackageReference Include="SkiaSharp" Version="$(SkiaSharpVersion)"/>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
+    <PackageReference Include="Avalonia.Skia" Version="$(AvaloniaVersion)"/>
   </ItemGroup>
   <ItemGroup>
     <None Update="README.md">
