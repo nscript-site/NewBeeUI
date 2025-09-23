@@ -157,7 +157,7 @@ public class MainView : BaseView, IWindowView
             //new RoutedViewBuilder("Animate", ()=> new AnimateView()),
             new RoutedViewBuilder("Slider", ()=> new SliderView()),
             new RoutedViewBuilder("Menu", ()=> new MenuView()),
-            new RoutedViewBuilder("Flayout", ()=>new FlyoutView()),
+            new RoutedViewBuilder("Flyout", ()=>new FlyoutView()),
             new RoutedViewBuilder("Styles", ()=>new StyleView()),
             new RoutedViewBuilder("ComboBox", ()=>new ComboBoxView()),
             new RoutedViewBuilder("TextBox", ()=>new TextBoxView()),
