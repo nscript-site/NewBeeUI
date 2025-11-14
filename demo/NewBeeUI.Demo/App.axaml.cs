@@ -15,6 +15,8 @@ public partial class App : Application
         this.Styles.AddRange(GlobalStyles.BuildStyles());
     }
 
+    public static bool MockMobileOnDesktop { get; set; } = false;
+
     public static bool IsMobileApp { get; private set; }
 
     public override void OnFrameworkInitializationCompleted()
@@ -29,12 +31,19 @@ public partial class App : Application
             this.AttachDevTools();
 #endif
 
-            new MainView().ShowDialog();
+            if(MockMobileOnDesktop)
+            {
+                new MobileMainView().ShowDialog();
+            }
+            else
+            {
+                new MainView().ShowDialog();
+            }
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
             IsMobileApp = true;
-            singleViewPlatform.MainView = new HostView(new MainView());
+            singleViewPlatform.MainView = new HostView(new MobileMainView());
         }
 
         base.OnFrameworkInitializationCompleted();

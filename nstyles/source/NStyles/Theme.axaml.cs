@@ -52,7 +52,7 @@ public partial class NTheme : Styles
     /// Currently active <see cref="SukiColorTheme"/>
     /// If you want to change this please use <see cref="ChangeColorTheme(SukiUI.Models.SukiColorTheme)"/>
     /// </summary>
-    public SukiColorTheme? ActiveColorTheme { get; private set; }
+    public SukiColorTheme? ActiveColorTheme { get; protected set; }
 
     /// <summary>
     /// All available Color Themes.
@@ -65,17 +65,18 @@ public partial class NTheme : Styles
     /// </summary>
     public ThemeVariant ActiveBaseTheme => _app.ActualThemeVariant;
 
-    private readonly Application _app;
+    protected readonly Application _app;
 
-    private readonly HashSet<SukiColorTheme> _colorThemeHashset = new();
-    private readonly AvaloniaList<SukiColorTheme> _allThemes = new();
+    protected readonly HashSet<SukiColorTheme> _colorThemeHashset = new();
+    protected readonly AvaloniaList<SukiColorTheme> _allThemes = new();
 
     public NTheme() : this(SukiColor.Blue,null)
     { }
 
-    public NTheme(SukiColor colorTheme, IEnumerable<SukiColorTheme>? extraColorThemes)
+    public NTheme(SukiColor colorTheme, IEnumerable<SukiColorTheme>? extraColorThemes, bool loadXaml = true)
     {
-        AvaloniaXamlLoader.Load(this);
+        if(loadXaml == true) AvaloniaXamlLoader.Load(this);
+
         _app = Application.Current!;
         _app.ActualThemeVariantChanged += (_, e) => OnBaseThemeChanged?.Invoke(_app.ActualThemeVariant);
 

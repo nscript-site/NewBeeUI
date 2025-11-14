@@ -27,6 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solutio
 		nbui\Directory.Build.props = nbui\Directory.Build.props
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewBeeUI.iOS", "nbui\NewBeeUI.iOS\NewBeeUI.iOS.csproj", "{700AB094-15CD-4596-B770-DC2A1301FA72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewBeeUI.Platforms", "nbui\NewBeeUI.Platforms\NewBeeUI.Platforms.csproj", "{4A789C52-05DC-4478-B6FD-7F3FD3D5A228}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{36ED72AD-ECAA-9C37-7712-47D7F2984256}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36ED72AD-ECAA-9C37-7712-47D7F2984256}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36ED72AD-ECAA-9C37-7712-47D7F2984256}.Release|Any CPU.Build.0 = Release|Any CPU
+		{700AB094-15CD-4596-B770-DC2A1301FA72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{700AB094-15CD-4596-B770-DC2A1301FA72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{700AB094-15CD-4596-B770-DC2A1301FA72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{700AB094-15CD-4596-B770-DC2A1301FA72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A789C52-05DC-4478-B6FD-7F3FD3D5A228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A789C52-05DC-4478-B6FD-7F3FD3D5A228}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A789C52-05DC-4478-B6FD-7F3FD3D5A228}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A789C52-05DC-4478-B6FD-7F3FD3D5A228}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +95,8 @@ Global
 		{4E0A55F3-6151-26A0-2BC5-FFCC318805E6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{D0F1F0FE-E718-4BC8-494F-3D53EEEF9387} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{36ED72AD-ECAA-9C37-7712-47D7F2984256} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{700AB094-15CD-4596-B770-DC2A1301FA72} = {A5728991-7BEC-405E-A2DF-09BB6A74B5C8}
+		{4A789C52-05DC-4478-B6FD-7F3FD3D5A228} = {A5728991-7BEC-405E-A2DF-09BB6A74B5C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28D0AC60-CC01-413F-B473-EB920E6F6426}
