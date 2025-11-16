@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Avalonia.Threading;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,8 @@ public class MobileMainView : BaseView, IWindowView
     }
 
     protected bool IsDockRightEnabled = true;
+
+    protected List<RoutedViewBuilder>? RoutedViewBuilders = null;
 
     protected WindowInfo CreateWindowInfo()
     {
@@ -76,10 +79,9 @@ public class MobileMainView : BaseView, IWindowView
     {
         var router = BuildViewRouter().Margin(20).Ref(out Router)!;
 
-        var grid = Grid(rows: "*, Auto")
-            .Children([
+        var grid = VGrid("*, Auto",[
                 router,
-                BuildMenu().Row(1),
+                BuildBottomNavBar(),
             ]);
 
         if (App.IsMobileApp && OperatingSystem.IsLinux())  //鸿蒙手机
@@ -103,35 +105,42 @@ public class MobileMainView : BaseView, IWindowView
         return r;
     }
 
-    protected Control BuildMenu()
+    protected Control BuildBottomNavBar()
     {
-        Control BuildTabItem(RoutedViewBuilder? builder)
+        RoutedViewBuilders??= GetMenuItems();
+
+        var items = MobBottomTab.CreateFrom(RoutedViewBuilders);
+        if(items.Length >0)
         {
-            if (builder == null || builder.IsEmpty())
-            {
-                return Border().Width(100).Height(1).Align(null, 0).Margin(10, 0)
-                    .Background(Brushes.Gray).IsHitTestVisible(false);
-            }
-            else
-            {
-                return VGrid("40,100", [Border(builder.Icon?.Align(0, 0)), new TextBlock().Text(builder.Name)]);
-            }
+            items[0].IsSelected = true; // 默认选中第一个
         }
 
-        var listBox = new TabControl()
-            .HorizontalAlignment(HorizontalAlignment.Center)
-            .ItemsSource(() => GetMenuItems())
-            .ItemTemplate<RoutedViewBuilder, TabControl>(BuildTabItem)
-            .OnSelectionChanged((e) =>
+        var navBar = new MobNavBar() { Items = items };
+        navBar.OnSelect = (index, tab) =>
+        {
+            for(int i =0; i< items.Length; i++)
             {
-                if (e.FirstItem() is RoutedViewBuilder builder)
-                {
-                    if (builder.IsEmpty() == false)
-                        Router?.Goto(builder);    // 跳转
-                }
-            });
+                items[i].IsSelected = (i == index);
+            }
 
-        return listBox;
+            var builder = RoutedViewBuilders.ElementAtOrDefault(index);
+            if (builder != null && builder.IsEmpty() == false)
+            {
+                Router?.Goto(builder);    // 跳转
+            }
+        };
+
+        Dispatcher.UIThread.Post(() =>
+        {
+            // 初始导航到第一个
+            var firstBuilder = RoutedViewBuilders.ElementAtOrDefault(0);
+            if (firstBuilder != null && firstBuilder.IsEmpty() == false)
+            {
+                Router?.Goto(firstBuilder);
+            }
+        });
+
+        return navBar;
     }
 
     #endregion
