@@ -19,6 +19,8 @@ public partial class App : Application
 
     public static bool IsMobileApp { get; private set; }
 
+    public static bool IsMobileLayout { get => IsMobileApp || MockMobileOnDesktop; }
+
     public override void OnFrameworkInitializationCompleted()
     {
         // Line below is needed to remove Avalonia data validation.

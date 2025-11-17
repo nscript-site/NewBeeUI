@@ -1,9 +1,4 @@
 ﻿using Avalonia.Threading;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NewBeeUI.Demo.Views;
 
@@ -79,8 +74,9 @@ public class MobileMainView : BaseView, IWindowView
     {
         var router = BuildViewRouter().Margin(20).Ref(out Router)!;
 
-        var grid = VGrid("*, Auto",[
+        var grid = VGrid("*, 1, Auto",[
                 router,
+                HLine(1,1,"SukiLightBackground"),
                 BuildBottomNavBar(),
             ]);
 
@@ -149,18 +145,11 @@ public class MobileMainView : BaseView, IWindowView
     {
         return
         [
-            new RoutedViewBuilder("Dashboard", () => new DashboardView()).Icon(ViewDashboardOutlineIcon.Instance),
-            new RoutedViewBuilder("Buttons", () => new ButtonsView()),
-            new RoutedViewBuilder("Windows", () => new WindowsView()),
-            new RoutedViewBuilder("Test", () => new TestView()),
-            new RoutedViewBuilder("Overlay", new OverlayView()),
-            //new RoutedViewBuilder("Animate", ()=> new AnimateView()),
-            //new RoutedViewBuilder("Slider", ()=> new SliderView()),
-            //new RoutedViewBuilder("Menu", ()=> new MenuView()),
-            //new RoutedViewBuilder("Flyout", ()=>new FlyoutView()),
-            //new RoutedViewBuilder("Styles", ()=>new StyleView()),
-            //new RoutedViewBuilder("ComboBox", ()=>new ComboBoxView()),
-            //new RoutedViewBuilder("TextBox", ()=>new TextBoxView()),
+            new RoutedViewBuilder("Home", () => new DashboardView()).Icon(HomeOutlineIcon.Instance),
+            new RoutedViewBuilder("Buttons", () => new ButtonsView()).Icon(ButtonPointerIcon.Instance),
+            new RoutedViewBuilder("TextBox", ()=>new TextBoxView()).Icon(TextBoxIcon.Instance),
+            new RoutedViewBuilder("Overlay", new OverlayView()).Icon(LayersOutlineIcon.Instance),
+            new RoutedViewBuilder("Setting", new SettingView()).Icon(CogOutlineIcon.Instance),
         ];
     }
 }

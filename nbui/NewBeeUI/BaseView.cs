@@ -370,9 +370,9 @@ public abstract class BaseView : MvuView
         return new Panel().Width(width).VerticalAlignment(VerticalAlignment.Stretch);
     }
 
-    public static Control HLine(double height = 1, double opacity = 0.6, Thickness? margin = null, Action<Control>? onCreate = null)
+    public static Control HLine(double height = 1, double opacity = 0.6, string borderBrush = "SukiBorderBrush", Thickness? margin = null, Action<Control>? onCreate = null)
     {
-        var panel = new Panel().Background(BaseView.R("SukiBorderBrush")).Opacity(opacity)
+        var panel = new Panel().Background(BaseView.R(borderBrush)).Opacity(opacity)
             .Height(height).HorizontalAlignment(HorizontalAlignment.Stretch);
         if (margin == null)
             panel.Margin(0, 10, 0, 0);

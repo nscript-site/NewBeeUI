@@ -48,6 +48,6 @@ public class MobNavBar : BaseView
 
         var grid = HGrid(rows, Items);
 
-        return new Border().Child(grid).Padding(10,10,10,10).Background(R("SukiLightBackground"));
+        return new Border().Child(grid).Padding(10,10,10,10);
     }
 }
