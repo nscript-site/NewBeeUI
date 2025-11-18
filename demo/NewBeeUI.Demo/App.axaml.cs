@@ -1,9 +1,12 @@
 ﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
 using NewBeeUI.Demo.Properties;
 using NewBeeUI.Demo.Views;
+using NewBeeUI.Platforms;
+using System.ComponentModel;
 
 namespace NewBeeUI.Demo;
 
@@ -20,6 +23,8 @@ public partial class App : Application
     public static bool IsMobileApp { get; private set; }
 
     public static bool IsMobileLayout { get => IsMobileApp || MockMobileOnDesktop; }
+
+    public static ICameraService? CameraService { get; set; }
 
     public override void OnFrameworkInitializationCompleted()
     {

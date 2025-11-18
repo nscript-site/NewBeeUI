@@ -1,4 +1,5 @@
-﻿using UIKit;
+﻿using NewBeeUI.iOS;
+using UIKit;
 
 namespace NewBeeUI.Demo.iOS;
 
@@ -9,6 +10,9 @@ public class Application
     {
         // if you want to use a different Application Delegate class from "AppDelegate"
         // you can specify it here.
+
+        App.CameraService = new AvCaptureCameraService();
+
         UIApplication.Main(args, null, typeof(AppDelegate));
     }
 }

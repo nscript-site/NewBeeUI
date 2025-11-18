@@ -147,7 +147,7 @@ public class MobileMainView : BaseView, IWindowView
         [
             new RoutedViewBuilder("Home", () => new DashboardView()).Icon(HomeOutlineIcon.Instance),
             new RoutedViewBuilder("Buttons", () => new ButtonsView()).Icon(ButtonPointerIcon.Instance),
-            new RoutedViewBuilder("TextBox", ()=>new TextBoxView()).Icon(TextBoxIcon.Instance),
+            new RoutedViewBuilder("Camera", () => new CameraInfoView()).Icon(CameraOutlineIcon.Instance),
             new RoutedViewBuilder("Overlay", new OverlayView()).Icon(LayersOutlineIcon.Instance),
             new RoutedViewBuilder("Setting", new SettingView()).Icon(CogOutlineIcon.Instance),
         ];

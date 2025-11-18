@@ -1,5 +1,11 @@
 ﻿namespace NewBeeUI.Platforms;
 
+public enum CameraPosition
+{
+    Unspecified,
+    Front,
+    Back
+}
 
 /// <summary>
 /// Camera service that delivers raw BGRA frames.
@@ -7,8 +13,11 @@
 /// </summary>
 public interface ICameraService
 {
+    CameraPosition Position { get; }
     void StartPreview();
     void StopPreview();
+
+    void SwitchCamera();
 
     /// <summary>
     /// Raised on background thread when a new frame is available.

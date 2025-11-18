@@ -4,6 +4,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\nbui\NewBeeUI.Platforms\NewBeeUI.Platforms.csproj" />
     <ProjectReference Include="..\..\nbui\NewBeeUI\NewBeeUI.csproj" />
     <ProjectReference Include="..\..\nstyles\source\NStyles\NStyles.csproj" />
   </ItemGroup>

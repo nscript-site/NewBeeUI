@@ -2,6 +2,9 @@
 using CoreFoundation;
 using CoreMedia;
 using CoreVideo;
+using MediaPlayer;
+using NewBeeUI.Platforms;
+using ReplayKit;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
@@ -9,7 +12,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using NewBeeUI.Platforms;
 
 namespace NewBeeUI.iOS;
 
@@ -23,13 +25,33 @@ public class AvCaptureCameraService : NSObject, ICameraService, IAVCaptureVideoD
     readonly int _frameSkip = 0; // 0 = deliver all frames
     int _frameCounter = 0;
 
+    CameraPosition _currentPosition = CameraPosition.Back;
+
+    private static NSString Video = new NSString("vide");
+
+    public CameraPosition Position { get => _currentPosition; }
+
     public event Action<PooledPixelFrame>? FrameArrived;
+
+    private AVCaptureDevicePosition ToAVCaptureDevicePosition(CameraPosition position)
+    {
+        return position == CameraPosition.Front ? AVCaptureDevicePosition.Front : AVCaptureDevicePosition.Back;
+    }
+
+    private AVCaptureDevice? GetCameraDevice(CameraPosition position)
+    {
+        // 获取所有视频类型的摄像头
+        var discoverySession = AVCaptureDeviceDiscoverySession.Create([AVCaptureDeviceType.BuiltInUltraWideCamera], AVMediaTypes.Video, ToAVCaptureDevicePosition(position));
+
+        // 没找到则返回第一个可用摄像头
+        return discoverySession.Devices.FirstOrDefault();
+    }
 
     public void StartPreview()
     {
         if (_session != null && _session.Running) return;
-
-        var device = AVCaptureDevice.GetDefaultDevice(AVMediaTypes.Video);
+        
+        var device = GetCameraDevice(_currentPosition);
         if (device == null) return;
 
         NSError? err;
@@ -37,29 +59,45 @@ public class AvCaptureCameraService : NSObject, ICameraService, IAVCaptureVideoD
         if (err != null || input == null) return;
 
         var session = new AVCaptureSession { SessionPreset = AVCaptureSession.PresetHigh };
+        session.BeginConfiguration();
 
-        if (session.CanAddInput(input))
-            session.AddInput(input);
-
-        var output = new AVCaptureVideoDataOutput();
-
-        // Request BGRA pixel format
-        output.UncompressedVideoSetting = new AVVideoSettingsUncompressed
+        try
         {
-            PixelFormatType = CVPixelFormatType.CV32BGRA
-        };
+            if (session.CanAddInput(input))
+                session.AddInput(input);
 
-        // Deliver on background queue
-        var queue = new DispatchQueue("videoQueue");
-        output.SetSampleBufferDelegate(this, queue);
+            var output = new AVCaptureVideoDataOutput();
 
-        if (session.CanAddOutput(output))
-            session.AddOutput(output);
+            // Request BGRA pixel format
+            output.UncompressedVideoSetting = new AVVideoSettingsUncompressed
+            {
+                PixelFormatType = CVPixelFormatType.CV32BGRA
+            };
 
-        // Prefer the camera orientation / mirroring settings if necessary
-        _session = session;
-        _input = input;
-        _videoOutput = output;
+            // Deliver on background queue
+            var queue = new DispatchQueue("videoQueue");
+            output.SetSampleBufferDelegate(this, queue);
+
+            if (session.CanAddOutput(output))
+                session.AddOutput(output);
+
+            // Prefer the camera orientation / mirroring settings if necessary
+            _session = session;
+            _input = input;
+            _videoOutput = output;
+            if (_videoOutput != null)
+            {
+                var connection = _videoOutput.ConnectionFromMediaType(Video);
+                if (connection != null && connection.IsVideoRotationAngleSupported(new NFloat(90)))
+                {
+                    connection.VideoRotationAngle = 90;
+                }
+            }
+        }
+        finally
+        {
+            session.CommitConfiguration();
+        }
 
         session.StartRunning();
     }
@@ -75,6 +113,18 @@ public class AvCaptureCameraService : NSObject, ICameraService, IAVCaptureVideoD
         _videoOutput = null;
         _input = null;
         _session = null;
+    }
+
+    public void SwitchCamera()
+    {
+        // 切换目标摄像头
+        _currentPosition = _currentPosition == CameraPosition.Back ? CameraPosition.Front : CameraPosition.Back;
+
+        // 停止当前预览
+        StopPreview();
+
+        // 重新启动预览
+        StartPreview();
     }
 
     // Called on videoQueue

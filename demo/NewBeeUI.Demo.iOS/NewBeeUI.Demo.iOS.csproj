@@ -12,11 +12,16 @@
     <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <MtouchLink>None</MtouchLink>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Avalonia.iOS" Version="$(AvaloniaVersion)" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\nbui\NewBeeUI.iOS\NewBeeUI.iOS.csproj" />
     <ProjectReference Include="..\NewBeeUI.Demo\NewBeeUI.Demo.csproj" />
   </ItemGroup>
 </Project>

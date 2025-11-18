@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=netstandard">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <Color x:Key="SukiWindowBackground">#353535</Color>
     <Color x:Key="SukiBackground">Transparent</Color>
     <Color x:Key="SukiStrongBackground">#353535</Color>
