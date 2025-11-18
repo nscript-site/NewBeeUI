@@ -2,16 +2,9 @@
 using CoreFoundation;
 using CoreMedia;
 using CoreVideo;
-using MediaPlayer;
 using NewBeeUI.Platforms;
-using ReplayKit;
-using System;
 using System.Buffers;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NewBeeUI.iOS;
 
@@ -172,7 +165,14 @@ public class AvCaptureCameraService : NSObject, ICameraService, IAVCaptureVideoD
 
                     // Raise event - consumer must call Release()
                     var frame = new PooledPixelFrame(arr, width, height, bytesPerRow, OnRelease);
-                    FrameArrived?.Invoke(frame);
+                    try
+                    {
+                        FrameArrived?.Invoke(frame);
+                    }
+                    finally
+                    {
+                        frame.Release();
+                    }
                 }
                 finally
                 {

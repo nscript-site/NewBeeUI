@@ -10,7 +10,6 @@ namespace NewBeeUI.Demo.Views;
 
 public class CameraInfoView : BaseView
 {
-
     private int ImageWidth = 0;
     private int ImageHeight = 0;
     private int FrameIndex = 0;
@@ -44,6 +43,7 @@ public class CameraInfoView : BaseView
         
         Dispatcher.UIThread.InvokeAsync(() =>
         {
+            // 这里没清理上一个 Bitmap，实际应用中应该注意内存管理
             var bitmap = ConvertToBitmap(frame);
             image.Source = bitmap;
             this.UpdateState();
@@ -62,7 +62,7 @@ public class CameraInfoView : BaseView
         var pixelFormat = Avalonia.Platform.PixelFormat.Bgra8888;
         var alphaFormat = Avalonia.Platform.AlphaFormat.Unpremul;
 
-        fixed(byte* pData = frame.Data)
+        fixed (byte* pData = frame.Data)
         {
             // 创建 Bitmap
             return new Bitmap(
