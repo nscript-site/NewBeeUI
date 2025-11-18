@@ -12,9 +12,9 @@
     <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <MtouchLink>None</MtouchLink>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <PackageReference Include="Avalonia.iOS" Version="$(AvaloniaVersion)" />
