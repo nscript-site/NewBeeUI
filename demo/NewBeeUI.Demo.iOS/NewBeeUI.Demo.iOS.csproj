@@ -12,9 +12,12 @@
     <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
 
-  <!--<PropertyGroup>
-    <MtouchLink>None</MtouchLink>
-  </PropertyGroup>-->
+  <PropertyGroup>
+    <!--<MtouchLink>None</MtouchLink>-->
+    <!--<UseInterpreter>true</UseInterpreter>-->
+    <!--<RunAOTCompilation>true</RunAOTCompilation>
+    <AotAssemblies>true</AotAssemblies>-->
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia.iOS" Version="$(AvaloniaVersion)" />

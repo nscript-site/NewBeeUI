@@ -42,9 +42,9 @@ public class MobileMainView : BaseView, IWindowView
             CanMinimize = true,
             CanClose = true,
             WindowMinWidth = 400,
-            WindowMinHeight = 900,
+            WindowMinHeight = 500,
             WindowWidth = 400,
-            WindowHeight = 900,
+            WindowHeight = 800,
             IsWindowAnimationEnable = true,
             Subtitle = BuildSubtitle(),
             RightWindowsBar = HStack([
@@ -72,13 +72,13 @@ public class MobileMainView : BaseView, IWindowView
 
     protected override object Build()
     {
-        var router = BuildViewRouter().Margin(20).Ref(out Router)!;
+        var router = BuildViewRouter().Margin(0).Ref(out Router)!;
 
         var grid = VGrid("*, 1, Auto",[
-                router,
-                HLine(1,1,"SukiLightBackground"),
+                new ScrollViewer().Padding(20,0,20,0).Margin(0,5,0,0).Content(router),
+                HLine(1,1,"SukiLightBackground",margin:new Thickness(0)),
                 BuildBottomNavBar(),
-            ]);
+            ]).VerticalAlignment(VerticalAlignment.Stretch);
 
         if (App.IsMobileApp && OperatingSystem.IsLinux())  //鸿蒙手机
         {

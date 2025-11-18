@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Metrics;
+﻿using SkiaSharp;
+using System.Diagnostics.Metrics;
 
 namespace NewBeeUI.Demo.Views;
 
@@ -7,22 +8,27 @@ public class DashboardView : BaseView
     int count = 0;
     protected override object Build()
     {
-        return 
+        var stack =  
             VStack([
                 GroupBox("Platform Info",
                     VStack([
                         BuildRow("Runtime", GetRuntime()),
                         BuildRow("Mode", App.IsMobileApp ? "Mobile" : "Desktop"),
+                        BuildRow("SkiaSharp", SkiaSharp.SkiaSharpVersion.Native.ToString()),
                     ])
                 ),
-                GroupBox("Click Button",
-                   VStack([
-                    TextBlock().Align(-1).Text(() => $"Click {count} times"),
-                    TextButton("Click Me").Align(-1).WhenClick(_=>{
-                            count++;
-                            this.UpdateState();
-                        })
-                    ])
+                GroupBox("Buttons",
+                       VStack([
+                        TextBlock().Align(-1).Text(() => $"Click {count} times"),
+                        TextButton("Click Me").Align(-1).WhenClick(_=>{
+                                count++;
+                                this.UpdateState();
+                            }),
+                        new ToggleSwitch().Align(0,0),
+                        IconButton(SearchIcon.Instance),
+                        IconButton(Icons.ScaleToOriginal),
+                        IconButton("InnerText", SearchIcon.Instance),
+                        ])
                 ),
                 GroupBox("TextBox",
                      VStack([
@@ -30,7 +36,12 @@ public class DashboardView : BaseView
                         new TextBox().Watermark("请输入内容").ListenIME(),
                         ])
                 ),
+                GroupBox("Drawing",VStack([
+                    new DrawingRect(){ Width = 200, Height = 200}.Align(0,0)
+                    ])),
             ]).Spacing(32);
+
+        return stack;
     }
 
     private Control BuildRow(string title, string value)
