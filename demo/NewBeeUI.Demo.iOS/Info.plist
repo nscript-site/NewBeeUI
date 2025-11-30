@@ -39,7 +39,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSMicrophoneUsageDescription</key>
+  <key>XSAppIconAssets</key>
+  <string>Assets.xcassets/AppIcon.appiconset</string>
+  <key>NSMicrophoneUsageDescription</key>
 	<string>This app needs access to the microphone for record videos</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs access to the camera to take photos.</string>
