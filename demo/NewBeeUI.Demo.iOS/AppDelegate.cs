@@ -19,6 +19,6 @@ public partial class AppDelegate : AvaloniaAppDelegate<App>
             // 设置背景色，不然会是黑色的，闪一下子
             if (this.Window != null)
                 this.Window.BackgroundColor = UIColor.White;
-        }).WithInterFont();
+        }).With(new iOSPlatformOptions { RenderingMode = [iOSRenderingMode.OpenGl] }).WithInterFont();
     }
 }

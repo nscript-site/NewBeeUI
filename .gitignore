@@ -173,8 +173,6 @@ $RECYCLE.BIN/
 #################
 ## Cake
 #################
-tools/*
-!tools/packages.config
 .nuget
 artifacts/
 nuget

@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Declarative;
@@ -701,6 +702,45 @@ public static class BaseViewExtensions
     public static ScrollViewer ScrollViewer<T>(this T button) where T : Control
     {
         return new ScrollViewer().Content(button);
+    }
+
+    public static T TextStyle<T>(this T ctrl, float? fontSize = null) where T: Control
+    {
+        if(ctrl is TemplatedControl tCtrl)
+            tCtrl.Foreground(BaseView.R("SukiText"));
+        else if (ctrl is TextBlock tbCtrl)
+        {
+            tbCtrl.Foreground(BaseView.R("SukiText"));
+            if (fontSize != null)
+                tbCtrl.FontSize = fontSize.Value;
+        }
+        return ctrl;
+    }
+
+    public static T LowTextStyle<T>(this T ctrl, float? fontSize = null) where T : Control
+    {
+        if (ctrl is TemplatedControl tCtrl)
+            tCtrl.Foreground(BaseView.R("SukiLowText"));
+        else if (ctrl is TextBlock tbCtrl)
+        {
+            tbCtrl.Foreground(BaseView.R("SukiLowText"));
+            if (fontSize != null)
+                tbCtrl.FontSize = fontSize.Value;
+        }
+        return ctrl;
+    }
+
+    public static T DisabledTextStyle<T>(this T ctrl, float? fontSize = null) where T : Control
+    {
+        if (ctrl is TemplatedControl tCtrl)
+            tCtrl.Foreground(BaseView.R("SukiDisabledText"));
+        else if (ctrl is TextBlock tbCtrl)
+        {
+            tbCtrl.Foreground(BaseView.R("SukiDisabledText"));
+            if(fontSize != null)
+                tbCtrl.FontSize = fontSize.Value;
+        }
+        return ctrl;
     }
 
     public static T Align<T>(this T ctrl, int? hAlign = 0, int? vAlign = 0) where T : Control

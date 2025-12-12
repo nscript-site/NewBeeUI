@@ -30,6 +30,14 @@ public class MobBottomTab : BaseView
 
     protected override object Build()
     {
+        if(Icon!= null)
+        {
+            if (Icon.Parent != null)
+            {
+                (Icon.Parent as StackPanel)?.Children.Remove(Icon);
+            }
+        }
+
         var stack = VStack([
             (Icon ?? new PathIcon().Data(Icons.Star)).Align(0).IsHitTestVisible(false).Ref(out icon),
             TextBlock(Title).Align(0).FontSize(12).IsHitTestVisible(false).Ref(out title),

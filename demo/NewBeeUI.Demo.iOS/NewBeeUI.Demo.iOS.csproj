@@ -14,7 +14,7 @@
 
   <PropertyGroup>
     <!--<MtouchLink>None</MtouchLink>-->
-    <!--<UseInterpreter>true</UseInterpreter>-->
+    <MtouchInterpreter>true</MtouchInterpreter>
     <!--<RunAOTCompilation>true</RunAOTCompilation>
     <AotAssemblies>true</AotAssemblies>-->
   </PropertyGroup>

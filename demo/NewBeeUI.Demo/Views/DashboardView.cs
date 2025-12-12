@@ -39,6 +39,9 @@ public class DashboardView : BaseView
                 GroupBox("Drawing",VStack([
                     new DrawingRect(){ Width = 200, Height = 200}.Align(0,0)
                     ])),
+                GroupBox("3D",VStack([
+                    new Glb3DView(){ Width = 300, Height = 300}.Align(0,0)
+                    ])),
             ]).Spacing(32);
 
         return stack;
