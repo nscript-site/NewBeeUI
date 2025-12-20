@@ -8,11 +8,11 @@ namespace NewBeeUI;
 
 public class MobNavBar : BaseView
 {
-    public MobBottomTab[]? Items { get; set; }
+    public MobIconButton[]? Items { get; set; }
 
     public string? CustomGridRows { get; set; } = null;
 
-    public Action<int,MobBottomTab>? OnSelect { get; set; }
+    public Action<int,MobIconButton>? OnSelect { get; set; }
 
     protected override object Build()
     {

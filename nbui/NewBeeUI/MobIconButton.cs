@@ -2,13 +2,15 @@
 
 namespace NewBeeUI;
 
-public class MobBottomTab : BaseView
+public class MobIconButton : BaseView
 {
     public string Title { get; set; } = string.Empty;
 
-    public PathIcon? Icon { get; set; }
+    public new PathIcon? Icon { get; set; }
 
-    public Action<MobBottomTab>? OnClick { get; set; }
+    public Action<MobIconButton>? OnClick { get; set; }
+
+    public bool AutoSelectedWhenClick { get; set; } = true;
 
     private bool isSelected = false;
     public bool IsSelected
@@ -22,7 +24,6 @@ public class MobBottomTab : BaseView
                 UpdateColor();
             }
         }
-
     }
 
     PathIcon icon = default!;
@@ -69,20 +70,22 @@ public class MobBottomTab : BaseView
 
     private void FireOnClick()
     {
-        IsSelected = true;
+        if(AutoSelectedWhenClick == true)
+            IsSelected = true;
+
         OnClick?.Invoke(this);
     }
 
-    public static MobBottomTab CreateFrom(RoutedViewBuilder builder)
+    public static MobIconButton CreateFrom(RoutedViewBuilder builder)
     {
-        return new MobBottomTab
+        return new MobIconButton
         {
             Title = builder.Name,
             Icon = builder.Icon
         };
     }
 
-    public static MobBottomTab[] CreateFrom(IList<RoutedViewBuilder> builders)
+    public static MobIconButton[] CreateFrom(IList<RoutedViewBuilder> builders)
     {
         return builders.Select(CreateFrom).ToArray();
     }

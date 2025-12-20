@@ -366,24 +366,21 @@ public abstract class BaseView : MvuView
         return iconView;
     }
 
-    public static Panel VLine(int width = 1)
+    public static Control VLine(int width = 1)
     {
-        return new Panel().Width(width).VerticalAlignment(VerticalAlignment.Stretch);
+        return new Avalonia.Controls.Shapes.Rectangle().Width(width).VerticalAlignment(VerticalAlignment.Stretch);
     }
 
     public static Control HLine(double height = 1, double opacity = 0.6, string borderBrush = "SukiBorderBrush", Thickness? margin = null, Action<Control>? onCreate = null)
     {
-        var panel = new Panel().Background(BaseView.R(borderBrush)).Opacity(opacity)
-            .Height(height).HorizontalAlignment(HorizontalAlignment.Stretch);
-        if (margin == null)
-            panel.Margin(0, 10, 0, 0);
-        else
-            panel.Margin(margin.Value);
-
+        var shape = new Avalonia.Controls.Shapes.Rectangle().Height(height).Opacity(opacity).Fill(BaseView.R(borderBrush)).HorizontalAlignment(HorizontalAlignment.Stretch);
         if (onCreate != null)
-            onCreate(panel);
-
-        return panel;
+            onCreate(shape);
+        if (margin == null)
+            shape.Margin(0, 10, 0, 0);
+        else
+            shape.Margin(margin.Value);
+        return shape;
     }
 
     /// <summary>
