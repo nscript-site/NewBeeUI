@@ -72,6 +72,7 @@ public class MessageBoxView : BaseView
         string? closeButtonClasses = null,
         StreamGeometry? iconCloseButton = null,
         Control? iconContent = null,
+        bool modal = true,
         Action<MessageBoxView>? onCreate = null)
     {
         var msgBox = CreateMessageBoxView(owner, message, title, iconContent);
@@ -79,7 +80,7 @@ public class MessageBoxView : BaseView
 
         onCreate?.Invoke(msgBox);
 
-        msgBox.ShowInOverlay(owner);
+        msgBox.ShowInOverlay(owner, modal);
         return msgBox;
     }
 
@@ -104,6 +105,7 @@ public class MessageBoxView : BaseView
         string? okButtonClasses = null, string? cancelButtonClasses = null,
         StreamGeometry? iconOkButton = null, StreamGeometry? iconCancelButton = null,
         Control? iconContent = null,
+        bool modal = true,
         Action<MessageBoxView>? onCreate = null)
     {        
         var msgBox = CreateMessageBoxView(owner, message, title,iconContent);
@@ -111,7 +113,7 @@ public class MessageBoxView : BaseView
         var cancelButton = msgBox.CreateButton(cancelButtonText, cancelButtonClasses, iconCancelButton, onClosed: () => onClose?.Invoke(false));
         msgBox.Buttons = [okButton,cancelButton];
         onCreate?.Invoke(msgBox);
-        msgBox.ShowInOverlay(owner);
+        msgBox.ShowInOverlay(owner,modal);
         await msgBox.tcs.Task.WaitAsync(CancellationToken.None);
     }
 }

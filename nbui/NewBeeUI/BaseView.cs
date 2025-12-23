@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Declarative;
@@ -9,6 +10,7 @@ using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using NStyles.Controls;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace NewBeeUI;
@@ -43,6 +45,18 @@ public abstract class BaseView : MvuView
     protected void InvokeByUIThread(Action action)
     {
         Dispatcher.UIThread.InvokeAsync(action);
+    }
+
+    protected override object Build()
+    {
+        Control content;
+        Build(out content);
+        return content;
+    }
+
+    protected virtual void Build(out Control content)
+    {
+        content = new TextBlock().Text("BaseView");
     }
 
     #region Tooltip Helpers
@@ -86,6 +100,12 @@ public abstract class BaseView : MvuView
 
     #region Control Create Helpers
 
+    public static Image Image(Stream imageFileStream)
+    {
+        imageFileStream.Position = 0;
+        return new Image().Source(new Avalonia.Media.Imaging.Bitmap(imageFileStream));
+    }
+
     public static Button TextButton(string text, double? fontSize = null)
     {
         return new Button() { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center }.Text(text, fontSize);
@@ -121,6 +141,13 @@ public abstract class BaseView : MvuView
     {
         var tb = new TextBlock() { TextWrapping = wrap ? TextWrapping.Wrap : TextWrapping.NoWrap };
         if (text != null) tb.Text(text);
+        return tb;
+    }
+
+    public static TextBlock TextBlock(Func<string>? textFunc = null, bool wrap = false)
+    {
+        var tb = new TextBlock() { TextWrapping = wrap ? TextWrapping.Wrap : TextWrapping.NoWrap };
+        if (textFunc != null) tb.Text(textFunc());
         return tb;
     }
 
@@ -507,15 +534,33 @@ public abstract class BaseView : MvuView
         hosts.Add(Loading);
     }
 
-    /// <summary>
-    /// 展示在窗口的 Overlay 上, 如果窗口不存在，则返回 false。
-    /// 本方法仅用于桌面环境。
-    /// </summary>
-    /// <returns></returns>
-    public bool ShowInOverlay(BaseView owner)
+    private InnerModalView? FindModalBackgroundControl(Controls hosts)
+    {
+        foreach(var ctrl in hosts)
+        {
+            if(ctrl is InnerModalView r)
+            {
+                return r;
+            }
+        }
+        return null;    
+    }
+
+    public bool ShowInOverlay(BaseView owner, bool modal = false)
     {
         var hosts = owner.OverlayHosts();
         if (hosts == null) return false;
+
+        if(modal == true)
+        {
+            InnerModalView? bg = FindModalBackgroundControl(hosts);
+            if(bg == null)
+            {
+                var border = new InnerModalView();
+                hosts.Add(border);
+            }
+        }
+
         hosts.Add(this);
         return false;
     }
@@ -524,6 +569,8 @@ public abstract class BaseView : MvuView
     {
         var hosts = this.OverlayHosts();
         if (hosts == null) return false;
+        InnerModalView? bg = FindModalBackgroundControl(hosts);
+        if(bg != null) hosts.Remove(bg);
         return hosts.Remove(this);
     }
 
@@ -1065,6 +1112,12 @@ public static class BaseViewExtensions
         }
 
         return button;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void Return<TElement>(this TElement control, out TElement field)
+    {
+        field = control;
     }
 
     #region 简化动作回调

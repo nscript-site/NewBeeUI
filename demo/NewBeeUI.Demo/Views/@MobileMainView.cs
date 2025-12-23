@@ -105,7 +105,7 @@ public class MobileMainView : BaseView, IWindowView
     {
         RoutedViewBuilders??= GetMenuItems();
 
-        var items = MobBottomTab.CreateFrom(RoutedViewBuilders);
+        var items = MobIconButton.CreateFrom(RoutedViewBuilders);
         if(items.Length >0)
         {
             items[0].IsSelected = true; // 默认选中第一个
