@@ -147,7 +147,7 @@ public abstract class BaseView : MvuView
     public static TextBlock TextBlock(Func<string>? textFunc = null, bool wrap = false)
     {
         var tb = new TextBlock() { TextWrapping = wrap ? TextWrapping.Wrap : TextWrapping.NoWrap };
-        if (textFunc != null) tb.Text(textFunc());
+        if (textFunc != null) tb.Text(textFunc);
         return tb;
     }
 
@@ -393,9 +393,18 @@ public abstract class BaseView : MvuView
         return iconView;
     }
 
-    public static Control VLine(int width = 1)
+    public static Control VLine(int width = 1, double opacity = 0.6, string borderBrush = "SukiBorderBrush", Thickness? margin = null, Action<Control>? onCreate = null)
     {
-        return new Avalonia.Controls.Shapes.Rectangle().Width(width).VerticalAlignment(VerticalAlignment.Stretch);
+        var line = new Avalonia.Controls.Shapes.Rectangle().Width(width).VerticalAlignment(VerticalAlignment.Stretch);
+        line.Opacity = opacity;
+        line.Fill(BaseView.R(borderBrush));
+        if (onCreate != null)
+            onCreate(line);
+        if (margin == null)
+            line.Margin(0, 10, 0, 0);
+        else
+            line.Margin(margin.Value);
+        return line;
     }
 
     public static Control HLine(double height = 1, double opacity = 0.6, string borderBrush = "SukiBorderBrush", Thickness? margin = null, Action<Control>? onCreate = null)

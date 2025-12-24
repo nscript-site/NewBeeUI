@@ -46,9 +46,7 @@ public class SKCanvasDrawOperation : ICustomDrawOperation
         var canvas = lease?.SkCanvas;
         if (canvas is { })
         {
-            Console.WriteLine(canvas.DeviceClipBounds);
             var rect = SKRect.Create((float)_bounds.Left, (float)_bounds.Top, (float)_bounds.Width, (float)_bounds.Height);
-
             OnDrawCanvas?.Invoke(canvas, rect);
         }
     }
