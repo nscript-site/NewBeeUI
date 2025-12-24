@@ -532,15 +532,50 @@ public abstract class BaseView : MvuView
         toast.ShowToast(message, seconds, opacity, compactMode, hAlign, vAlign);
     }
 
-    public void ShowLoading(Action<Loading>? onCreate = null)
+    public void ShowLoading(Control? centerOfContainer = null, Action<Loading>? onCreate = null)
     {
         var hosts = this.OverlayHosts();
         if (hosts == null) return;
 
         this.IsEnabled = false;
-        var Loading = new Loading().Align(0, 0);
-        onCreate?.Invoke(Loading);
-        hosts.Add(Loading);
+        var loading = new Loading().Align(0, 0);
+
+        if (centerOfContainer != null)
+        {
+            // 获取 OverlayHosts 的屏幕位置
+            Visual overlay = (this.GetVisualRoot() as Visual) ?? centerOfContainer;
+            var overlayBound = overlay.Bounds;
+
+            // 获取 centerOfContainer 的屏幕位置
+            var centerOrigin = centerOfContainer.PointToScreen(new Point(0, 0));
+            var overlayOrigin = overlay.PointToScreen(new Point(0, 0));
+
+            // 获取 centerOfContainer 的中心点
+            var centerSize = centerOfContainer.Bounds;
+            var centerPoint = new Point(
+                centerOrigin.X + centerSize.Width / 2,
+                centerOrigin.Y + centerSize.Height / 2
+            );
+
+            // 计算相对于 OverlayHosts 的偏移
+            var offsetX = centerPoint.X - overlayOrigin.X - overlayBound.Width * 0.5;
+            var offsetY = centerPoint.Y - overlayOrigin.Y - overlayBound.Height * 0.5;
+
+            // 假设 Loading 控件有默认宽高（如 80x80），可根据实际情况获取
+            double loadingWidth = loading.Width > 0 ? loading.Width : 50;
+            double loadingHeight = loading.Height > 0 ? loading.Height : 50;
+
+            // 设置 Margin，使 Loading 居中于 centerOfContainer
+            loading.Margin = new Thickness(
+                0,
+                0,
+                - offsetX * 2,
+                - offsetY * 2
+            );
+        }
+
+        onCreate?.Invoke(loading);
+        hosts.Add(loading);
     }
 
     private InnerModalView? FindModalBackgroundControl(Controls hosts)
@@ -1025,7 +1060,7 @@ public static class BaseViewExtensions
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     if (isLoading == false) return;
-                    owner.ShowLoading(onCreate);
+                    owner.ShowLoading(null, onCreate);
                 });
             });
 
