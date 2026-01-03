@@ -11,6 +11,7 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 using NStyles.Controls;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Windows.Input;
 
 namespace NewBeeUI;
@@ -264,6 +265,13 @@ public abstract class BaseView : MvuView
         return panel;
     }
 
+    public static ScrollViewer Scrollable(Control? content = null)
+    {
+        var sv = new ScrollViewer();
+        if (content != null) sv.Content = content;
+        return sv;
+    }
+
     public static Grid Grid(string? rows = null, string? cols = null, Control?[]? controls = null)
     {
         var g = new Grid();
@@ -401,7 +409,7 @@ public abstract class BaseView : MvuView
         if (onCreate != null)
             onCreate(line);
         if (margin == null)
-            line.Margin(0, 10, 0, 0);
+            line.Margin(0, 0, 0, 0);
         else
             line.Margin(margin.Value);
         return line;
@@ -484,6 +492,55 @@ public abstract class BaseView : MvuView
         var gb = new GroupBox() { Header = header }.Align(hAlign).BorderThickness(1);
         if (content != null) gb.Content = content;
         return gb;
+    }
+
+    public static Grid SettingRow(StreamGeometry? icon, string text, Control content, bool canClick = false, Action<Grid>? onClick = null)
+    {
+        if(canClick == false) return HGrid("Auto,Auto, *",
+            [
+                icon == null ? null : new PathIcon().Data(icon).Size(16).Margin(10,0,10,0),
+                TextBlock(text).Align(-1,0),
+                content.Align(1,0)
+            ]);
+        else
+        {
+            var grid = HGrid("Auto,Auto, *",
+            [
+                icon == null ? null : new PathIcon().Data(icon).Size(16).Margin(10, 0, 10, 0).IsHitTestVisible(false),
+                TextBlock(text).Align(-1, 0).IsHitTestVisible(false),
+                content.Align(1, 0).IsHitTestVisible(false)
+            ]).Background(Brushes.Transparent);
+
+            if (onClick != null) grid.WhenClick(onClick);
+            return grid;
+        }
+    }
+
+    public static Border SettingVGrid(Control?[] contents, string borderBrush = "SukiBorderBrush")
+    {
+        Control CreateLine()
+        {
+            return HLine(1, 1, borderBrush).Margin(0);
+        }
+
+        var controls = new List<Control>(contents.Length * 2);
+        var sb = new StringBuilder();
+        foreach (var item in contents)
+        {
+            if (item != null)
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append(",1,");
+                    controls.Add(CreateLine());
+                }
+                sb.Append("*");
+                controls.Add(item.Margin(6));
+            }
+        }
+
+        return Border(VGrid(sb.ToString(), controls.ToArray()), thickness: 1)
+            .BorderBrush(R(borderBrush));
     }
 
     #endregion
@@ -1181,6 +1238,12 @@ public static class BaseViewExtensions
     public static T WhenDoubleClick<T>(this T ctrl, Action<T> action) where T : Control
     {
         ctrl.OnDoubleTapped(_ => action(ctrl));
+        return ctrl;
+    }
+
+    public static T WhenIsCheckedChanged<T>(this T ctrl, Action<T> action) where T : ToggleSwitch
+    {
+        ctrl.OnIsCheckedChanged(_ => action(ctrl));
         return ctrl;
     }
 
