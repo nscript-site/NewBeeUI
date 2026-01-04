@@ -1,4 +1,6 @@
-# NewBeeUI
+<p align="center">
+  <img src="./assets/logo200.jpg" alt="logo" />
+</p>
 
 NewBeeUI(NB UI，又叫菜鸟UI) 是基于 Avalonia 的 mvu gui 库，它专门针对不会/不喜欢 axaml 的程序员开发，是一个入门非常简单的跨平台 gui 库。
 

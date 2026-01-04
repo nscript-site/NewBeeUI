@@ -43,7 +43,7 @@ internal class Program
 
     static void GenerateBitmap(DirectoryInfo dirOutput, SKBitmap bitmap, int size)
     {
-        var resized = bitmap.Resize(new SKImageInfo(size, size), new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.None));
+        var resized = bitmap.Resize(new SKImageInfo(size, size), new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear));
         if (resized == null)
         {
             Console.WriteLine($"Failed to resize image to {size}x{size}");
