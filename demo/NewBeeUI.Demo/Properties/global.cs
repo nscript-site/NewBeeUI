@@ -8,3 +8,4 @@ global using NewBeeUI;
 global using NStyles.MeterialIcons;
 global using System.Collections.Generic;
 global using System;
+global using NewBeeUI.Demo.Views.Components;

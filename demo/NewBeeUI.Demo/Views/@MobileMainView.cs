@@ -75,7 +75,7 @@ public class MobileMainView : BaseView, IWindowView
         var router = BuildViewRouter().Margin(0).Ref(out Router)!;
 
         var grid = VGrid("*, 1, Auto",[
-                new ScrollViewer().Padding(20,0,20,0).Margin(0,5,0,0).Content(router),
+                new ScrollViewer().Padding(20,20,20,0).Margin(0,5,0,0).Content(router),
                 HLine(1,1,"SukiLightBackground",margin:new Thickness(0)),
                 BuildBottomNavBar(),
             ]).VerticalAlignment(VerticalAlignment.Stretch);
@@ -145,11 +145,11 @@ public class MobileMainView : BaseView, IWindowView
     {
         return
         [
-            new RoutedViewBuilder("Home", () => new DashboardView()).Icon(HomeOutlineIcon.Instance),
-            new RoutedViewBuilder("Buttons", () => new ButtonsView()).Icon(ButtonPointerIcon.Instance),
-            new RoutedViewBuilder("Camera", () => new CameraInfoView()).Icon(CameraOutlineIcon.Instance),
-            new RoutedViewBuilder("Overlay", new OverlayView()).Icon(LayersOutlineIcon.Instance),
-            new RoutedViewBuilder("Setting", new MobileSettingView()).Icon(CogOutlineIcon.Instance),
+            new RoutedViewBuilder("首页", () => new HomeView()).Icon(HomeOutlineIcon.Instance),
+            new RoutedViewBuilder("组件", () => new ComponentsView()).Icon(ButtonPointerIcon.Instance),
+            new RoutedViewBuilder("布局", () => new LayoutView()).Icon(ViewGridOutlineIcon.Instance),
+            new RoutedViewBuilder("弹窗", new OverlayView()).Icon(LayersOutlineIcon.Instance),
+            new RoutedViewBuilder("设置", new MobileSettingView()).Icon(CogOutlineIcon.Instance),
         ];
     }
 }

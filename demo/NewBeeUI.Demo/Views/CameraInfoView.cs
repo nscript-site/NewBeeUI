@@ -2,9 +2,6 @@
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using NewBeeUI.Platforms;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NewBeeUI.Demo.Views;
 

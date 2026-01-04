@@ -2,24 +2,24 @@
 
 public class OverlayView : BaseView
 {
-    protected override object Build()
+    protected override void Build(out Control content)
     {
-        var list = new List<Control>();
-
-        if(App.IsMobileApp == false && App.MockMobileOnDesktop == false)
+        if (App.IsMobileApp == false && App.MockMobileOnDesktop == false)
         {
-            Control[] desktopOnlyList = [
-                TextButton("弹出窗口1").OnClick(async _=>{
-                            await new PopupWindowView().ShowDialogAsync(null);
-                        }),
-                TextButton("弹出窗口2").OnClick(async _=>{
-                    await new PopupWindowView().ShowDialogAsync(null, "自定义窗口标题");
-                }),
-            ];
-            list.AddRange(desktopOnlyList);
+            VStack(BuildDesktop().ConcatWith(BuildMobile()))
+                .Return(out content);
         }
+        else
+        {
+            VStack(BuildMobile())
+                .Return(out content);
+        }
+    }
 
-        Control[] commonList = [
+    protected Control[] BuildMobile()
+    {
+        return
+        [
             TextButton("MessageBoxView1").OnClick(_=>{
                 MessageBoxView.Show(this, "这是一条消息XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
             }),
@@ -29,7 +29,7 @@ public class OverlayView : BaseView
                         MessageBoxView.Show(this, val ? "你点击了确定" : "你点击了取消");
                     });
             }),
-                TextButton("ConfirmMessageWithIcons").OnClick(async _=>{
+            TextButton("ConfirmMessageWithIcons").OnClick(async _=>{
                 await MessageBoxView.ShowOkCancel(this, "确定 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 吗",
                     iconOkButton: CheckIcon.Instance,
                     iconCancelButton: CloseIcon.Instance,
@@ -50,12 +50,21 @@ public class OverlayView : BaseView
             TextButton("移除 Overlay").OnClick(_ => {
                 var hosts = this.OverlayHosts();
                 hosts?.Clear();
+            }),
+            DemoViewCodeView(),
+        ];
+    }
+
+    protected Control[] BuildDesktop()
+    {
+        return
+        [
+            TextButton("弹出窗口1").OnClick(async _=>{
+                await new PopupWindowView().ShowDialogAsync(null);
+            }),
+            TextButton("弹出窗口2").OnClick(async _=>{
+                await new PopupWindowView().ShowDialogAsync(null, "自定义窗口标题"); 
             })
         ];
-
-        list.AddRange(commonList);
-
-        return VStack(0, 0).Spacing(10)
-            .Children(list.ToArray());
     }
 }

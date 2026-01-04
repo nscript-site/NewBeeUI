@@ -8,6 +8,10 @@ using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using NStyles.Controls;
+using NStyles.MeterialIcons;
+using System;
+using System.Buffers.Text;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
@@ -336,10 +340,40 @@ public abstract class BaseView : MvuView
         return border;
     }
 
+    public static Control DemoViewCodeView([CallerFilePath] string filePath = "", string text = "<code>", string baseUrl = "https://github.com/nscript-site/NewBeeUI/tree/main/demo/NewBeeUI.Demo/Views/")
+    {
+        void ShowSourceCode(string fileName, string code)
+        {
+            var sourceView = new SourceCodeView()
+            {
+                FileName = fileName,
+                Codes = code
+            };
+            sourceView.ShowDialog();
+        }
+
+        var fileName = Path.GetFileName(filePath);
+            String codes = "";
+            if (File.Exists(filePath)) codes = File.ReadAllText(filePath);
+            return HStack([
+                    TextBlock($"[{fileName}]").Align(0,0).Foreground(R("SukiPrimaryColor")).Margin(0,0,10,0),
+                    IconButton(ContentCopyIcon.Instance, "复制源代码", iconSize:14).Size(24).WhenClick(_=>{ CopyToClipboard(codes); }).Align(0,0),
+                    IconButton(FileCodeOutlineIcon.Instance, "查看源代码", iconSize:14).Size(24).WhenClick(_=>{ ShowSourceCode(fileName, codes); }).Align(0,0),
+                    IconButton(LinkIcon.Instance, "使用浏览器在线浏览源代码", iconSize:14).Size(24).WhenClick(_=>{ OpenUrl($"{baseUrl}{fileName}"); }).Align(0,0),
+                ]).Align(0, -1).Margin(0,10).Spacing(2);
+    }
+
+    public static HyperlinkButton Hyperlink(string text, string url, string baseUrl = "")
+    {
+        return new HyperlinkButton()
+            .Text(text)
+            .NavigateUri(new Uri($"{baseUrl}{url}"));
+    }
+
     public const string BaseView_Classes_HStack = "BaseView_HStack";
     public static StackPanel HStack(Control[] controls, bool useDefaultClasses = true)
     {
-        var stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10 };
+        var stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = Globals.HStackDefaultSpacing };
         stack.Children.AddRange(controls);
         if (useDefaultClasses) stack.Classes(BaseView_Classes_HStack);
         return stack;
@@ -347,7 +381,7 @@ public abstract class BaseView : MvuView
 
     public static StackPanel HStack(int? hAlign = -1, int? vAlign = 0, bool useDefaultClasses = true)
     {
-        var stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10 }.Align(hAlign,vAlign);
+        var stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = Globals.HStackDefaultSpacing }.Align(hAlign,vAlign);
         if (useDefaultClasses) stack.Classes(BaseView_Classes_HStack);
         return stack;
     }
@@ -356,7 +390,7 @@ public abstract class BaseView : MvuView
 
     public static StackPanel VStack(Control[] controls, bool useDefaultClasses = true)
     {
-        var stack = new StackPanel() { Orientation = Orientation.Vertical, Spacing = 10 };
+        var stack = new StackPanel() { Orientation = Orientation.Vertical, Spacing = Globals.VStackDefaultSpacing };
         stack.Children.AddRange(controls);
         if(useDefaultClasses) stack.Classes(BaseView_Classes_VStack);
         return stack;
@@ -364,7 +398,7 @@ public abstract class BaseView : MvuView
 
     public static StackPanel VStack(int? hAlign = -1, int? vAlign = 0, bool useDefaultClasses = true)
     {
-        var stack = new StackPanel() { Orientation = Orientation.Vertical, Spacing = 10 }.Align(hAlign, vAlign);
+        var stack = new StackPanel() { Orientation = Orientation.Vertical, Spacing = Globals.VStackDefaultSpacing }.Align(hAlign, vAlign);
         if (useDefaultClasses) stack.Classes(BaseView_Classes_VStack);
         return stack;
     }
@@ -566,6 +600,45 @@ public abstract class BaseView : MvuView
     }
 
     #endregion
+
+    public static void OpenUrl(string url)
+    {
+        try
+        {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true // 必须为 true 才能用默认浏览器打开
+            };
+            Process.Start(psi);
+        }
+        catch (Exception ex)
+        {
+            // 处理异常
+        }
+    }
+
+    public static void CopyToClipboard(string text, Action? onComplete = null)
+    {
+        TopLevel? topLevel = null;
+        Dispatcher.UIThread.Post(
+            async () => {
+                topLevel ??= TopLevel.GetTopLevel(Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+        ? desktop.MainWindow
+        : null);
+
+                if (topLevel != null)
+                {
+                    var clipboard = topLevel.Clipboard;
+                    if (clipboard != null)
+                    {
+                        await clipboard.SetTextAsync(text);
+                        onComplete?.Invoke();
+                    }
+                }
+            }
+        );
+    }
 
     /// <summary>
     /// 显示 ToastView
@@ -1217,6 +1290,19 @@ public static class BaseViewExtensions
     public static void Return<TElement>(this TElement control, out TElement field)
     {
         field = control;
+    }
+
+    public static Control[] ConcatWith(this Control[] first, params Control[] second)
+    {
+        if (first == null || first.Length == 0)
+            return second ?? Array.Empty<Control>();
+        if (second == null || second.Length == 0)
+            return first ?? Array.Empty<Control>();
+
+        var result = new Control[first.Length + second.Length];
+        Array.Copy(first, 0, result, 0, first.Length);
+        Array.Copy(second, 0, result, first.Length, second.Length);
+        return result;
     }
 
     #region 简化动作回调

@@ -24,7 +24,8 @@ public class MobileSettingView : BaseView
                 SettingRow(ShieldAccountOutlineIcon.Instance, "隐私政策", RightArrow(), true),
                 SettingRow(InformationOutlineIcon.Instance, "关于我们", RightArrow(), true),
             ]).CornerRadius(10).Background(R("SukiCardBackground")),
-        ]).Margin(0, 20).Spacing(10).Align(null, null).Return(out content);
+            DemoViewCodeView(),
+        ]).Spacing(10).Align(null, null).Return(out content);
     }
 
     RadioButton[] BuildColorThemeRadioButtons()

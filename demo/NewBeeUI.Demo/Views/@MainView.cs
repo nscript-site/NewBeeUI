@@ -149,8 +149,8 @@ public class MainView : BaseView, IWindowView
     {
         return
         [
-            new RoutedViewBuilder("Home", () => new DashboardView()).Icon(HomeOutlineIcon.Instance),
-            new RoutedViewBuilder("Buttons", () => new ButtonsView()),
+            new RoutedViewBuilder("Home", () => new HomeView()).Icon(HomeOutlineIcon.Instance),
+            new RoutedViewBuilder("Components", () => new ComponentsView()),
             new RoutedViewBuilder("Test", () => new TestView()),
             new RoutedViewBuilder("Overlay", new OverlayView()),
             //new RoutedViewBuilder("Animate", ()=> new AnimateView()),

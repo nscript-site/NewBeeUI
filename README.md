@@ -31,15 +31,15 @@ public class HelloView : BaseView
 {
     int count = 0;
 
-    protected override object Build()
+    protected override void Build(out Control content)
     {
-        return VStack([
-                TextBlock().Align(0).Text(() => $"Click {count} times"),
-                TextButton("Hello").OnClick(_=>{
+        VStack([
+                TextBlock(() => $"Click {count} times").Align(0),
+                TextButton("Hello").WhenClick(_=>{
                     count++;
                     this.UpdateState();
                 })
-            ]).Margin(20);
+        ]).Margin(20).Ref(out content);
     }
 }
 
@@ -394,3 +394,19 @@ public class MainView : BaseView, IWindowView
     }
 }
 ```
+
+## 辅助工具
+
+### nbuitools
+
+`tools/NewBeeUI.Tools.ConsoleApp` 是辅助工具。编译后可以得到 nbuitools 程序。支持下面子命令: 
+
+- gicon - 生成 app icon，目前仅支持生成 iOS 下的 App Icons
+
+运行下面命令，可以生成对应的 App Icons 图标：
+
+```bash
+nbuitools.exe gicon --input .\logo.png
+```
+
+将生成的图像复制到 AvaloniaUI 的 iOS 项目下 `Assets.xcassets/AppIcon.appiconset` 目录（如果目录不存在，则创建对应目录）下。同时，需要在该目录下，创建 `Contents.json` 内容，可直接复制自 : `https://github.com/nscript-site/NewBeeUI/blob/main/demo/NewBeeUI.Demo.iOS/Assets.xcassets/AppIcon.appiconset/Contents.json`

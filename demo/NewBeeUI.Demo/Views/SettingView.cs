@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace NewBeeUI.Demo.Views;
 
@@ -22,13 +18,17 @@ public class SettingView : BaseView, IWindowView
 
     protected override object Build()
     {
-        return VStack(0, 0).Children([
+        return VStack([
             TextButton("切换基础主题（白天/黑夜）").FlatStyle().OnClick(_ => {
                 NTheme.GetInstance()?.SwitchBaseTheme();
             }),
             TextButton("切换颜色主题").FlatStyle().OnClick(_ => {
                 NTheme.GetInstance()?.SwitchColorTheme();
-            })
-        ]);
+            }),
+            TextButton("浏览 Material Design Icons 图标").FlatStyle().OnClick(_ => {
+                OpenUrl("https://pictogrammers.com/library/mdi/");
+            }),
+            DemoViewCodeView()
+        ]).Margin(10);
     }
 }

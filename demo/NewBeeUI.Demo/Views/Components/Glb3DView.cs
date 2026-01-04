@@ -3,7 +3,7 @@ using Aura3D.Core;
 using Aura3D.Core.Nodes;
 using Avalonia.Platform;
 
-namespace NewBeeUI.Demo.Views;
+namespace NewBeeUI.Demo.Views.Components;
 
 public class Glb3DView : BaseView
 {
