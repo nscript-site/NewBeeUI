@@ -30,7 +30,7 @@ public class CameraInfoView : BaseView
 
         return VStack([
             TextBlock("Camera View Loading"),
-            TextBlock().Text(()=> $"Position:{App.CameraService.Position.ToString()}, Frame: {FrameIndex}, Image Size: {ImageWidth}x{ImageHeight}"),
+            TextBlock(()=> $"Position:{App.CameraService.Position.ToString()}, Frame: {FrameIndex}, Image Size: {ImageWidth}x{ImageHeight}"),
             new Image().Size(400,400).Ref(out image),
             ]);
     }

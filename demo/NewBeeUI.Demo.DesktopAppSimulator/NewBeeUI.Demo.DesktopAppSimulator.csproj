@@ -6,7 +6,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <AssemblyName>NewBeeUIDemo</AssemblyName>
+    <!--<ApplicationManifest>app.manifest</ApplicationManifest>-->
+    <AssemblyName>NewBeeUIAppDemo</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">

@@ -8,7 +8,7 @@ public class HelloView : BaseView
     protected override void Build(out Control content)
     {
         VStack([
-                TextBlock().Align(0).Text(() => $"Click {count} times"),
+                TextBlock(() => $"Click {count} times").Align(0),
                 TextButton("Hello").WhenClick(_=>{
                     count++;
                     this.UpdateState();

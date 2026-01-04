@@ -7,7 +7,7 @@ public class TestView : BaseView
     protected override object Build()
     {
         return VStack(0, 0).Spacing(10).Children([
-            TextBlock().Text(()=>msg??"Empty String"),
+            TextBlock(()=>msg??"Empty String"),
             TextButton("Test").OnClick(_=>{ Test(); }),
         ]);
     }

@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace NewBeeUI.Demo.Desktop;
+namespace NewBeeUI.Demo.DesktopAppSimulator;
 
 class Program
 {
@@ -11,6 +11,7 @@ class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        App.MockMobileOnDesktop = true;
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }
 
@@ -19,6 +20,6 @@ class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont();
-            //.LogToTrace(LogEventLevel.Verbose);
+    //.LogToTrace(LogEventLevel.Verbose);
 
 }

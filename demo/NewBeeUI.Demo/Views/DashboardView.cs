@@ -19,7 +19,7 @@ public class DashboardView : BaseView
                 ),
                 GroupBox("Buttons",
                        VStack([
-                        TextBlock().Align(-1).Text(() => $"Click {count} times"),
+                        TextBlock(() => $"Click {count} times").Align(-1),
                         TextButton("Click Me").Align(-1).WhenClick(_=>{
                                 count++;
                                 this.UpdateState();

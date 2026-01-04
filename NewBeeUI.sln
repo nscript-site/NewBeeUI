@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11222.15 d18.0
+VisualStudioVersion = 18.0.11222.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewBeeUI", "nbui\NewBeeUI\NewBeeUI.csproj", "{79948D0C-6D47-D768-8A89-C2B9E8CDC79B}"
 EndProject
@@ -34,6 +34,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{8F823C21-A6D0-4510-B47D-C1EBA7CB0A9E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewBeeUI.Tools.ConsoleApp", "tools\NewBeeUI.Tools.ConsoleApp\NewBeeUI.Tools.ConsoleApp.csproj", "{373E9F74-91F2-4D30-B5AA-2FAEA6FDF2AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewBeeUI.Demo.DesktopAppSimulator", "demo\NewBeeUI.Demo.DesktopAppSimulator\NewBeeUI.Demo.DesktopAppSimulator.csproj", "{1136F72D-C8A8-4225-ACD7-017CB02B382D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,10 @@ Global
 		{373E9F74-91F2-4D30-B5AA-2FAEA6FDF2AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{373E9F74-91F2-4D30-B5AA-2FAEA6FDF2AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{373E9F74-91F2-4D30-B5AA-2FAEA6FDF2AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1136F72D-C8A8-4225-ACD7-017CB02B382D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1136F72D-C8A8-4225-ACD7-017CB02B382D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1136F72D-C8A8-4225-ACD7-017CB02B382D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1136F72D-C8A8-4225-ACD7-017CB02B382D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +112,7 @@ Global
 		{700AB094-15CD-4596-B770-DC2A1301FA72} = {A5728991-7BEC-405E-A2DF-09BB6A74B5C8}
 		{4A789C52-05DC-4478-B6FD-7F3FD3D5A228} = {A5728991-7BEC-405E-A2DF-09BB6A74B5C8}
 		{373E9F74-91F2-4D30-B5AA-2FAEA6FDF2AF} = {8F823C21-A6D0-4510-B47D-C1EBA7CB0A9E}
+		{1136F72D-C8A8-4225-ACD7-017CB02B382D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28D0AC60-CC01-413F-B473-EB920E6F6426}

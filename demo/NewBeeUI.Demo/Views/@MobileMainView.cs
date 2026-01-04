@@ -44,7 +44,7 @@ public class MobileMainView : BaseView, IWindowView
             WindowMinWidth = 400,
             WindowMinHeight = 500,
             WindowWidth = 400,
-            WindowHeight = 800,
+            WindowHeight = 900,
             IsWindowAnimationEnable = true,
             Subtitle = BuildSubtitle(),
             RightWindowsBar = HStack([
@@ -149,7 +149,7 @@ public class MobileMainView : BaseView, IWindowView
             new RoutedViewBuilder("Buttons", () => new ButtonsView()).Icon(ButtonPointerIcon.Instance),
             new RoutedViewBuilder("Camera", () => new CameraInfoView()).Icon(CameraOutlineIcon.Instance),
             new RoutedViewBuilder("Overlay", new OverlayView()).Icon(LayersOutlineIcon.Instance),
-            new RoutedViewBuilder("Setting", new SettingView()).Icon(CogOutlineIcon.Instance),
+            new RoutedViewBuilder("Setting", new MobileSettingView()).Icon(CogOutlineIcon.Instance),
         ];
     }
 }
