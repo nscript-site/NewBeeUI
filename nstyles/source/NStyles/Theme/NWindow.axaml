@@ -20,7 +20,8 @@
               <ItemsControl ItemsSource="{Binding Hosts, RelativeSource={RelativeSource AncestorType={x:Type nc:NWindow}}}">
                 <ItemsControl.ItemsPanel>
                   <ItemsPanelTemplate>
-                    <Panel />
+                    <Panel Margin="{OnPlatform Windows='0,44,0,0', Linux='0,44,0,0', macOS='0,44,0,0', Default='0'}">
+                    </Panel>
                   </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
               </ItemsControl>

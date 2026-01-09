@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Styling;
 using System;
+using System.Threading;
 
 namespace NStyles;
 
@@ -102,7 +103,7 @@ public static class ControlAnimationHelper
         }.RunAsync(control);
     }
 
-    public static CancellationTokenSource Animate<T>(this Animatable control, AvaloniaProperty Property, T from, T to, TimeSpan duration, ulong count = 1, Easing? easing = null)
+    public static CancellationTokenSource Animate<T>(this Animatable control, AvaloniaProperty Property, T from, T to, TimeSpan duration, Action? onComplete = null, ulong count = 1, Easing? easing = null)
     {
         var tokensource = new CancellationTokenSource();
         
@@ -126,10 +127,44 @@ public static class ControlAnimationHelper
                     KeyTime = duration
                 }
             }
-        }.RunAsync(control, tokensource.Token);
-        
+        }.RunAsync(control, tokensource.Token)
+        .ContinueWith(t =>
+        {
+            onComplete?.Invoke();
+        });
+
         return tokensource;
     }
+
+    //internal Task RunAsync(Animatable control, IClock? clock, CancellationToken cancellationToken)
+    //{
+    //    if (cancellationToken.IsCancellationRequested)
+    //    {
+    //        return Task.CompletedTask;
+    //    }
+
+    //    TaskCompletionSource<object?> run = new TaskCompletionSource<object>();
+    //    if (IterationCount == IterationCount.Infinite)
+    //    {
+    //        run.SetException(new InvalidOperationException("Looping animations must not use the Run method."));
+    //    }
+
+    //    IDisposable subscriptions = null;
+    //    IDisposable cancellation = null;
+    //    subscriptions = Apply(control, clock, Observable.Return(value: true), delegate
+    //    {
+    //        run.TrySetResult(null);
+    //        subscriptions?.Dispose();
+    //        cancellation?.Dispose();
+    //    });
+    //    cancellation = cancellationToken.Register(delegate
+    //    {
+    //        run.TrySetResult(null);
+    //        subscriptions?.Dispose();
+    //        cancellation?.Dispose();
+    //    });
+    //    return run.Task;
+    //}
 
     public static CancellationTokenSource Animate<T>(this Animatable control, AvaloniaProperty Property, T from, T to, Easing? easing = null)
     {

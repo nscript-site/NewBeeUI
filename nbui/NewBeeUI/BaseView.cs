@@ -227,6 +227,35 @@ public abstract class BaseView : MvuView
         return button;
     }
 
+    protected TopLevel? GetTopLevel()
+    {
+        return TopLevel.GetTopLevel(this);
+    }
+
+    protected int WindowsWidth()
+    {
+        var topLevel = GetTopLevel();
+        if (topLevel != null)
+            return (int)topLevel.Bounds.Width;
+        return 0;
+    }
+
+    protected int WindowsHeight()
+    {
+        var topLevel = GetTopLevel();
+        if (topLevel != null)
+            return (int)topLevel.Bounds.Height;
+        return 0;
+    }
+
+    protected Size WindowsSize()
+    {
+        var topLevel = GetTopLevel();
+        if (topLevel != null)
+            return topLevel.Bounds.Size;
+        return new Size(0, 0);
+    }
+
     protected MenuItem Menu(string txt, StreamGeometry? g, Action? action)
     {
         var menu = new MenuItem().Header(txt);
@@ -453,7 +482,7 @@ public abstract class BaseView : MvuView
         if (onCreate != null)
             onCreate(shape);
         if (margin == null)
-            shape.Margin(0, 10, 0, 0);
+            shape.Margin(0, 0, 0, 0);
         else
             shape.Margin(margin.Value);
         return shape;
@@ -718,7 +747,7 @@ public abstract class BaseView : MvuView
         return null;    
     }
 
-    public bool ShowInOverlay(BaseView owner, bool modal = false)
+    public bool ShowInOverlay(BaseView owner, bool modal = false, double modalBgOpacity = 0.7)
     {
         var hosts = owner.OverlayHosts();
         if (hosts == null) return false;
@@ -729,6 +758,7 @@ public abstract class BaseView : MvuView
             if(bg == null)
             {
                 var border = new InnerModalView();
+                border.Opacity = modalBgOpacity;
                 hosts.Add(border);
             }
         }
@@ -1313,6 +1343,12 @@ public static class BaseViewExtensions
         return ctrl;
     }
 
+    public static T WhenUnloaded<T>(this T ctrl, Action<T> action) where T : Control
+    {
+        ctrl.OnUnloaded((Avalonia.Interactivity.RoutedEventArgs _) => action(ctrl));
+        return ctrl;
+    }
+
     public static T WhenClick<T>(this T ctrl, Action<T> action) where T : Control
     {
         ctrl.OnTapped(_ => action(ctrl));
@@ -1336,46 +1372,79 @@ public static class BaseViewExtensions
 
     #region 动画
 
-    public static T Opacity<T>(this T ctrl, double duration, double from, double to) where T : Visual
+    /// <summary>
+    /// 设置平移变换
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="ctrl"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    public static T Translate<T>(this T ctrl, double x, double y) where T : Visual
     {
-        ctrl.Animate<double>(Visual.OpacityProperty, from, to, TimeSpan.FromSeconds(duration));
+        if (ctrl.RenderTransform is TransformGroup group)
+        {
+            var translate = new TranslateTransform(x, y);
+            group.Children.Add(translate);
+        }
+        else if (ctrl.RenderTransform == null)
+        {
+            // 没有变换或是默认的
+            ctrl.RenderTransform = new TranslateTransform(x, y);
+        }
+        else
+        {
+            var newGroup = new TransformGroup();
+            var oldTransform = ctrl.RenderTransform as Transform;
+            if(oldTransform != null)
+                newGroup.Children.Add(oldTransform);
+            var translate = new TranslateTransform(x, y);
+            newGroup.Children.Add(translate);
+            ctrl.RenderTransform = newGroup;
+        }
         return ctrl;
     }
 
-    public static T Transform<T>(this T ctrl, double duration, Transform from, Transform to) where T : Visual
+    public static T Opacity<T>(this T ctrl, double duration, double from, double to, Action? onComplete = null) where T : Visual
     {
-        ctrl.Animate<Transform>(Visual.RenderTransformProperty, from, to, TimeSpan.FromSeconds(duration));
+        ctrl.Animate<double>(Visual.OpacityProperty, from, to, TimeSpan.FromSeconds(duration), onComplete: onComplete);
         return ctrl;
     }
 
-    public static T Move<T>(this T ctrl, double duration, double fromX, double fromY, double toX, double toY) where T : Visual
+    public static T Transform<T>(this T ctrl, double duration, Transform from, Transform to, Action? onComplete = null) where T : Visual
+    {
+        ctrl.Animate<Transform>(Visual.RenderTransformProperty, from, to, TimeSpan.FromSeconds(duration), onComplete: onComplete);
+        return ctrl;
+    }
+
+    public static T Move<T>(this T ctrl, double duration, double fromX, double fromY, double toX, double toY, Action? onComplete = null) where T : Visual
     {
         if(fromX != toX)
-            ctrl.Animate<double>(TranslateTransform.XProperty, fromX, toX, TimeSpan.FromSeconds(duration));
+            ctrl.Animate<double>(TranslateTransform.XProperty, fromX, toX, TimeSpan.FromSeconds(duration),onComplete:onComplete);
     
         if(fromY != toY)
-            ctrl.Animate<double>(TranslateTransform.YProperty, fromY, toY, TimeSpan.FromSeconds(duration));
+            ctrl.Animate<double>(TranslateTransform.YProperty, fromY, toY, TimeSpan.FromSeconds(duration),onComplete:onComplete);
         return ctrl;
     }
 
-    public static T Rotate<T>(this T ctrl, double duration, double fromAngle, double toAngle) where T : Visual
+    public static T Rotate<T>(this T ctrl, double duration, double fromAngle, double toAngle, Action? onComplete = null) where T : Visual
     {
-        ctrl.Animate<double>(RotateTransform.AngleProperty, fromAngle, toAngle, TimeSpan.FromSeconds(duration));
+        ctrl.Animate<double>(RotateTransform.AngleProperty, fromAngle, toAngle, TimeSpan.FromSeconds(duration), onComplete: onComplete);
         return ctrl;
     }
 
-    public static T Scale<T>(this T ctrl, double duration, double fromScale, double toScale) where T : Visual
+    public static T Scale<T>(this T ctrl, double duration, double fromScale, double toScale, Action? onComplete = null) where T : Visual
     {
-        return ctrl.Scale(duration, fromScale, fromScale, toScale, toScale);
+        return ctrl.Scale(duration, fromScale, fromScale, toScale, toScale, onComplete: onComplete);
     }
 
-    public static T Scale<T>(this T ctrl, double duration, double fromScaleX, double fromScaleY, double toScaleX, double toScaleY) where T : Visual
+    public static T Scale<T>(this T ctrl, double duration, double fromScaleX, double fromScaleY, double toScaleX, double toScaleY, Action? onComplete = null) where T : Visual
     {
         if (fromScaleX != toScaleX)
-            ctrl.Animate<double>(ScaleTransform.ScaleXProperty, fromScaleX, toScaleX, TimeSpan.FromSeconds(duration));
+            ctrl.Animate<double>(ScaleTransform.ScaleXProperty, fromScaleX, toScaleX, TimeSpan.FromSeconds(duration), onComplete: onComplete);
 
         if (fromScaleY != toScaleY)
-            ctrl.Animate<double>(ScaleTransform.ScaleYProperty, fromScaleY, toScaleY, TimeSpan.FromSeconds(duration));
+            ctrl.Animate<double>(ScaleTransform.ScaleYProperty, fromScaleY, toScaleY, TimeSpan.FromSeconds(duration), onComplete: onComplete);
         return ctrl;
     }
 

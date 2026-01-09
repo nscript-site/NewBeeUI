@@ -21,6 +21,14 @@ public class ComponentsView : BaseView
                 SelectableIconButton(SearchIcon.Instance, "ToolTip", "ToolTip2", ToolTipPosition.Top),
                 SelectableIconButton(CogBoxIcon.Instance).OnClick(v=>{ v.Selected = !v.Selected; v.UpdateState(); }),
             ]).Align(0,0),
+            GroupBox("动画",
+                VStack([
+                    TextButton("动画演示").OnClick(_=>{
+                        var v = new AnimateView();
+                        v.ShowInOverlay(this,true);
+                    })
+                ])
+            ),
             DemoViewCodeView(),
         ]).Return(out content);
     }

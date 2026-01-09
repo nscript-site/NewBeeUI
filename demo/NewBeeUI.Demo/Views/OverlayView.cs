@@ -51,6 +51,11 @@ public class OverlayView : BaseView
                 var hosts = this.OverlayHosts();
                 hosts?.Clear();
             }),
+            TextButton("Modal").OnClick(_ =>
+            {
+                var modal = new ModalView(){ Name = "Modal View" };
+                modal.ShowInOverlay(this,true,0);
+            }),
             DemoViewCodeView(),
         ];
     }
