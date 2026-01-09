@@ -147,7 +147,7 @@ public class MobileMainView : BaseView, IWindowView
         [
             new RoutedViewBuilder("首页", () => new HomeView()).Icon(HomeOutlineIcon.Instance),
             new RoutedViewBuilder("组件", () => new ComponentsView()).Icon(ButtonPointerIcon.Instance),
-            new RoutedViewBuilder("布局", () => new LayoutView()).Icon(ViewGridOutlineIcon.Instance),
+            new RoutedViewBuilder("颜色", () => new ColorsView()).Icon(ViewGridOutlineIcon.Instance),
             new RoutedViewBuilder("弹窗", new OverlayView()).Icon(LayersOutlineIcon.Instance),
             new RoutedViewBuilder("设置", new MobileSettingView()).Icon(CogOutlineIcon.Instance),
         ];

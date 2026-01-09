@@ -749,6 +749,16 @@ public abstract class BaseView : MvuView
         );
     }
 
+    public int GetDesktopWindowBarHeight()
+    {
+        var topLevel = GetTopLevel();
+        if (topLevel is Window window)
+        {
+            return 44;
+        }
+        return 0;
+    }
+
     /// <summary>
     /// 显示 ToastView
     /// </summary>
@@ -781,7 +791,7 @@ public abstract class BaseView : MvuView
         {
             // 获取 OverlayHosts 的屏幕位置
             Visual overlay = (this.GetVisualRoot() as Visual) ?? centerOfContainer;
-            var overlayBound = overlay.Bounds;
+            var overlaySize = overlay.Bounds;
 
             // 获取 centerOfContainer 的屏幕位置
             var centerOrigin = centerOfContainer.PointToScreen(new Point(0, 0));
@@ -794,9 +804,16 @@ public abstract class BaseView : MvuView
                 centerOrigin.Y + centerSize.Height / 2
             );
 
+            var titleBarHeight = GetDesktopWindowBarHeight();
+
+            var overlayCenterPoint = new Point(
+                overlayOrigin.X + overlaySize.Width / 2,
+                overlayOrigin.Y + overlaySize.Height / 2 + titleBarHeight/2
+            );
+
             // 计算相对于 OverlayHosts 的偏移
-            var offsetX = centerPoint.X - overlayOrigin.X - overlayBound.Width * 0.5;
-            var offsetY = centerPoint.Y - overlayOrigin.Y - overlayBound.Height * 0.5;
+            var offsetX = centerPoint.X - overlayCenterPoint.X;
+            var offsetY = centerPoint.Y - overlayCenterPoint.Y;
 
             // 假设 Loading 控件有默认宽高（如 80x80），可根据实际情况获取
             double loadingWidth = loading.Width > 0 ? loading.Width : 50;
@@ -825,6 +842,96 @@ public abstract class BaseView : MvuView
             }
         }
         return null;    
+    }
+
+    public bool AddOverlay(Control control)
+    {
+        var hosts = this.OverlayHosts();
+        if (hosts == null) return false;
+        hosts.Add(control);
+        return false;
+    }
+
+    public bool ClearOverlays()
+    {
+        var hosts = this.OverlayHosts();
+        if (hosts == null) return false;
+        hosts.Clear();
+        return false;
+    }
+
+    public bool RemoveOverlay(Control control)
+    {
+        var hosts = this.OverlayHosts();
+        if (hosts == null) return false;
+
+        Control? match = null;
+        foreach (var ctrl in hosts)
+        {
+            if (ctrl == control)
+            {
+                match = ctrl; break;
+            }
+        }
+
+        if (match != null) hosts.Remove(match);
+
+        return match != null;
+    }
+
+    public bool RemoveOverlayFirst(Func<Control,bool> pred)
+    {
+        var hosts = this.OverlayHosts();
+        if (hosts == null) return false;
+
+        Control? match = null;
+        foreach (var ctrl in hosts)
+        {
+            if (pred(ctrl))
+            {
+                match = ctrl; break;
+            }
+        }
+
+        if (match != null) hosts.Remove(match);
+        
+        return match != null;
+    }
+
+    public bool RemoveOverlays(Func<Control, bool>? pred = null)
+    {
+        var hosts = this.OverlayHosts();
+        if (hosts == null) return false;
+
+        if(pred == null)
+        {
+            hosts.Clear();
+            return true;
+        }
+
+        var list = new List<Control>();
+        foreach (var ctrl in hosts)
+        {
+            if (pred(ctrl))
+            {
+                list.Add(ctrl);
+            }
+        }
+
+        foreach(var ctrl in list)
+        {
+            hosts.Remove(ctrl);
+        }
+
+        return list.Count > 0;
+    }
+
+    public bool RemoveOverlayAt(int index)
+    {
+        var hosts = this.OverlayHosts();
+        if (hosts == null) return false;
+        hosts.RemoveAt(index);
+        return true;
     }
 
     public bool ShowInOverlay(BaseView owner, bool modal = false, double modalBgOpacity = 0.7)
@@ -1298,7 +1405,7 @@ public static class BaseViewExtensions
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     if (isLoading == false) return;
-                    owner.ShowLoading(null, onCreate);
+                    owner.ShowLoading(owner, onCreate);
                 });
             });
 
