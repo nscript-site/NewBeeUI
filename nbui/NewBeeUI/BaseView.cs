@@ -623,9 +623,89 @@ public abstract class BaseView : MvuView
         get => new DynamicResourceExtension("SukiText");
     }
 
+    public static DynamicResourceExtension R_LowTextColor
+    {
+        get => new DynamicResourceExtension("SukiLowText");
+    }
+
+    public static DynamicResourceExtension R_DisabledTextColor
+    {
+        get => new DynamicResourceExtension("SukiDisabledText");
+    }
+
     public static DynamicResourceExtension R_LightBorderBrush
     {
         get => new DynamicResourceExtension("SukiLightBorderBrush");
+    }
+
+    public static DynamicResourceExtension R_SukiBackground
+    {
+        get => new DynamicResourceExtension("SukiBackground");
+    }
+
+    public static DynamicResourceExtension R_SukiStrongBackground
+    {
+        get => new DynamicResourceExtension("SukiStrongBackground");
+    }
+
+    public static DynamicResourceExtension R_SukiCardBackground
+    {
+        get => new DynamicResourceExtension("SukiCardBackground");
+    }
+
+    public static DynamicResourceExtension R_SukiLightBackground
+    {
+        get => new DynamicResourceExtension("SukiLightBackground");
+    }
+
+    public static DynamicResourceExtension R_SukiPopupBackground
+    {
+        get => new DynamicResourceExtension("SukiPopupBackground");
+    }
+
+    public static DynamicResourceExtension R_SukiGlassCardBackground
+    {
+        get => new DynamicResourceExtension("SukiGlassCardBackground");
+    }
+
+    public static DynamicResourceExtension R_SukiGlassCardOpaqueBackground
+    {
+        get => new DynamicResourceExtension("SukiGlassCardOpaqueBackground");
+    }
+
+    public static DynamicResourceExtension R_SukiControlTouchBackground
+    {
+        get => new DynamicResourceExtension("SukiControlTouchBackground");
+    }
+
+    public static DynamicResourceExtension R_SukiDialogBackground
+    {
+        get => new DynamicResourceExtension("SukiDialogBackground");
+    }
+
+    public static DynamicResourceExtension R_SukiBorderBrush
+    {
+        get => new DynamicResourceExtension("SukiBorderBrush");
+    }
+    public static DynamicResourceExtension R_SukiControlBorderBrush
+    {
+        get => new DynamicResourceExtension("SukiControlBorderBrush");
+    }
+    public static DynamicResourceExtension R_SukiMediumBorderBrush
+    {
+        get => new DynamicResourceExtension("SukiMediumBorderBrush");
+    }
+    public static DynamicResourceExtension R_SukiLightBorderBrush
+    {
+        get => new DynamicResourceExtension("SukiLightBorderBrush");
+    }
+    public static DynamicResourceExtension R_SukiMenuBorderBrush
+    {
+        get => new DynamicResourceExtension("SukiMenuBorderBrush");
+    }
+    public static DynamicResourceExtension R_GlassBorderBrush
+    {
+        get => new DynamicResourceExtension("GlassBorderBrush");
     }
 
     #endregion
