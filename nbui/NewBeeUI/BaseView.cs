@@ -9,8 +9,6 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 using NStyles.Controls;
 using NStyles.MeterialIcons;
-using System;
-using System.Buffers.Text;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -1522,6 +1520,28 @@ public static class BaseViewExtensions
         return result;
     }
 
+    public static T WhenPointer<T>(this T ctrl, Action<PointerAction>? onPointer) where T : Control
+    {
+        ctrl.PointerPressed += (s, e) =>
+        {
+            onPointer?.Invoke(PointerAction.Pressed);
+        };
+        ctrl.PointerReleased += (s, e) =>
+        {
+            onPointer?.Invoke(PointerAction.Enter);
+        };
+        ctrl.PointerEntered += (s, e) =>
+        {
+            onPointer?.Invoke(PointerAction.Enter);
+        };
+        ctrl.PointerExited += (s, e) =>
+        {
+            onPointer?.Invoke(PointerAction.Leave);
+        };
+
+        return ctrl;
+    }
+
     #region 简化动作回调
 
     public static T WhenLoaded<T>(this T ctrl, Action<T> action) where T : Control
@@ -1555,7 +1575,6 @@ public static class BaseViewExtensions
     }
 
     #endregion
-
 
     #region 动画
 

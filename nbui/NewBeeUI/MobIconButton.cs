@@ -47,6 +47,9 @@ public class MobIconButton : BaseView
         UpdateColor();
 
         stack.WhenClick((_) => FireOnClick());
+        stack.WhenPointer(act => {
+            UpdateColor();
+        });
 
         return stack;
     }
@@ -55,7 +58,7 @@ public class MobIconButton : BaseView
     {
         Dispatcher.UIThread.InvokeAsync(() =>
         {
-            if (IsSelected)
+            if (IsSelected || this.IsPointerOver)
             {
                 title.Foreground(R("SukiPrimaryColor"));
                 icon.Foreground(R("SukiPrimaryColor"));
