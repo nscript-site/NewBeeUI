@@ -830,11 +830,11 @@ public abstract class BaseView : MvuView
         hosts.Add(loading);
     }
 
-    private InnerModalView? FindModalBackgroundControl(Controls hosts)
+    private InnerModalView? FindModalBackgroundControl(Controls hosts, BaseView? relatedView)
     {
         foreach(var ctrl in hosts)
         {
-            if(ctrl is InnerModalView r)
+            if(ctrl is InnerModalView r && r.RelatedView == relatedView)
             {
                 return r;
             }
@@ -939,10 +939,10 @@ public abstract class BaseView : MvuView
 
         if(modal == true)
         {
-            InnerModalView? bg = FindModalBackgroundControl(hosts);
+            InnerModalView? bg = FindModalBackgroundControl(hosts, this);
             if(bg == null)
             {
-                var border = new InnerModalView();
+                var border = new InnerModalView() { RelatedView = this };
                 border.Opacity = modalBgOpacity;
                 hosts.Add(border);
             }
@@ -956,7 +956,7 @@ public abstract class BaseView : MvuView
     {
         var hosts = this.OverlayHosts();
         if (hosts == null) return false;
-        InnerModalView? bg = FindModalBackgroundControl(hosts);
+        InnerModalView? bg = FindModalBackgroundControl(hosts, this);
         if(bg != null) hosts.Remove(bg);
         return hosts.Remove(this);
     }
