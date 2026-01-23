@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace NewBeeUI;
 
@@ -49,5 +45,15 @@ public class MobNavBar : BaseView
         var grid = HGrid(rows, Items);
 
         return new Border().Child(grid).Background(R("SukiCardBackground")).Padding(10,10,10,10);
+    }
+
+    public void SelectIndex(int index)
+    {
+        if (Items == null || index < 0 || index >= Items.Length) return;
+        for (int i = 0; i < Items.Length; i++)
+        {
+            Items[i].IsSelected = (i == index);
+            OnSelect?.Invoke(index, Items[i]);
+        }
     }
 }

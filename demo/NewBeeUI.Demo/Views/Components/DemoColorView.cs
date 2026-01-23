@@ -1,6 +1,6 @@
 ﻿namespace NewBeeUI.Demo.Views.Components;
 
-public class ColorView : BaseView
+public class DemoColorView : BaseView
 {
     public IBrush? Color { get; set; }
 

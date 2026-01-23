@@ -131,6 +131,41 @@ public abstract class BaseView : MvuView
         return b;
     }
 
+    public static Border Border(Func<Control> func,
+        double thickness = 0,
+        double? width = null, double? height = null)
+    {
+        var b = new Border();
+        b.BorderThickness = new Thickness(thickness);
+        b.Child(func);
+        if (width != null) b.Width(width.Value);
+        if (height != null) b.Height(height.Value);
+        return b;
+    }
+
+    /// <summary>
+    /// 将一个控件包装为移动端按钮。因为移动端存在点击误差，因此，对于较小的内容，需要封装在一个较大的可点击区域中。
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static Border MobButton(Control content, double? width = null, double? height = null)
+    {
+        content.IsHitTestVisible = false;
+        var border = new Border();
+        border.Child = content;
+        border.Background = Brushes.Transparent;
+        if(width != null) border.Width = width.Value;
+        if(height != null) border.Height = height.Value;
+        return border;
+    }
+
+    public static Border MobTextButton(string text, double? width = null, double? height = null, Action<TextBlock>? onCreateTextBlock = null)
+    {
+        var tb = new TextBlock().Text(text);
+        onCreateTextBlock?.Invoke(tb);
+        return MobButton(tb,width,height);
+    }
+
     public static TextBox TextBox(string? text = null)
     {
         var tb = new TextBox();
@@ -830,11 +865,11 @@ public abstract class BaseView : MvuView
         hosts.Add(loading);
     }
 
-    private InnerModalView? FindModalBackgroundControl(Controls hosts, BaseView? relatedView)
+    private InnerBackgroundView? FindBackgroundControl(Controls hosts, BaseView? relatedView)
     {
         foreach(var ctrl in hosts)
         {
-            if(ctrl is InnerModalView r && r.RelatedView == relatedView)
+            if(ctrl is InnerBackgroundView r && r.RelatedView == relatedView)
             {
                 return r;
             }
@@ -932,20 +967,19 @@ public abstract class BaseView : MvuView
         return true;
     }
 
-    public bool ShowInOverlay(BaseView owner, bool modal = false, double modalBgOpacity = 0.7)
+    public bool ShowInOverlay(BaseView owner, bool modal = false, double modalBgOpacity = 0.7, Action? onRemove = null)
     {
         var hosts = owner.OverlayHosts();
         if (hosts == null) return false;
 
-        if(modal == true)
+        InnerBackgroundView? bg = FindBackgroundControl(hosts, this);
+        if (bg == null)
         {
-            InnerModalView? bg = FindModalBackgroundControl(hosts, this);
-            if(bg == null)
-            {
-                var border = new InnerModalView() { RelatedView = this };
-                border.Opacity = modalBgOpacity;
-                hosts.Add(border);
-            }
+            bg = new InnerBackgroundView() { RelatedView = this };
+            bg.IsModal = modal;
+            bg.Opacity = modalBgOpacity;
+            bg.OnRemove = onRemove;
+            hosts.Add(bg);
         }
 
         hosts.Add(this);
@@ -956,9 +990,11 @@ public abstract class BaseView : MvuView
     {
         var hosts = this.OverlayHosts();
         if (hosts == null) return false;
-        InnerModalView? bg = FindModalBackgroundControl(hosts, this);
+        InnerBackgroundView? bg = FindBackgroundControl(hosts, this);
         if(bg != null) hosts.Remove(bg);
-        return hosts.Remove(this);
+        bool result = hosts.Remove(this);
+        bg?.OnRemove?.Invoke();
+        return result;
     }
 
     public void RemoveLoading()
