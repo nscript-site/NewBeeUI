@@ -75,7 +75,10 @@ public class MobileMainView : BaseView, IWindowView
         var router = BuildViewRouter().Margin(0).Ref(out Router)!;
 
         var grid = VGrid("*, 1, Auto",[
-                new ScrollViewer().Padding(20,20,20,0).Margin(0,5,0,0).Content(router),
+                new ScrollViewer()
+                .Padding(20,0,20,0)
+                .Margin(0,25,0,20)
+                .Content(router),
                 HLine(1,1,"SukiLightBackground",margin:new Thickness(0)),
                 BuildBottomNavBar(),
             ]).VerticalAlignment(VerticalAlignment.Stretch);

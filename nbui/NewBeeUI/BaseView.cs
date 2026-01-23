@@ -651,6 +651,21 @@ public abstract class BaseView : MvuView
         get => new DynamicResourceExtension("SukiPrimaryColor");
     }
 
+    public static DynamicResourceExtension R_PrimaryDarkColor
+    {
+        get => new DynamicResourceExtension("SukiPrimaryDarkColor");
+    }
+
+    public static DynamicResourceExtension R_AccentColor
+    {
+        get => new DynamicResourceExtension("SukiAccentColor");
+    }
+
+    public static DynamicResourceExtension R_AccentDarkColor
+    {
+        get => new DynamicResourceExtension("SukiAccentDarkColor");
+    }
+
     public static DynamicResourceExtension R_TextColor
     {
         get => new DynamicResourceExtension("SukiText");
