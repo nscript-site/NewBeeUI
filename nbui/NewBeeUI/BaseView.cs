@@ -1504,6 +1504,23 @@ public static class BaseViewExtensions
         }
     }
 
+    /// <summary>
+    /// 是否有任何父控件被隐藏
+    /// </summary>
+    /// <param name="control"></param>
+    /// <returns></returns>
+    public static bool IsAnyParentHidden(this Control control)
+    {
+        var parent = control.Parent;
+        while (parent is Control parentControl)
+        {
+            if (!parentControl.IsVisible)
+                return true;
+            parent = parentControl.Parent;
+        }
+        return false;
+    }
+
     public static T Scale<T>(this T control, double scale) where T : Visual
     {
         return control.RenderTransform(new ScaleTransform(scale, scale));
