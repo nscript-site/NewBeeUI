@@ -36,12 +36,6 @@ public class HomeView : BaseView
                 //        IconButton("InnerText", SearchIcon.Instance),
                 //        ])
                 //),
-                GroupBox("文本输入",
-                     VStack([
-                        new TextBox(),
-                        new TextBox().Watermark("请输入内容").ListenIME(),
-                        ])
-                ),
                 //GroupBox("Drawing",VStack([
                 //    new DrawingRect(){ Width = 200, Height = 200}.Align(0,0)
                 //    ])),

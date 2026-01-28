@@ -56,4 +56,14 @@ public class MobNavBar : BaseView
             OnSelect?.Invoke(index, Items[i]);
         }
     }
+
+    public int GetSelectedIndex()
+    {
+        if (Items == null) return -1;
+        for (int i = 0; i < Items.Length; i++)
+        {
+            if (Items[i].IsSelected) return i;
+        }
+        return -1;
+    }
 }

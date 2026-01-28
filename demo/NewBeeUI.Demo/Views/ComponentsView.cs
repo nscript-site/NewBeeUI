@@ -7,26 +7,53 @@ public class ComponentsView : BaseView
     protected override void Build(out Control content)
     {
         VStack([
-            VStack([TextButton("返回").OnClick(_=>{ Router?.GoBack(); }),
-                new ToggleSwitch().Align(0,0),
-                IconButton(SearchIcon.Instance),
-                IconButton(Icons.ScaleToOriginal),
-                IconButton("InnerText", SearchIcon.Instance),
-                IconButton("InnerText", SearchIcon.Instance, iconSize:12),
-                IconButton(NStyles.MeterialIcons.SearchWebIcon.Instance),
-                TextButton("显示加载").WhenClick(_ => MockLoading()),
-            ]).Align(0,0),
-            HStack([
-                IconButton(SearchIcon.Instance, "ToolTip", ToolTipPosition.Top ),
-                SelectableIconButton(SearchIcon.Instance, "ToolTip", "ToolTip2", ToolTipPosition.Top),
-                SelectableIconButton(CogBoxIcon.Instance).OnClick(v=>{ v.Selected = !v.Selected; v.UpdateState(); }),
-            ]).Align(0,0),
-            GroupBox("动画",
+            GroupBox("文本输入",
                 VStack([
+                    new TextBox().Watermark("请输入内容").ListenIME(),
+                    new TextBox().PasswordChar('*').Watermark("请输入密码"),
+                    new TextBox().Height(100).TextWrapping(TextWrapping.Wrap)
+                        .AcceptsReturn(true).VerticalContentAlignment(VerticalAlignment.Top).Align(null,0),
+                ])
+            ),
+            GroupBox("按钮",
+                VStack([
+                        HStack([
+                            new ToggleSwitch().Align(0,0),
+                            IconButton(Icons.ScaleToOriginal),
+                            IconButton(NStyles.MeterialIcons.SearchWebIcon.Instance),
+                            IconButton(SearchIcon.Instance, "ToolTip", ToolTipPosition.Top ),
+                            SelectableIconButton(CogBoxIcon.Instance).OnClick(v=>{ v.Selected = !v.Selected; v.UpdateState(); }),
+                        ]),
+                        HStack([
+                            IconButton("InnerText", SearchIcon.Instance),
+                            IconButton("InnerText", SearchIcon.Instance, iconSize:12),
+                        ]),                        
+                    ])
+            ),
+            GroupBox("Styles",
+                VStack([
+                    HStack([
+                            TextButton("Flat").FlatStyle(),
+                            TextButton("Success").SuccessStyle(),
+                            TextButton("Danger").DangerStyle(),
+                        ]),
+                    HStack([
+                            TextButton("Click").FlatStyle().CornerRadius(24),
+                            TextButton("Basic").BasicStyle(),
+                            TextButton("Accent").AccentStyle(),
+                        ]),
+                ])
+            ),
+            GroupBox("动画与3D",
+                HStack([
                     TextButton("动画演示").OnClick(_=>{
                         var v = new AnimateView();
                         v.ShowInOverlay(this,true);
-                    })
+                    }).Align(-1,0),
+                    TextButton("3D演示").OnClick(_=>{
+                        var v = new ThreeDView();
+                        v.ShowInOverlay(this,true);
+                    }).Align(-1,0)
                 ])
             ),
             DemoViewCodeView(),

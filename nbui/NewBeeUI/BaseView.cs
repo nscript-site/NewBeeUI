@@ -414,15 +414,19 @@ public abstract class BaseView : MvuView
             sourceView.ShowDialog();
         }
 
-        var fileName = Path.GetFileName(filePath);
-            String codes = "";
-            if (File.Exists(filePath)) codes = File.ReadAllText(filePath);
-            return HStack([
-                    TextBlock($"[{fileName}]").Align(0,0).Foreground(R("SukiPrimaryColor")).Margin(0,0,10,0),
-                    IconButton(ContentCopyIcon.Instance, "复制源代码", iconSize:14).Size(24).WhenClick(_=>{ CopyToClipboard(codes); }).Align(0,0),
-                    IconButton(FileCodeOutlineIcon.Instance, "查看源代码", iconSize:14).Size(24).WhenClick(_=>{ ShowSourceCode(fileName, codes); }).Align(0,0),
-                    IconButton(LinkIcon.Instance, "使用浏览器在线浏览源代码", iconSize:14).Size(24).WhenClick(_=>{ OpenUrl($"{baseUrl}{fileName}"); }).Align(0,0),
-                ]).Align(0, -1).Margin(0,10).Spacing(2);
+        // 不能直接用 Path.GetFileName，因为在某些平台上路径分隔符不是 '\'
+        var newFilePath = filePath.Replace('\\', '/');
+        int idx = newFilePath.LastIndexOf("/");
+        var fileName = idx > -1 ? newFilePath.Substring(idx + 1) : newFilePath;
+
+        String codes = "";
+        if (File.Exists(filePath)) codes = File.ReadAllText(filePath);
+        return HStack([
+                TextBlock($"[{fileName}]").Align(0,0).Foreground(R("SukiPrimaryColor")).Margin(0,0,10,0),
+                IconButton(ContentCopyIcon.Instance, "复制源代码", iconSize:14).Size(24).WhenClick(_=>{ CopyToClipboard(codes); }).Align(0,0),
+                IconButton(FileCodeOutlineIcon.Instance, "查看源代码", iconSize:14).Size(24).WhenClick(_=>{ ShowSourceCode(fileName, codes); }).Align(0,0),
+                IconButton(LinkIcon.Instance, "使用浏览器在线浏览源代码", iconSize:14).Size(24).WhenClick(_=>{ OpenUrl($"{baseUrl}{fileName}"); }).Align(0,0),
+            ]).Align(0, -1).Margin(0,10).Spacing(2);
     }
 
     public static HyperlinkButton Hyperlink(string text, string url, string baseUrl = "")
