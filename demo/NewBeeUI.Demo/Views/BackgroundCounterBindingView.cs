@@ -21,13 +21,13 @@ public static class BackgroundCounterModel_Binding_Extentions
 {
     internal static void BindCountUpdate(this BaseView view)
     {
-        void OnProjectsUpdateHandler()
+        void OnUpdate()
         {
             view.UpdateStateByUIThread();
         }
 
-        view.OnLoaded(_ => { BackgroundCounterModel.Instance.CountUpdate += OnProjectsUpdateHandler; });
-        view.OnUnloaded(_ => { BackgroundCounterModel.Instance.CountUpdate -= OnProjectsUpdateHandler; });
+        view.OnLoaded(_ => { BackgroundCounterModel.Instance.CountUpdate += OnUpdate; });
+        view.OnUnloaded(_ => { BackgroundCounterModel.Instance.CountUpdate -= OnUpdate; });
     }
 }
 
