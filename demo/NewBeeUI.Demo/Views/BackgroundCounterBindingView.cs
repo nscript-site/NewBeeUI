@@ -17,16 +17,8 @@ public static class BackgroundCounterModel_Binding_Extentions
             view.UpdateStateByUIThread();
         }
 
-        view.OnLoaded(_ =>
-        {
-            BackgroundCounterModel.Instance.CountUpdate += OnProjectsUpdateHandler;
-        }
-        );
-        view.OnUnloaded(_ =>
-        {
-            BackgroundCounterModel.Instance.CountUpdate -= OnProjectsUpdateHandler;
-        }
-        );
+        view.OnLoaded(_ => { BackgroundCounterModel.Instance.CountUpdate += OnProjectsUpdateHandler; });
+        view.OnUnloaded(_ => { BackgroundCounterModel.Instance.CountUpdate -= OnProjectsUpdateHandler; });
     }
 }
 
@@ -40,11 +32,11 @@ public class BackgroundCounterBindingView : BaseView
 
         VGrid("42,1,*,Auto", [
             HGrid("40,*,40",[
-                        IconButton(ArrowLeftIcon.Instance).OnClick(_ => {
-                        this.RemoveFromOverlay();
-                        }),
-                        TextBlock(this.Name).Align(0,0)
-                        ]),
+                IconButton(ArrowLeftIcon.Instance).OnClick(_ => {
+                this.RemoveFromOverlay();
+                }),
+                TextBlock(this.Name).Align(0,0)
+            ]),
             HLine(1,1).Margin(0),
             body,
             DemoViewCodeView(),

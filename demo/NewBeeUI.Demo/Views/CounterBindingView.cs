@@ -26,11 +26,11 @@ public class CounterBindingView : BaseView
 
         VGrid("42,1,*,Auto", [
             HGrid("40,*,40",[
-                        IconButton(ArrowLeftIcon.Instance).OnClick(_ => {
-                        this.RemoveFromOverlay();
-                        }),
-                        TextBlock(this.Name).Align(0,0)
-                        ]),
+                IconButton(ArrowLeftIcon.Instance).OnClick(_ => {
+                this.RemoveFromOverlay();
+                }),
+                TextBlock(this.Name).Align(0,0)
+            ]),
             HLine(1,1).Margin(0),
             body,
             DemoViewCodeView(),
