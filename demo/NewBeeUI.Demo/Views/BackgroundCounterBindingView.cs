@@ -4,7 +4,16 @@ public class BackgroundCounterModel
 {
     public static BackgroundCounterModel Instance { get; } = new BackgroundCounterModel();
 
-    public int Count { get; set; }
+    public int Count
+    {   
+        get;
+        set {
+            if (field == value) return;
+            field = value;
+            CountUpdate?.Invoke();
+        }
+    }
+
     public Action? CountUpdate { get; set; }
 }
 
@@ -50,7 +59,7 @@ public class BackgroundCounterBindingView : BaseView
         VStack([
             TextBlock($"[未绑定] Count: {BackgroundCounterModel.Instance.Count}"),
             TextBlock(()=>$"[绑定] Count: {BackgroundCounterModel.Instance.Count}"),
-            TextButton("增加").OnClick(_=> { BackgroundCounterModel.Instance.Count ++; BackgroundCounterModel.Instance.CountUpdate?.Invoke(); }),
+            TextButton("增加").OnClick(_=> { BackgroundCounterModel.Instance.Count ++;}),
         ])
         .Margin(20)
         .Return(out content);
