@@ -1031,6 +1031,14 @@ public abstract class BaseView : MvuView
             }
         }
     }
+
+    public void UpdateStateByUIThread(Action? updateStateAction = null)
+    {
+        Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            this.UpdateState(updateStateAction);
+        });
+    }
 }
 
 public static class BaseViewExtensions

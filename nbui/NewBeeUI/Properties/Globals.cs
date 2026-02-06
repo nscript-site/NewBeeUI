@@ -12,3 +12,11 @@ public enum PointerAction
     Leave,
     Pressed,
 }
+
+public static class PointerAction_ClassHelper
+{
+    public static bool IsEnterOrPressed(this PointerAction action)
+    {
+        return (action == PointerAction.Enter || action == PointerAction.Pressed);
+    }
+}

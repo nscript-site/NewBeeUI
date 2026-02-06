@@ -56,6 +56,18 @@ public class ComponentsView : BaseView
                     }).Align(-1,0)
                 ])
             ),
+            GroupBox("数据绑定",
+                HStack([
+                    TextButton("数据绑定演示").OnClick(_=>{
+                        var v = new CounterBindingView();
+                        v.ShowInOverlay(this,true);
+                    }).Align(-1,0),
+                    TextButton("后台绑定演示").OnClick(_=>{
+                        var v = new BackgroundCounterBindingView();
+                        v.ShowInOverlay(this,true);
+                    }).Align(-1,0),
+                ])
+            ),
             DemoViewCodeView(),
         ]).Return(out content);
     }

@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NewBeeUI;
+﻿namespace NewBeeUI;
 
 public class HostView : BaseView
 {
-    public HostView() : base() { }
-
     private Control? InnerView;
 
     private Panel _Hosts;

@@ -10,6 +10,15 @@ public class MobNavBar : BaseView
 
     public Action<int,MobIconButton>? OnSelect { get; set; }
 
+    public bool HasOverlay { get; init; } = false;
+
+    private Panel? _overlayLayer = null;
+
+    public Panel? OverlayLayer { get => _overlayLayer; }
+
+    private Control? _mainLayer = null;
+    public Control? MainLayer { get => _mainLayer; }
+
     protected override object Build()
     {
         if (Items == null || Items.Length == 0) return TextBlock("Empty Nav Bar");
@@ -43,8 +52,18 @@ public class MobNavBar : BaseView
         }
 
         var grid = HGrid(rows, Items);
+        var border = new Border().Child(grid)
+                .Background(R("SukiCardBackground"))
+                .Padding(10, 10, 10, 10);
+        _mainLayer = border;
 
-        return new Border().Child(grid).Background(R("SukiCardBackground")).Padding(10,10,10,10);
+        if (HasOverlay == false)
+            return border;
+        else
+        {
+            _overlayLayer = new Panel();
+            return Panel([border, _overlayLayer]);
+        }
     }
 
     public void SelectIndex(int index)
