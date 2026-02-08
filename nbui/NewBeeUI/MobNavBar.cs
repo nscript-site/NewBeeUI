@@ -53,7 +53,7 @@ public class MobNavBar : BaseView
 
         var grid = HGrid(rows, Items);
         var border = new Border().Child(grid)
-                .Background(R("SukiCardBackground"))
+                //.Background(R("SukiCardBackground"))
                 .Padding(10, 10, 10, 10);
         _mainLayer = border;
 
