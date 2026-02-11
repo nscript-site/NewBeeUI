@@ -23,6 +23,9 @@
     <Color x:Key="SukiLowText">#caffffff</Color>
     <Color x:Key="SukiDisabledText">#ca727272</Color>
 
+    <Color x:Key="Dark">#222222</Color>
+    <Color x:Key="Light">#eeeeee</Color>
+
     <BoxShadows x:Key="SukiLowShadow">0 0 3 0 #353535</BoxShadows>
     <BoxShadows x:Key="SukiSwitchShadow">0 1 5 0 #555555</BoxShadows>
     <BoxShadows x:Key="SukiSmallPopupShadow">0 0 4 1 #101010</BoxShadows>
