@@ -68,6 +68,14 @@ public class ComponentsView : BaseView
                     }).Align(-1,0),
                 ])
             ),
+            GroupBox("生成图像和视频",
+                HStack([
+                    TextButton("生成演示").OnClick(_=>{
+                        var v = new GenVideoView();
+                        v.ShowInOverlay(this,true);
+                    }).Align(-1,0),
+                ])
+            ),
             DemoViewCodeView(),
         ]).Return(out content);
     }

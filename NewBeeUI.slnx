@@ -1,0 +1,23 @@
+<Solution>
+  <Folder Name="/core/">
+    <Project Path="nbui\NewBeeUI.iOS\NewBeeUI.iOS.csproj" Id="700ab094-15cd-4596-b770-dc2a1301fa72" />
+    <Project Path="nbui\NewBeeUI.Platforms\NewBeeUI.Platforms.csproj" Id="4a789c52-05dc-4478-b6fd-7f3fd3d5a228" />
+    <Project Path="nbui\NewBeeUI\NewBeeUI.csproj" Id="79948d0c-6d47-d768-8a89-c2b9e8cdc79b" />
+    <Project Path="nstyles\source\NStyles.MeterialIcons\NStyles.MeterialIcons.csproj" />
+    <Project Path="nstyles\source\NStyles\NStyles.csproj" />
+  </Folder>
+  <Folder Name="/demo/">
+    <Project Path="demo\NewBeeUI.Demo.Android\NewBeeUI.Demo.Android.csproj" />
+    <Project Path="demo\NewBeeUI.Demo.Browser\NewBeeUI.Demo.Browser.csproj" />
+    <Project Path="demo\NewBeeUI.Demo.DesktopAppSimulator\NewBeeUI.Demo.DesktopAppSimulator.csproj" Id="1136f72d-c8a8-4225-acd7-017cb02b382d" />
+    <Project Path="demo\NewBeeUI.Demo.Desktop\NewBeeUI.Demo.Desktop.csproj" />
+    <Project Path="demo\NewBeeUI.Demo.iOS\NewBeeUI.Demo.iOS.csproj" />
+    <Project Path="demo\NewBeeUI.Demo\NewBeeUI.Demo.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools\NewBeeUI.Tools.ConsoleApp\NewBeeUI.Tools.ConsoleApp.csproj" Id="373e9f74-91f2-4d30-b5aa-2faea6fdf2af" />
+  </Folder>
+  <Folder Name="/_Solution Items/">
+    <File Path="nbui\Directory.Build.props" />
+  </Folder>
+</Solution>
