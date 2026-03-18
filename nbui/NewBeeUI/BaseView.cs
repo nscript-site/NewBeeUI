@@ -1203,9 +1203,9 @@ public static class BaseViewExtensions
         return button.Classes("Basic");
     }
 
-    public static ScrollViewer ScrollViewer<T>(this T button) where T : Control
+    public static ScrollViewer Scrollable<T>(this T ctrl) where T : Control
     {
-        return new ScrollViewer().Content(button);
+        return new ScrollViewer().Content(ctrl);
     }
 
     public static T TextStyle<T>(this T ctrl, float? fontSize = null) where T: Control

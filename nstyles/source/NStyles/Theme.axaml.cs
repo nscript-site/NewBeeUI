@@ -78,7 +78,7 @@ public partial class NTheme : Styles
         if(loadXaml == true) AvaloniaXamlLoader.Load(this);
 
         _app = Application.Current!;
-        _app.ActualThemeVariantChanged += (_, e) => OnBaseThemeChanged?.Invoke(_app.ActualThemeVariant);
+        _app?.ActualThemeVariantChanged += (_, e) => OnBaseThemeChanged?.Invoke(_app.ActualThemeVariant);
 
         foreach (var theme in DefaultColorThemes)
             AddColorTheme(theme.Value);
