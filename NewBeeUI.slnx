@@ -18,6 +18,6 @@
     <Project Path="tools\NewBeeUI.Tools.ConsoleApp\NewBeeUI.Tools.ConsoleApp.csproj" />
   </Folder>
   <Folder Name="/_Solution Items/">
-    <File Path="nbui\Directory.Build.props" />
+    <File Path="Directory.Build.props" />
   </Folder>
 </Solution>

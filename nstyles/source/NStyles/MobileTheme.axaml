@@ -1,4 +1,4 @@
-<Styles x:Class="NStyles.NTheme"
+<Styles x:Class="NStyles.NMobileTheme"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:system="clr-namespace:System;assembly=netstandard">
@@ -13,7 +13,7 @@
   <StyleInclude Source="avares://NStyles/Theme/ComboBoxStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/ComboBoxItemStyle.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/ProgressBarStyles.axaml" />
-  <!--<StyleInclude Source="avares://NStyles/MobileTheme/TabControlStyles.axaml" />-->
+  <StyleInclude Source="avares://NStyles/MobileTheme/TabControlStyles.axaml" />
   <Styles.Resources>
     <ResourceDictionary>
 

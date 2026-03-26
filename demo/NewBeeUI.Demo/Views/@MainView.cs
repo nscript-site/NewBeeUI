@@ -160,6 +160,7 @@ public class MainView : BaseView, IWindowView
             new RoutedViewBuilder("Styles", ()=>new StyleView()),
             new RoutedViewBuilder("ComboBox", ()=>new ComboBoxView()),
             new RoutedViewBuilder("TextBox", ()=>new TextBoxView()),
+            new RoutedViewBuilder("TabControls", ()=> new TabControlsView()),
         ];
     }
 }

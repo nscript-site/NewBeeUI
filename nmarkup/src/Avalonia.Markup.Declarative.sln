@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.31911.260
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11620.152 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Markup.Declarative", "Avalonia.Markup.Declarative\Avalonia.Markup.Declarative.csproj", "{5B5C0172-0B35-470A-9A65-4679E6028454}"
 EndProject
@@ -20,7 +20,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{2495724C-3E46-4375-B547-AFC84BCAEFC5}"
 	ProjectSection(SolutionItems) = preProject
 		..\Directory.Build.props = ..\Directory.Build.props
-		..\global.json = ..\global.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalLibrarySample", "Samples\ExternalLibrarySample\ExternalLibrarySample.csproj", "{D2C4C84B-269B-4479-A408-F12AC813DFAB}"

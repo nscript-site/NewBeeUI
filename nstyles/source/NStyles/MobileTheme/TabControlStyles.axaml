@@ -171,10 +171,4 @@
         <Setter Property="Foreground" Value="{DynamicResource Accent}" />
         <Setter Property="FontSize" Value="18" />
     </Style>
-
-
-
-
-
-
 </Styles>

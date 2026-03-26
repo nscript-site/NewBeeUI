@@ -182,7 +182,7 @@ internal class ViewBuildContext : IDisposable
         //    Debug.WriteLine($"Poped view {_currentContext._view.GetType().Name}");
     }
 
-    public static string GetViewStackString() => string.Join("/", ViewsStack.ToArray().Reverse().Select(x=>x._view.GetType().Name));
+    //public static string GetViewStackString() => string.Join("/", ViewsStack.ToArray().Reverse().Select(x=>x._view.GetType().Name));
 }
 
 internal enum ViewBuildContextState

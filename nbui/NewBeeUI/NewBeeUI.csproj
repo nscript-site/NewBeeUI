@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <!--<Version>11.3.0.22</Version>-->
-    <Version>11.2.8.1</Version>
+    <Version>11.3.12</Version>
     <RepositoryUrl>https://github.com/nscript-site/NewBeeUI</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageId>newbeeui</PackageId>
@@ -27,8 +27,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="nmarkup" Version="$(AvaloniaVersion)"/>
-    <PackageReference Include="NStyles.MeterialIcons" Version="$(AvaloniaVersion)"/>
+    <PackageReference Include="nmarkup" Version="$(nmarkupVersion)"/>
+    <PackageReference Include="NStyles.MeterialIcons" Version="$(nmarkupVersion)"/>
     <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
   </ItemGroup>
   <ItemGroup>
