@@ -860,19 +860,25 @@ public abstract class BaseView : MvuView
         toast.ShowToast(message, seconds, opacity, compactMode, hAlign, vAlign);
     }
 
-    public void ShowLoading(Control? centerOfContainer = null, Action<Loading>? onCreate = null)
+    public void ShowLoading(Visual? centerOfContainer = null, TextBlock? text = null, Action<Control>? onCreate = null)
     {
         var hosts = this.OverlayHosts();
         if (hosts == null) return;
 
         this.IsEnabled = false;
-        var loading = new Loading().Align(0, 0);
+
+        Control loading = text == null ? new Loading().Align(0, 0) : new LoadingView() { TitleContent = text };
 
         if (centerOfContainer != null)
         {
             // 获取 OverlayHosts 的屏幕位置
             Visual overlay = (this.GetVisualRoot() as Visual) ?? centerOfContainer;
             var overlaySize = overlay.Bounds;
+
+            if(text != null)
+            {
+                
+            }
 
             // 获取 centerOfContainer 的屏幕位置
             var centerOrigin = centerOfContainer.PointToScreen(new Point(0, 0));
@@ -1054,7 +1060,7 @@ public abstract class BaseView : MvuView
         for(int i = hosts.Count - 1; i >= 0; i--)
         {
             var ctrl = hosts[i];
-            if (ctrl is Loading)
+            if (ctrl is Loading || ctrl is LoadingView)
             {
                 hosts.RemoveAt(i);
             }
@@ -1464,16 +1470,16 @@ public static class BaseViewExtensions
     /// <param name="action"></param>
     /// <param name="minDelayMilliseconds"></param>
     /// <param name="onCreate"></param>
-    public static T? RunWithDelayedLoading<T>(this T? owner, Action action, int minDelayMilliseconds = 200, bool runAtBackground = false, Action<Loading>? onCreate = null) where T:BaseView
+    public static T? RunWithDelayedLoading<T>(this T? owner, Action action, int minDelayMilliseconds = 200, TextBlock? text = null, bool centeredInApp = true, bool runAtBackground = false, Action<Control>? onCreate = null) where T:BaseView
     {
         if(runAtBackground == false)
-            owner?.RunWithDelayedLoadingCore(action, minDelayMilliseconds,onCreate);
+            owner?.RunWithDelayedLoadingCore(action, minDelayMilliseconds, centeredInApp, text, onCreate);
         else
-            Task.Run(() => owner?.RunWithDelayedLoadingCore(action, minDelayMilliseconds, onCreate));
+            Task.Run(() => owner?.RunWithDelayedLoadingCore(action, minDelayMilliseconds, centeredInApp, text, onCreate));
         return owner;
     }
 
-    private static void RunWithDelayedLoadingCore<T>(this T? owner, Action action, int minDelayMilliseconds = 200, Action<Loading>? onCreate = null) where T : BaseView
+    private static void RunWithDelayedLoadingCore<T>(this T? owner, Action action, int minDelayMilliseconds = 200, bool centeredInApp = false, TextBlock? text = null, Action<Control>? onCreate = null) where T : BaseView
     {
         if (owner == null)
         {
@@ -1495,7 +1501,7 @@ public static class BaseViewExtensions
                 Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     if (isLoading == false) return;
-                    owner.ShowLoading(owner, onCreate);
+                    owner.ShowLoading(centeredInApp == false ? owner: null, text, onCreate);
                 });
             });
 

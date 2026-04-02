@@ -64,12 +64,19 @@ public class OverlayView : BaseView
 
             GroupBox("显示加载",
                 HStack([
-                    TextButton("显示加载示例").WhenClick(_ => {
+                    TextButton("显示加载示例1").WhenClick(_ => {
                         this.RunWithDelayedLoading(() =>
                         {
                             // Do some work
                             Thread.Sleep(3000);
                         }, runAtBackground: true);
+                    }),
+                    TextButton("显示加载示例2").WhenClick(_ => {
+                        this.RunWithDelayedLoading(() =>
+                        {
+                            // Do some work
+                            Thread.Sleep(3000);
+                        },  runAtBackground: true, centeredInApp: true, text: TextBlock("加载中"));
                     }),
                 ])
             ),

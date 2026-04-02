@@ -17,20 +17,20 @@ public class ComponentsView : BaseView
             ),
             GroupBox("按钮",
                 VStack([
-                        HStack([
-                            new ToggleSwitch().Align(0,0),
-                            IconButton(Icons.ScaleToOriginal),
-                            IconButton(NStyles.MeterialIcons.SearchWebIcon.Instance),
-                            IconButton(SearchIcon.Instance, "ToolTip", ToolTipPosition.Top ),
-                            SelectableIconButton(CogBoxIcon.Instance).OnClick(v=>{ v.Selected = !v.Selected; v.UpdateState(); }),
-                        ]),
-                        HStack([
-                            IconButton("InnerText", SearchIcon.Instance),
-                            IconButton("InnerText", SearchIcon.Instance, iconSize:12),
-                        ]),
-                        HStack([
-                            ToggleIconButton(LinkVariantIcon.Instance, LinkVariantOffIcon.Instance, "语义搜索已开启", "语义搜索已关闭")
-                        ]),
+                    HStack([
+                        new ToggleSwitch().Align(0,0),
+                        IconButton(Icons.ScaleToOriginal),
+                        IconButton(NStyles.MeterialIcons.SearchWebIcon.Instance),
+                        IconButton(SearchIcon.Instance, "ToolTip", ToolTipPosition.Top ),
+                        SelectableIconButton(CogBoxIcon.Instance).OnClick(v=>{ v.Selected = !v.Selected; v.UpdateState(); }),
+                    ]),
+                    HStack([
+                        IconButton("InnerText", SearchIcon.Instance),
+                        IconButton("InnerText", SearchIcon.Instance, iconSize:12),
+                    ]),
+                    HStack([
+                        ToggleIconButton(LinkVariantIcon.Instance, LinkVariantOffIcon.Instance, "语义搜索已开启", "语义搜索已关闭")
+                    ]),
                     ])
             ),
             GroupBox("Styles",
