@@ -27,9 +27,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="nmarkup" Version="$(nmarkupVersion)"/>
-    <PackageReference Include="NStyles.MeterialIcons" Version="$(nmarkupVersion)"/>
-    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
+    <PackageReference Include="nmarkup" Version="$(nmarkupVersion)" />
+    <PackageReference Include="NStyles.MeterialIcons" Version="$(nmarkupVersion)" />
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\nstyles\source\NStyles\NStyles.csproj" />

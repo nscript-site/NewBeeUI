@@ -437,10 +437,15 @@ public abstract class BaseView : MvuView
     }
 
     public const string BaseView_Classes_HStack = "BaseView_HStack";
-    public static StackPanel HStack(Control[] controls, bool useDefaultClasses = true)
+    public static StackPanel HStack(Control?[] controls, bool useDefaultClasses = true)
     {
         var stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = Globals.HStackDefaultSpacing };
-        stack.Children.AddRange(controls);
+        
+        foreach(var item in controls)
+        {
+            if (item != null) stack.Children.Add(item);
+        }
+
         if (useDefaultClasses) stack.Classes(BaseView_Classes_HStack);
         return stack;
     }
@@ -454,11 +459,14 @@ public abstract class BaseView : MvuView
 
     public const string BaseView_Classes_VStack = "BaseView_VStack";
 
-    public static StackPanel VStack(Control[] controls, bool useDefaultClasses = true)
+    public static StackPanel VStack(Control?[] controls, bool useDefaultClasses = true)
     {
         var stack = new StackPanel() { Orientation = Orientation.Vertical, Spacing = Globals.VStackDefaultSpacing };
-        stack.Children.AddRange(controls);
-        if(useDefaultClasses) stack.Classes(BaseView_Classes_VStack);
+        foreach (var item in controls)
+        {
+            if (item != null) stack.Children.Add(item);
+        }
+        if (useDefaultClasses) stack.Classes(BaseView_Classes_VStack);
         return stack;
     }
 

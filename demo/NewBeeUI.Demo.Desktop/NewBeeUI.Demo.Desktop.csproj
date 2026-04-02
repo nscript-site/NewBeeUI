@@ -19,6 +19,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="test.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="test.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
   </ItemGroup>
 

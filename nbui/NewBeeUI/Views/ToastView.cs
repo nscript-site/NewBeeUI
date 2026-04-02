@@ -40,6 +40,14 @@ public class ToastView : BaseView
 
     System.Timers.Timer? toastTimer;
 
+    public void ShowToastInUIThread(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1)
+    {
+        Dispatcher.UIThread.Post(async () =>
+        {
+            this.ShowToast(message, seconds, opacity, compactMode, hAlign, vAlign);
+        });
+    }
+
     public void ShowToast(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1)
     {
         if (border == null || toast == null || String.IsNullOrEmpty(message)) return;
