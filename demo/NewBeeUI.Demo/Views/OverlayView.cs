@@ -22,6 +22,23 @@ public class OverlayView : BaseView
     {
         return
         [
+            GroupBox("Toast",
+                HStack([
+                    TextButton("Toast示例1").OnClick(_=>{
+                        this.ShowToast("这是一条 Toast 消息");
+                    }),
+                    TextButton("Toast示例2").OnClick(_=>{
+                        this.ShowToast(
+                            HStack([
+                                TextBlock("这是一条复杂的 Toast 消息"),
+                                Icon(WardrobeIcon.Instance),
+                                TextBlock("!!")
+                                ])
+                        );
+                    }),
+                ])
+            ),
+
             GroupBox("消息弹窗",
                 HStack([
                     TextButton("消息弹窗示例").OnClick(_=>{

@@ -43,7 +43,7 @@ public abstract class BaseView : MvuView
             topLevel.KeyBindings.AddRange(this.KeyBindings);
     }
 
-    protected void InvokeByUIThread(Action action)
+    public void InvokeByUIThread(Action action)
     {
         Dispatcher.UIThread.InvokeAsync(action);
     }
@@ -850,14 +850,24 @@ public abstract class BaseView : MvuView
     /// <param name="hAlign"></param>
     /// <param name="vAlign"></param>
     /// <param name="onCreate"></param>
-    public void ShowToastView(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1, Action<ToastView>? onCreate = null)
+    public void ShowToast(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1, Action<ToastView>? onCreate = null)
     {
         var hosts = this.OverlayHosts();
         if (hosts == null) return;
         var toast = new ToastView() { IsTemporary = true };
         onCreate?.Invoke(toast);
         hosts.Add(toast);
-        toast.ShowToast(message, seconds, opacity, compactMode, hAlign, vAlign);
+        toast.Show(message, seconds, opacity, compactMode, hAlign, vAlign);
+    }
+
+    public void ShowToast(Control content, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1, Action<ToastView>? onCreate = null)
+    {
+        var hosts = this.OverlayHosts();
+        if (hosts == null) return;
+        var toast = new ToastView() { IsTemporary = true };
+        onCreate?.Invoke(toast);
+        hosts.Add(toast);
+        toast.Show(content, seconds, opacity, compactMode, hAlign, vAlign);
     }
 
     public void ShowLoading(Visual? centerOfContainer = null, TextBlock? text = null, Action<Control>? onCreate = null)

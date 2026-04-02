@@ -29,7 +29,7 @@ public class ComponentsView : BaseView
                         IconButton("InnerText", SearchIcon.Instance, iconSize:12),
                     ]),
                     HStack([
-                        ToggleIconButton(LinkVariantIcon.Instance, LinkVariantOffIcon.Instance, "语义搜索已开启", "语义搜索已关闭")
+                        ToggleIconButton(LinkVariantIcon.Instance, LinkVariantOffIcon.Instance, "Semantic search is on. Click to switch to keyword search", "Keyword search is on. Click to switch to semantic search")
                     ]),
                     ])
             ),

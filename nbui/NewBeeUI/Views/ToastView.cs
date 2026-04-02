@@ -7,7 +7,7 @@ public class ToastView : BaseView
     TextBlock? toast;
     Border? border;
     PathIcon? icon;
-
+    Border? toastContent;
     bool CompactMode;
 
     /// <summary>
@@ -15,42 +15,60 @@ public class ToastView : BaseView
     /// </summary>
     public bool IsTemporary { get; set; }
 
-    protected override object Build()
+    protected override void Build(out Control content)
     {
-        return new Border().Align(0, 0).CornerRadius(4)
-                    .Margin(80)
-                    .MaxWidth(600)
-                    .BorderBrush(R("SukiMenuBorderBrush"))
-                    .BorderThickness(1)
-                    .Background(R("SukiCardBackground"))
-                    .Ref(out border)!
-                    .IsVisible(false)
-                    .Child(
-                        Grid(cols: "Auto, *").Margin(10).Children([
-                            PathIcon(NStyles.MeterialIcons.InformationOutlineIcon.Instance)
-                                .Ref(out icon)!.Margin(0,0,10,0)
-                                .IsVisible(CompactMode == false)
-                                .Foreground(R("SukiPrimaryColor")),
-                            new TextBlock().Col(1).Align(1,0)
-                                .TextWrapping(TextWrapping.Wrap).Foreground(R("SukiText"))
-                                .Ref(out toast)!
-                        ])
-                    );
+        Border(HGrid("Auto, *", [
+                    PathIcon(NStyles.MeterialIcons.InformationOutlineIcon.Instance)
+                        .Ref(out icon)!.Margin(0,0,10,0)
+                        .IsVisible(CompactMode == false)
+                        .Foreground(R("SukiPrimaryColor")),
+                    Border().Col(1).Align(1,0).Ref(out toastContent)!,
+                    //new TextBlock().Col(1).Align(1,0)
+                    //    .TextWrapping(TextWrapping.Wrap).Foreground(R("SukiText"))
+                    //    .Ref(out toast)!
+                ]).Margin(10))
+            .Align(0, 0).CornerRadius(4)
+            .Margin(80)
+            .MaxWidth(600)
+            .BorderBrush(R("SukiMenuBorderBrush"))
+            .BorderThickness(1)
+            .Background(R("SukiCardBackground"))
+            .Ref(out border)!
+            .IsVisible(false)
+            .Return(out content);
     }
 
     System.Timers.Timer? toastTimer;
 
-    public void ShowToastInUIThread(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1)
+    public void ShowInUIThread(Control content, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1)
     {
         Dispatcher.UIThread.Post(async () =>
         {
-            this.ShowToast(message, seconds, opacity, compactMode, hAlign, vAlign);
+            this.Show(content, seconds, opacity, compactMode, hAlign, vAlign);
         });
     }
 
-    public void ShowToast(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1)
+    public void ShowInUIThread(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1)
     {
-        if (border == null || toast == null || String.IsNullOrEmpty(message)) return;
+        Dispatcher.UIThread.Post(async () =>
+        {
+            this.Show(message, seconds, opacity, compactMode, hAlign, vAlign);
+        });
+    }
+
+    public void Show(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1)
+    {
+        if (String.IsNullOrEmpty(message)) return;
+
+        var msg = TextBlock(message).Align(1, 0)
+                        .TextWrapping(TextWrapping.Wrap).Foreground(R("SukiText"));
+
+        Show(msg, seconds, opacity, compactMode, hAlign, vAlign);
+    }
+
+    public void Show(Control content, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1)
+    {
+        if (border == null || toastContent == null) return;
 
         this.Align(hAlign, vAlign);
 
@@ -67,7 +85,9 @@ public class ToastView : BaseView
         border.Opacity = opacity;
         border.IsVisible = true;
         if (icon != null) icon.IsVisible = CompactMode == false;
-        toast.Text = message;
+
+        toastContent?.Child = content;
+
         toastTimer = new System.Timers.Timer(miniseconds);
         toastTimer.Elapsed += (s, e) =>
         {
@@ -75,7 +95,7 @@ public class ToastView : BaseView
             {
                 toastTimer?.Dispose();
                 toastTimer = null;
-                if(IsTemporary)
+                if (IsTemporary)
                 {
                     var hosts = this.OverlayHosts();
                     hosts?.Remove(this);
