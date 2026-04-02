@@ -83,7 +83,7 @@ public class MainView : BaseView, IWindowView
         var grid = Grid(cols: "Auto, *")
             .Children([
                 BuildMenu(),
-                router.Col(1)
+                router.Scrollable().Col(1)
             ]);
 
         if(App.IsMobileApp && OperatingSystem.IsLinux())  //鸿蒙手机

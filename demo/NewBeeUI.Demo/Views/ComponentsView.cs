@@ -27,7 +27,10 @@ public class ComponentsView : BaseView
                         HStack([
                             IconButton("InnerText", SearchIcon.Instance),
                             IconButton("InnerText", SearchIcon.Instance, iconSize:12),
-                        ]),                        
+                        ]),
+                        HStack([
+                            ToggleIconButton(LinkVariantIcon.Instance, LinkVariantOffIcon.Instance, "语义搜索已开启", "语义搜索已关闭")
+                        ]),
                     ])
             ),
             GroupBox("Styles",

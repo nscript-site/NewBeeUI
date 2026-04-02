@@ -1,21 +1,38 @@
 ﻿namespace NewBeeUI;
 
-using C = (string Name, string IP);
-
 public class ToggleIconButtonView : BaseView
 {
-    public PathIcon OnIcon { get; init; } = default!;
+    public StreamGeometry IconOn { get; init; } = default!;
 
-    public PathIcon OffIcon { get; init; } = default!;
+    public StreamGeometry IconOff { get; init; } = default!;
 
-    public string OnToolTip { get; set; } = String.Empty;
+    public string? ToolTipOn { get; set; }
 
-    public string OffToolTip { get; set; } = String.Empty;
+    public string? ToolTipOff { get; set; }
+
+    public bool IsOn { get; set; } = true;
+
+    internal double? IconSize;
+
+    public Action<ToggleIconButtonView>? OnSwitch { get; set; } 
 
     protected override void Build(out Control content)
     {
-        C a = new C("name", "ip");
-
-        base.Build(out content);
+        Panel([
+            IconButton(IconOn,ToolTipOn, iconSize: IconSize)
+                .IsVisible(()=>IsOn)
+                .OnClick(_ => { 
+                    IsOn = false;
+                    OnSwitch?.Invoke(this);
+                    this.UpdateState();
+                }),
+            IconButton(IconOff,ToolTipOff, iconSize: IconSize)
+                .IsVisible(()=>!IsOn)
+                .OnClick(_ => { 
+                    IsOn = true;
+                    OnSwitch?.Invoke(this);
+                    this.UpdateState();
+                }),
+        ]).Return(out content);
     }
 }

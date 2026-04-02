@@ -218,6 +218,17 @@ public abstract class BaseView : MvuView
         return CreateButton(new PathIcon().Data(g), text, tooltip, scale, iconSize, onSetTooltipPosition: GetSetTooltipPosition(toolTipPosition));
     }
 
+    public static ToggleIconButtonView ToggleIconButton(StreamGeometry iconOn, StreamGeometry iconOff, 
+        string? toolTipOn = null, string? toolTipOff = null, 
+        double? iconSize = null,
+        Action<ToggleIconButtonView>? onSwitch = null)
+    {
+        var v = new ToggleIconButtonView() { IconOn = iconOn, IconOff = iconOff, 
+            ToolTipOn = toolTipOn, ToolTipOff = toolTipOff,
+            OnSwitch = onSwitch, IconSize = iconSize };
+        return v;
+    }
+
     public static Button CreateButton(PathIcon? icon, string? text, string? tooltip, 
         double scale, double? iconSize = null, Action<Button>? onSetTooltipPosition = null)
     {
