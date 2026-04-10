@@ -5,7 +5,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <nmarkupVersion>11.*</nmarkupVersion>
-    <AvaloniaVersion>11.3.12</AvaloniaVersion>
+    <AvaloniaVersion>12.0.0</AvaloniaVersion>
     <SkiaSharpVersion>2.88.9</SkiaSharpVersion>
   </PropertyGroup>
   <!--<ItemGroup>

@@ -57,7 +57,7 @@ public abstract class BaseView : MvuView
 
     protected virtual void Build(out Control content)
     {
-        content = new TextBlock().Text("BaseView");
+        content = TextBlock("BaseView");
     }
 
     #region Tooltip Helpers
@@ -850,24 +850,60 @@ public abstract class BaseView : MvuView
     /// <param name="hAlign"></param>
     /// <param name="vAlign"></param>
     /// <param name="onCreate"></param>
-    public void ShowToast(string message, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1, Action<ToastView>? onCreate = null)
+    public void ShowToast(string message, double seconds = 2, double opacity = 1, bool compactMode = false,
+        int hAlign = 0, int vAlign = -1, bool removeTemplateToasts = false,
+        Action<ToastView>? onCreate = null)
     {
         var hosts = this.OverlayHosts();
         if (hosts == null) return;
+        if (removeTemplateToasts == true)
+            ClearTemporaryToasts();
+
         var toast = new ToastView() { IsTemporary = true };
         onCreate?.Invoke(toast);
         hosts.Add(toast);
         toast.Show(message, seconds, opacity, compactMode, hAlign, vAlign);
     }
 
-    public void ShowToast(Control content, double seconds = 2, double opacity = 1, bool compactMode = false, int hAlign = 0, int vAlign = -1, Action<ToastView>? onCreate = null)
+    public void ShowToast(Control content, double seconds = 2, double opacity = 1, bool compactMode = false,
+        int hAlign = 0, int vAlign = -1, bool removeTemplateToasts = false,
+        Action<ToastView>? onCreate = null)
     {
         var hosts = this.OverlayHosts();
         if (hosts == null) return;
+
+        if (removeTemplateToasts == true)
+            ClearTemporaryToasts();
+
         var toast = new ToastView() { IsTemporary = true };
         onCreate?.Invoke(toast);
         hosts.Add(toast);
         toast.Show(content, seconds, opacity, compactMode, hAlign, vAlign);
+    }
+
+    public void ClearTemporaryToasts()
+    {
+        var hosts = this.OverlayHosts();
+        if (hosts == null || hosts.Count == 0) return;
+        List<ToastView>? deletes = null;
+        foreach(var item in hosts)
+        {
+            if(item is ToastView v)
+            {
+                if(v.IsTemporary == true)
+                {
+                    v.StopTimer();
+                    if (deletes == null) deletes = new List<ToastView>();
+                    deletes.Add(v);
+                }
+            }
+        }
+
+        if(deletes != null)
+        {
+            foreach (var c in deletes)
+                hosts.Remove(c);
+        }
     }
 
     public void ShowLoading(Visual? centerOfContainer = null, TextBlock? text = null, Action<Control>? onCreate = null)

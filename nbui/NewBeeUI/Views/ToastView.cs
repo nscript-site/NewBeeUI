@@ -29,7 +29,7 @@ public class ToastView : BaseView
                 ]).Margin(10))
             .Align(0, 0).CornerRadius(4)
             .Margin(80)
-            .MaxWidth(600)
+            .MaxWidth(600).IsHitTestVisible(false)
             .BorderBrush(R("SukiMenuBorderBrush"))
             .BorderThickness(1)
             .Background(R("SukiCardBackground"))
@@ -107,6 +107,13 @@ public class ToastView : BaseView
             });
         };
         toastTimer.Start();
+    }
+
+    internal void StopTimer()
+    {
+        var timer = toastTimer;
+        if (timer == null) return;
+        timer.Stop();
     }
 
     public void Hide()

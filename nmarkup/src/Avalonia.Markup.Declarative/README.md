@@ -4,6 +4,7 @@
 
 11.3.0.x 代表针对的是 Avalonia 11.3.0 版本
 11.2.8.x 代表针对的是 Avalonia 11.2.8 版本
+12.0.0.x 代表针对的是 Avalonia 12.2.0 版本
 
 使用时请选择对应的版本。比如，鸿蒙系统下目前建议使用匹配 https://github.com/OpenHarmony-NET/OpenHarmony.Avalonia 的版本(当前: Avalonia 11.2.8 版本)。
 
