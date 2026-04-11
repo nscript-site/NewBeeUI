@@ -4,8 +4,6 @@
     <TargetFramework>net10.0-ios</TargetFramework>
     <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
-    <!--<CodesignKey>Apple Development: Created via API (XXXXXXXXXXXXXX)</CodesignKey>
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>-->
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net10.0-ios'">
     <CodesignKey>Apple Development: Created via API (DX29BP47A3)</CodesignKey>
@@ -13,15 +11,18 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!--<MtouchLink>None</MtouchLink>-->
     <MtouchInterpreter>true</MtouchInterpreter>
-    <!--<RunAOTCompilation>true</RunAOTCompilation>
-    <AotAssemblies>true</AotAssemblies>-->
+    <ProvisioningType>manual</ProvisioningType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <MtouchLink>None</MtouchLink>
+    <!-- prevents linker stripping -->
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia.iOS" Version="$(AvaloniaVersion)" />
   </ItemGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\..\nbui\NewBeeUI.iOS\NewBeeUI.iOS.csproj" />

@@ -1491,7 +1491,7 @@ public static class BaseViewExtensions
             return window.Hosts;
         }
 
-        var root = ctrl.GetVisualRoot() as TopLevel;
+        var root = TopLevel.GetTopLevel(ctrl);
         if (root == null) return null;
 
         HostView? hostView = root.Content as HostView;
@@ -1502,7 +1502,8 @@ public static class BaseViewExtensions
 
     public static Visual? GetVisualRoot(this Control ctrl)
     {
-        return ctrl.GetPresentationSource()?.RootVisual;
+        var p = ctrl.GetPresentationSource();
+        return p?.RootVisual;
     }
 
     public static T Flyout<T>(this T control, Control? flyoutContent, Action<Flyout>? onFlyout = null) where T : Button
