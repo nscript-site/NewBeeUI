@@ -283,30 +283,13 @@ public class NWindow : Window
         {
             ExtendClientAreaToDecorationsHint = true;
             ExtendClientAreaTitleBarHeightHint = 44;
-            
-            // 尝试不同的组合
-            //ExtendClientAreaChromeHints = 
-            //    Avalonia.Platform.ExtendClientAreaChromeHints.PreferSystemChrome |
-            //    Avalonia.Platform.ExtendClientAreaChromeHints.OSXThickTitleBar;
-        }
-        else if (OperatingSystem.IsLinux())
-        {
-            ExtendClientAreaToDecorationsHint = true;
-            ExtendClientAreaTitleBarHeightHint = -1; // Linux 标题栏高度
-            //ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
-        }
-        else if(OperatingSystem.IsIOS())
-        {
-            ExtendClientAreaToDecorationsHint = true;
-            ExtendClientAreaTitleBarHeightHint = -1; // Windows 标题栏高度
-            //ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
         }
         else
         {
             ExtendClientAreaToDecorationsHint = true;
             ExtendClientAreaTitleBarHeightHint = -1; // Windows 标题栏高度
-            //ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
         }
+        WindowDecorations = WindowDecorations.BorderOnly;
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
@@ -488,23 +471,17 @@ public class NWindow : Window
     {
         if (state == WindowState.FullScreen)
         {
-            Margin = new Thickness(0);
             oldShowBottomBorder = ShowBottomBorder;
             CanResize = CanMove = false;
             ShowBottomBorder = false;
         }
         else if (state == WindowState.Maximized)
         {
-            if(IsNotMac == true)
-                Margin = new Thickness(7);
-            else
-                Margin = new Thickness(0);
             CanResize = CanMove = true;
             ShowBottomBorder = oldShowBottomBorder;
         }
         else
         {
-            Margin = new Thickness(0);
             CanResize = CanMove = true;
             ShowBottomBorder = oldShowBottomBorder;
         }

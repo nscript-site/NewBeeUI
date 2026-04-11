@@ -607,7 +607,7 @@ public abstract class BaseView : MvuView
 
     public static GroupBox GroupBox(string header, Control? content = null, int? hAlign = null)
     {
-        var gb = new GroupBox() { Header = header }.Align(hAlign).BorderThickness(1);
+        var gb = new GroupBox() { Header = header }.Align(hAlign).BorderThickness(1).Padding(20).BorderBrush(Brushes.Gray) ;
         if (content != null) gb.Content = content;
         return gb;
     }
