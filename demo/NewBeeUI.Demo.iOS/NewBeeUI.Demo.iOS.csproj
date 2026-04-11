@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <!-- <MtouchInterpreter>true</MtouchInterpreter> -->
     <!--<MtouchLink>None</MtouchLink>-->
-    <MtouchInterpreter>true</MtouchInterpreter>
     <!--<RunAOTCompilation>true</RunAOTCompilation>
     <AotAssemblies>true</AotAssemblies>-->
   </PropertyGroup>
