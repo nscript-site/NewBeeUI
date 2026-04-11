@@ -79,7 +79,7 @@ public partial class PropertyGridTemplateSelector : ResourceDictionary, IDataTem
 
     private static async Task ShowWindowDialogAsync(Control control)
     {
-        var root = control.GetVisualRoot();
+        var root = control.GetPresentationSource()?.RootVisual;
         if (root is not Window parentWindow || control.DataContext is not ComplexTypeViewModel childViewModel || childViewModel.Value is null)
         {
             return;
@@ -115,7 +115,7 @@ public partial class PropertyGridTemplateSelector : ResourceDictionary, IDataTem
             }
             else
             {
-                var root = control.GetVisualRoot();
+                var root = control.GetPresentationSource()?.RootVisual;
                 if (root is not NWindow parentWindow || control.DataContext is not ComplexTypeViewModel childViewModel || childViewModel.Value is null)
                 {
                     return;

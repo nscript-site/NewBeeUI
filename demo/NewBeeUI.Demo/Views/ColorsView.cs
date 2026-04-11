@@ -34,7 +34,7 @@ public class ColorsView : BaseView
             ]).Return(out content);
     }
 
-    protected DemoColorView DemoColor(IBinding binding, string name = "")
+    protected DemoColorView DemoColor(BindingBase binding, string name = "")
     {
         return new DemoColorView() { Name = name, Color = binding };
     }

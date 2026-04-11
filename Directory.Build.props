@@ -1,12 +1,12 @@
 <Project>
 	<PropertyGroup>
-		<Version>11.3.12</Version>
-    <!--<Version>11.2.8.0</Version>-->
+		<Version>12.0.0</Version>
   </PropertyGroup>
   <PropertyGroup>
-    <nmarkupVersion>11.*</nmarkupVersion>
+    <nmarkupVersion>12.0.0.3</nmarkupVersion>
     <AvaloniaVersion>12.0.0</AvaloniaVersion>
-    <SkiaSharpVersion>2.88.9</SkiaSharpVersion>
+    <AvaloniaDiagnosticsVersion>11.3.13</AvaloniaDiagnosticsVersion>
+    <SkiaSharpVersion>3.119.3-preview.1.1</SkiaSharpVersion>
   </PropertyGroup>
   <!--<ItemGroup>
     <PackageVersion Include="Avalonia" Version="$(AvaloniaVersion)" />

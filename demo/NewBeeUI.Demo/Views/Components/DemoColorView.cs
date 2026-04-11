@@ -4,7 +4,7 @@ namespace NewBeeUI.Demo.Views.Components;
 
 public class DemoColorView : BaseView
 {
-    public IBinding? Color { get; set; }
+    public BindingBase? Color { get; set; }
 
     protected override void Build(out Control content)
     {

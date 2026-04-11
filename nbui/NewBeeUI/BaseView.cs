@@ -2,6 +2,7 @@
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
+using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Styling;
@@ -1175,7 +1176,7 @@ public static class BaseViewExtensions
     {
         var tb = new TextBlock().Text(text);
         if(fontSize != null) tb.FontSize = fontSize.Value;
-        button.Content(tb);
+        button.Content = tb;
         return button;
     }
 
@@ -1497,6 +1498,11 @@ public static class BaseViewExtensions
         if (hostView != null) return hostView.Hosts.Children;
 
         return null;
+    }
+
+    public static Visual? GetVisualRoot(this Control ctrl)
+    {
+        return ctrl.GetPresentationSource()?.RootVisual;
     }
 
     public static T Flyout<T>(this T control, Control? flyoutContent, Action<Flyout>? onFlyout = null) where T : Button

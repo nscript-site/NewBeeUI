@@ -43,7 +43,7 @@ public class SukiEffect
         _shaderString = shaderString;
         _rawShaderString = rawShaderString;
 
-        var compiledEffect = SKRuntimeEffect.Create(_shaderString, out var errors);
+        var compiledEffect = SKRuntimeEffect.CreateShader(_shaderString, out var errors);
         Effect = compiledEffect ?? throw new ShaderCompilationException(errors);
     }
 
@@ -169,7 +169,7 @@ public class SukiEffect
                 { "iAlpha", alpha }
             };
 
-        return Effect.ToShader(true, inputs);
+        return Effect.ToShader(inputs);
     }
 
     internal SKShader ToShaderWithCustomUniforms(Func<SKRuntimeEffect, SKRuntimeEffectUniforms> uniformFactory, float timeSeconds, Rect bounds,
@@ -179,7 +179,7 @@ public class SukiEffect
         uniforms.Add("iResolution", new[] { (float)bounds.Width, (float)bounds.Height, 0f });
         uniforms.Add("iTime", timeSeconds * animationScale);
         uniforms.Add("iAlpha", alpha);
-        return Effect.ToShader(true,uniforms);
+        return Effect.ToShader(uniforms);
     }
 
     /// <summary>

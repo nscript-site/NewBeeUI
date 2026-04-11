@@ -285,27 +285,27 @@ public class NWindow : Window
             ExtendClientAreaTitleBarHeightHint = 44;
             
             // 尝试不同的组合
-            ExtendClientAreaChromeHints = 
-                Avalonia.Platform.ExtendClientAreaChromeHints.PreferSystemChrome |
-                Avalonia.Platform.ExtendClientAreaChromeHints.OSXThickTitleBar;
+            //ExtendClientAreaChromeHints = 
+            //    Avalonia.Platform.ExtendClientAreaChromeHints.PreferSystemChrome |
+            //    Avalonia.Platform.ExtendClientAreaChromeHints.OSXThickTitleBar;
         }
         else if (OperatingSystem.IsLinux())
         {
             ExtendClientAreaToDecorationsHint = true;
             ExtendClientAreaTitleBarHeightHint = -1; // Linux 标题栏高度
-            ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
+            //ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
         }
         else if(OperatingSystem.IsIOS())
         {
             ExtendClientAreaToDecorationsHint = true;
             ExtendClientAreaTitleBarHeightHint = -1; // Windows 标题栏高度
-            ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
+            //ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
         }
         else
         {
             ExtendClientAreaToDecorationsHint = true;
             ExtendClientAreaTitleBarHeightHint = -1; // Windows 标题栏高度
-            ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
+            //ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
         }
     }
 

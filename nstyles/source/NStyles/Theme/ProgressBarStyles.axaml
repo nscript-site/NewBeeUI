@@ -196,9 +196,9 @@
                 </KeyFrame>
             </Animation>
         </Style.Animations>-->
-        <Setter Property="Width"
+<!--        <Setter Property="Width"
                 Value="{Binding TemplateProperties.ContainerWidth, RelativeSource={RelativeSource TemplatedParent}}" />
-    </Style>
+-->    </Style>
 
     <Style Selector="ProgressBar:vertical:indeterminate /template/ Border#PART_IndeterminateIndicator">
         <!--<Style.Animations>

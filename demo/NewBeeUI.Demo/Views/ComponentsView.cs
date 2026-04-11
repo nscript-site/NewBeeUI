@@ -9,8 +9,8 @@ public class ComponentsView : BaseView
         VStack([
             GroupBox("文本输入",
                 VStack([
-                    new TextBox().Watermark("请输入内容").ListenIME(),
-                    new TextBox().PasswordChar('*').Watermark("请输入密码"),
+                    new TextBox().PlaceholderText("请输入内容").ListenIME(),
+                    new TextBox().PasswordChar('*').PlaceholderText("请输入密码"),
                     new TextBox().Height(100).TextWrapping(TextWrapping.Wrap)
                         .AcceptsReturn(true).VerticalContentAlignment(VerticalAlignment.Top).Align(null,0),
                 ])

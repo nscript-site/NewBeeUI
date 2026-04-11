@@ -6,7 +6,7 @@
   <ControlTheme x:Key="NWindowTheme" TargetType="nc:NWindow">
     <Setter Property="Margin" Value="0" />
     <Setter Property="TransparencyLevelHint" Value="Transparent"></Setter>
-    <Setter Property="SystemDecorations" Value="{OnPlatform Full, Linux=None, x:TypeArguments=SystemDecorations}" />
+    <!--<Setter Property="SystemDecorations" Value="{OnPlatform Full, Linux=None, x:TypeArguments=SystemDecorations}" />-->
     <Setter Property="TextElement.Foreground" Value="{DynamicResource SukiText}" />
     <Setter Property="FlowDirection" Value="{DynamicResource FlowDirectionPrimary}" />
     <Setter Property="Template">
@@ -15,18 +15,10 @@
                 ClipToBounds="True"
                 CornerRadius="{OnPlatform '0', Linux='10', x:TypeArguments=CornerRadius}">
           <VisualLayerManager Name="PART_VisualLayerManager" IsHitTestVisible="True">
-            <VisualLayerManager.ChromeOverlayLayer>
-              <!-- <nc:SukiHost /> -->
-              <ItemsControl ItemsSource="{Binding Hosts, RelativeSource={RelativeSource AncestorType={x:Type nc:NWindow}}}">
-                <ItemsControl.ItemsPanel>
-                  <ItemsPanelTemplate>
-                    <Panel Margin="{OnPlatform Windows='0,44,0,0', Linux='0,44,0,0', macOS='0,44,0,0', Default='0'}">
-                    </Panel>
-                  </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-              </ItemsControl>
+<!--            <VisualLayerManager.ChromeOverlayLayer>
+              --><!-- <nc:SukiHost /> --><!--
             </VisualLayerManager.ChromeOverlayLayer>
-            <Panel Background="{DynamicResource SukiWindowBackground}" x:Name="PART_Root" >
+-->            <Panel Background="{DynamicResource SukiWindowBackground}" x:Name="PART_Root" >
               <DockPanel LastChildFill="True">
                 <Panel ContextMenu="{TemplateBinding TitleBarContextMenu}" DockPanel.Dock="Top">
                   <Panel.Styles>
@@ -106,6 +98,14 @@
                                   CornerRadius="10"
                                   IsHitTestVisible="True" />
               </DockPanel>
+              <ItemsControl ItemsSource="{Binding Hosts, RelativeSource={RelativeSource AncestorType={x:Type nc:NWindow}}}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <Panel Margin="{OnPlatform Windows='0,44,0,0', Linux='0,44,0,0', macOS='0,44,0,0', Default='0'}">
+                    </Panel>
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+              </ItemsControl>
             </Panel>
           </VisualLayerManager>
         </Border>
