@@ -282,14 +282,15 @@ public class NWindow : Window
         if (OperatingSystem.IsMacOS())
         {
             ExtendClientAreaToDecorationsHint = true;
-            ExtendClientAreaTitleBarHeightHint = 44;
+            ExtendClientAreaTitleBarHeightHint = -1;
+            WindowDecorations = WindowDecorations.Full;
         }
         else
         {
             ExtendClientAreaToDecorationsHint = true;
             ExtendClientAreaTitleBarHeightHint = -1; // Windows 标题栏高度
+            WindowDecorations = WindowDecorations.BorderOnly;
         }
-        WindowDecorations = WindowDecorations.BorderOnly;
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
