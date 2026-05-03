@@ -13,9 +13,9 @@
   <PropertyGroup>
     <MtouchInterpreter>true</MtouchInterpreter>
     <ProvisioningType>manual</ProvisioningType>
-    <DebugSymbols>true</DebugSymbols>
+    <!--<DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>None</MtouchLink>-->
     <!-- prevents linker stripping -->
   </PropertyGroup>
 

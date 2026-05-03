@@ -922,11 +922,6 @@ public abstract class BaseView : MvuView
             Visual overlay = (this.GetVisualRoot() as Visual) ?? centerOfContainer;
             var overlaySize = overlay.Bounds;
 
-            if(text != null)
-            {
-                
-            }
-
             // 获取 centerOfContainer 的屏幕位置
             var centerOrigin = centerOfContainer.PointToScreen(new Point(0, 0));
             var overlayOrigin = overlay.PointToScreen(new Point(0, 0));

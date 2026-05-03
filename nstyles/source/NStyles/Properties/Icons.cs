@@ -62,7 +62,8 @@ public static class Icons
     public static StreamGeometry DockRightCollapse { get; } = GetIcon(nameof(DockRightCollapse), IconsResources.DockRightCollapse);
 
     public static StreamGeometry ScaleToOriginal { get; } = GetIcon(nameof(ScaleToOriginal), IconsResources.ScaleToOriginal);
-    
+
+    public static StreamGeometry ImageThumbs { get; } = GetIcon(nameof(ImageThumbs), IconsResources.ImageThumbs);
 
     public static StreamGeometry GetIcon(string name, string svg)
     {
@@ -169,4 +170,5 @@ internal static class IconsResources
 
     internal const string ScaleToOriginal = "M813.176 180.706a60.235 60.235 0 0 1 60.236 60.235v481.883a60.235 60.235 0 0 1-60.236 60.235H210.824a60.235 60.235 0 0 1-60.236-60.235V240.94a60.235 60.235 0 0 1 60.236-60.235h602.352zm0-60.235H210.824A120.47 120.47 0 0 0 90.353 240.94v481.883a120.47 120.47 0 0 0 120.47 120.47h602.353a120.47 120.47 0 0 0 120.471-120.47V240.94a120.47 120.47 0 0 0-120.47-120.47zm-120.47 180.705a30.118 30.118 0 0 0-30.118 30.118v301.177a30.118 30.118 0 0 0 60.236 0V331.294a30.118 30.118 0 0 0-30.118-30.118zm-361.412 0a30.118 30.118 0 0 0-30.118 30.118v301.177a30.118 30.118 0 1 0 60.236 0V331.294a30.118 30.118 0 0 0-30.118-30.118zM512 361.412a30.118 30.118 0 0 0-30.118 30.117v30.118a30.118 30.118 0 0 0 60.236 0V391.53A30.118 30.118 0 0 0 512 361.412zM512 512a30.118 30.118 0 0 0-30.118 30.118v30.117a30.118 30.118 0 0 0 60.236 0v-30.117A30.118 30.118 0 0 0 512 512z";
 
+    internal const string ImageThumbs = "M5,19.5H7V21.5H5V19.5M9,19.5H11V21.5H9V19.5M13,19.5H15V21.5H13V19.5M17,19.5H19V21.5H17V19.5M4,2.5A2,2 0 0,0 2,4.5V14.5A2,2 0 0,0 4,16.5H20A2,2 0 0,0 22,14.5V4.5A2,2 0 0,0 20,2.5H4M4,4.5H20V14.5H4V4.5Z";
 }
