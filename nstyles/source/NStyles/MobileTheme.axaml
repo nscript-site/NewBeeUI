@@ -9,7 +9,7 @@
   <StyleInclude Source="avares://NStyles/Theme/ToggleSwitchStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/CheckBoxStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/SliderStyles.axaml" />
-  <StyleInclude Source="avares://NStyles/Theme/TextBoxStyles.axaml" />
+  <!--<StyleInclude Source="avares://NStyles/Theme/TextBoxStyles.axaml" />-->
   <StyleInclude Source="avares://NStyles/Theme/ComboBoxStyles.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/ComboBoxItemStyle.axaml" />
   <StyleInclude Source="avares://NStyles/Theme/ProgressBarStyles.axaml" />
