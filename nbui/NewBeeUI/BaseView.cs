@@ -1124,12 +1124,18 @@ public static class BaseViewExtensions
     {
         private readonly Action _action;
 
-        public KeyActionCommand(Action action)
+        private Func<bool>? _canExecute;
+
+        public KeyActionCommand(Action action, Func<bool>? canExecute = null)
         {
             _action = action;
+            _canExecute = canExecute;
         }
 
-        public bool CanExecute(object? parameter) => true;
+        public bool CanExecute(object? parameter)
+        {
+            return _canExecute == null ? true : _canExecute();
+        }
 
         public void Execute(object? parameter)
         {
@@ -1137,6 +1143,15 @@ public static class BaseViewExtensions
         }
 
         public event EventHandler? CanExecuteChanged;
+    }
+
+    public static bool FocusIsNotInTextBox(this Control control)
+    {
+        var topLevel = TopLevel.GetTopLevel(control);
+        if (topLevel == null) return true;
+        var focus = topLevel.FocusManager.GetFocusedElement();
+        if (focus == null) return true;
+        return !(focus is TextBox);
     }
 
     public static T Size<T>(this T ctrl, double size) where T : Control
@@ -1181,31 +1196,34 @@ public static class BaseViewExtensions
         return ctrl;
     }
 
-    public static T OnKey<T>(this T ctrl, Key key, Action action) where T : Control
+    public static T OnKey<T>(this T ctrl, Key key, Action action, bool disableWhenTextBoxFocused = true, Func<bool>? customCanExecute = null) where T : Control
     {
+        Func<bool>? canExecute = customCanExecute ?? (disableWhenTextBoxFocused == true ? ctrl.FocusIsNotInTextBox : null);
         ctrl.KeyBindings.Add(new KeyBinding()
         {
             Gesture = new KeyGesture(key),
-            Command = new KeyActionCommand(action)
+            Command = new KeyActionCommand(action, canExecute)
         });
 
         return ctrl;
     }
 
-    public static T OnKey<T>(this T ctrl, (KeyModifiers, Key) key, Action action) where T : Control
+    public static T OnKey<T>(this T ctrl, (KeyModifiers, Key) key, Action action, bool disableWhenTextBoxFocused = true, Func<bool>? customCanExecute = null) where T : Control
     {
+        Func<bool>? canExecute = customCanExecute ?? (disableWhenTextBoxFocused == true ? ctrl.FocusIsNotInTextBox : null);
         ctrl.KeyBindings.Add(new KeyBinding()
         {
             Gesture = new KeyGesture(key.Item2, key.Item1),
-            Command = new KeyActionCommand(action)
+            Command = new KeyActionCommand(action, canExecute)
         });
 
         return ctrl;
     }
 
-    public static T OnKey<T>(this T ctrl, Key[] keys, Action action) where T : Control
+    public static T OnKey<T>(this T ctrl, Key[] keys, Action action, bool disableWhenTextBoxFocused = true, Func<bool>? customCanExecute = null) where T : Control
     {
-        var command = new KeyActionCommand(action);
+        Func<bool>? canExecute = customCanExecute ?? (disableWhenTextBoxFocused == true ? ctrl.FocusIsNotInTextBox : null);
+        var command = new KeyActionCommand(action, canExecute);
 
         foreach (var key in keys)
         {
