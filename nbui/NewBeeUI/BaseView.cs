@@ -1657,6 +1657,51 @@ public static class BaseViewExtensions
         return prefix + content;
     }
 
+    /// <summary>
+    /// 创建一个棋盘格透明笔刷
+    /// </summary>
+    /// <param name="cellSize">单个小方块的大小（像素）</param>
+    /// <param name="color1">颜色1（如白色）</param>
+    /// <param name="color2">颜色2（如浅灰色）</param>
+    public static IBrush CreateCheckerboardBrush(double cellSize = 10, Color? color1 = null, Color? color2 = null)
+    {
+        var c1 = color1 ?? Colors.White;
+        var c2 = color2 ?? Color.Parse("#CCCCCC");
+        var halfSize = cellSize / 2;
+
+        return new DrawingBrush
+        {
+            TileMode = TileMode.Tile,
+            Stretch = Stretch.None,
+            // 关键点：DestinationRect 必须是绝对单位，控制平铺单元大小
+            DestinationRect = new RelativeRect(0, 0, cellSize, cellSize, RelativeUnit.Absolute),
+            Drawing = new DrawingGroup
+            {
+                Children =
+                    {
+                        // 1. 绘制底色（填满整个 cellSize x cellSize 区域）
+                        new GeometryDrawing
+                        {
+                            Brush = new SolidColorBrush(c2),
+                            Geometry = new RectangleGeometry(new Rect(0, 0, cellSize, cellSize))
+                        },
+                        // 2. 绘制左上角小方块
+                        new GeometryDrawing
+                        {
+                            Brush = new SolidColorBrush(c1),
+                            Geometry = new RectangleGeometry(new Rect(0, 0, halfSize, halfSize))
+                        },
+                        // 3. 绘制右下角小方块
+                        new GeometryDrawing
+                        {
+                            Brush = new SolidColorBrush(c1),
+                            Geometry = new RectangleGeometry(new Rect(halfSize, halfSize, halfSize, halfSize))
+                        }
+                    }
+            }
+        };
+    }
+
     public static Button CreateWindowIcon(this IWindowView win, StreamGeometry g, string? tooltip = null, double scale = 0.8)
     {
         return win.CreateWindowIcon(new PathIcon().Data(g), tooltip, scale);

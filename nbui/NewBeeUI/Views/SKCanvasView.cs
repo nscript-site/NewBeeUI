@@ -12,7 +12,7 @@ public class SKCanvasDrawOperation : ICustomDrawOperation
 
     public Action<SKCanvas, SKRect>? OnDrawCanvas { get; set; }
 
-    public SKCanvasDrawOperation(Rect bounds,IBrush? backgroundBrush)
+    public SKCanvasDrawOperation(Rect bounds, IBrush? backgroundBrush)
     {
         _bounds = bounds;
         _backgroundBrush = backgroundBrush;
@@ -30,6 +30,7 @@ public class SKCanvasDrawOperation : ICustomDrawOperation
 
     public void Render(ImmediateDrawingContext context)
     {
+        // 普通笔刷交给 Avalonia 绘制
         if (_backgroundBrush != null)
         {
             context.FillRectangle(_backgroundBrush.ToImmutable(),
@@ -47,6 +48,7 @@ public class SKCanvasDrawOperation : ICustomDrawOperation
         if (canvas is { })
         {
             var rect = SKRect.Create((float)_bounds.Left, (float)_bounds.Top, (float)_bounds.Width, (float)_bounds.Height);
+
             OnDrawCanvas?.Invoke(canvas, rect);
         }
     }
@@ -54,12 +56,28 @@ public class SKCanvasDrawOperation : ICustomDrawOperation
 
 public class SKCanvasView : Control
 {
-    public IBrush? BackgroundBrush { get; set; }
+    private IBrush? _backgroundBrush;
+
+    /// <summary>
+    /// 背景笔刷（Avalonia 内置笔刷类型）。
+    /// </summary>
+    public IBrush? BackgroundBrush
+    {
+        get => _backgroundBrush;
+        set
+        {
+            _backgroundBrush = value;
+            InvalidateVisual();
+        }
+    }
 
     public Action<SKCanvas, SKRect>? OnDrawCanvas { get; set; }
 
     public override void Render(DrawingContext context)
     {
-        context.Custom(new SKCanvasDrawOperation(new Rect(0, 0, Bounds.Width, Bounds.Height), BackgroundBrush) { OnDrawCanvas = OnDrawCanvas });
+        context.Custom(new SKCanvasDrawOperation(new Rect(0, 0, Bounds.Width, Bounds.Height), BackgroundBrush)
+        {
+            OnDrawCanvas = OnDrawCanvas
+        });
     }
 }
